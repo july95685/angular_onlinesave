@@ -1,0 +1,153 @@
+<div layout="column" class="dal-coll-update">
+    <div ng-if="!showAssign">
+        <div layout="row" style="height:56px;background-color: #006fd5;"  layout-align="start center">
+            <i class="mdi mdi-chevron-left" style="margin: 0 10px;color: #fff;"  ng-click="closeThisMenu()"></i>
+            <span class="l-text-nowrap icon-size-20" style="color: #fff;font-size: 18px;">{{item.firstName}} {{item.lastName}}</span>
+        </div>
+
+        <!-- new design -->
+        <div layout="column" ng-show="!editpage" style="background-color: #f5f5f5;" class="dal-coll-list coll-overflow-scroll">
+            <div layout="column"  layout-align="start center" style="min-height: 170px;">
+                <img alt="linley.tanner" ng-src="{{::item.img}}"  class="dal-coll-img"/>
+            </div>
+            <div style="background-color: #fff;margin:0 15px;position: relative;height: 360px;overflow: scroll;">
+                <div layout-align="center start" layout="column" style="border-bottom: 1px solid rgba(0,0,0,0.08);margin:5px 15px;">
+                    <div layout="column" layout-align=" center start">
+                        <span style="font-size: 11px;color: rgba(0,0,0,0.38);">Name of Collaborator</span>
+                        <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;">{{item.username}}</span>
+                    </div>
+                    <div layout="column" layout-align=" center start" style="margin-top: 10px;">
+                        <span style="font-size: 11px;color: rgba(0,0,0,0.38);">E-mail address</span>
+                        <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;">{{item.email}}</span>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div layout="row"  layout-align="start start" style="margin: 5px 15px;"  ng-repeat="item in item.enterpriseLockrRoles">
+                        <div layout="row" layout-align="center start">
+                            <img alt="linley.tanner" ng-src="{{item.thumbnailUrl}}" style="width: 60px;height: 40px;"  />
+                        </div>
+                        <div flex style="margin-left: 10px;" layout="column" layout-align="center start">
+                            <div layout="row" layout-align="start center">
+                                <i style="line-height: 40px;" class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black"></i>
+                                <span  style="overflow:hidden;text-overflow:ellipsis;">{{item.lockrName}}</span>
+                            </div>
+                            <div style="border-bottom: 1px solid rgba(0,0,0,0.08);width:100%;" layout="column" layout-align="center start">
+                                <span  style="font-size: 11px;color: rgba(0,0,0,0.38);">Role</span>
+                                <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;"> {{item.role}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:50px;margin:0 15px;background-color: #fff;" layout="row" layout-align="end center">
+                <div style="background-color: #006fd5;height:35px;color: #fff;margin-right: 15px;border-radius: 5%;" layout="row" layout-align="center center">
+                    <span style="font-size: 15px;font-weight: bold;padding: 5px 10px;" ng-click="editUserManager()">Edit</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div layout="column" ng-show="editusermanager" style="background-color: #f5f5f5;" class="dal-coll-list coll-overflow-scroll">
+            <div layout="row" layout-align="start start" style="margin: 10px 5px 0 5px;min-height:120px;background-color: #fff;padding: 10px;border-bottom: 1px solid rgba(0,0,0,0.08);">
+                <div layout="column"  layout-align="start center" style="min-width: 50px;">
+                    <img alt="linley.tanner" ng-src="{{::item.img}}"  style="width: 50px;height: 50px;"/>
+                </div>
+                <div layout-align="center start" layout="column" style="margin:5px 15px;width: 100%;">
+                    <div layout="column" layout-align=" center start" style="border-bottom: 1px solid rgba(0,0,0,0.08);width: 100%;">
+                        <span style="font-size: 11px;color: rgba(0,0,0,0.38);">Name of Collaborator</span>
+                        <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;">{{item.username}}</span>
+                    </div>
+                    <div layout="column" layout-align=" center start" style="margin-top: 10px;border-bottom: 1px solid rgba(0,0,0,0.08);">
+                        <span style="font-size: 11px;color: rgba(0,0,0,0.38);">E-mail address</span>
+                        <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;">{{item.email}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="background-color: #fff;margin: 0 5px;">
+                <div  layout="row" layout-align="start center" style="margin: 5px 10px 10px 10px;">
+                    <div ng-if="!deleteLockrList[0]" layout="row" layout-align="start center" >
+                        <i class="mdi mdi-delete" style="font-size: 20px;color: rgba(0,0,0,0.38);"></i>
+                        <span  style="color: rgba(0,0,0,0.38);font-size: 11px;margin:0 5px;">DELETE</span>
+                    </div>
+                    <div ng-if="deleteLockrList[0]" layout="row" layout-align="start center" ng-click="deleteManageLockr()">
+                        <i class="mdi mdi-delete" style="font-size: 20px;color:#006fd5;"></i>
+                        <span  style="color: #3c3c3c;font-size: 11px;margin:0 5px;">DELETE</span>
+                    </div>
+                    <div layout="row" layout-align="start center" ng-click="openFormAssign()">
+                        <i class="mdi dalello-icon-add_newlocker_black" style="font-size: 20px;"></i>
+                        <span style="color: #3c3c3c;font-size: 11px;margin:0 5px;">ASSIGN MORE LOCKRS</span>
+                    </div>
+                </div>
+                <div layout="row"  layout-align="start start" style="margin: 5px 15px;"  ng-repeat="item in item.enterpriseLockrRoles">
+                    <md-checkbox ng-click="chooseLockr(item)" aria-label="Checkbox 1">
+                    </md-checkbox>
+                    <div layout="row" layout-align="center start">
+                        <img alt="linley.tanner" ng-src="{{item.thumbnailUrl}}" style="width: 60px;height: 40px;"  />
+                    </div>
+                    <div flex style="margin-left: 10px;" layout="column" layout-align="center start">
+                        <div layout="row" layout-align="start center">
+                            <i style="line-height: 40px;" class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black"></i>
+                            <span  style="overflow:hidden;text-overflow:ellipsis;">{{item.lockrName}}</span>
+                        </div>
+                        <div style="border-bottom: 1px solid rgba(0,0,0,0.08);width:100%;" layout="column" layout-align="center start">
+                            <span  style="font-size: 11px;color: rgba(0,0,0,0.38);">Role</span>
+                            <span style="font-size: 15px;font-weight:bold;padding: 3px 0;color: #006fd5;"> {{item.role}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div ng-if="showAssign">
+        <div layout="row" style="height:56px;background-color: #006fd5;"  layout-align="start center">
+            <span class="l-text-nowrap icon-size-20" style="color: #fff;font-size: 18px;">Assign more Lockrs</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="margin: 0 10px;color: #fff;"  ng-click="BackFormAssign()"></i>
+        </div>
+        <div layout="column" layout-align="center center" style="width: 100%;">
+            <md-progress-circular md-mode="indeterminate" ng-show="loadingAssignLockr"></md-progress-circular>
+        </div>
+        <div ng-show="!loadingAssignLockr">
+            <div layout="column" layout-align="start center" style="min-height: 65px;max-height: 65px;">
+                <div layout="row" layout-align="start center" style="width: 100%;padding: 0 20px;margin-top: 20px;">
+                    <i class="mdi mdi-magnify"></i>
+                    <md-input-container style="margin: 0;width: 100%;">
+                        <label>Search</label>
+                        <input style="margin-bottom: -20px;"  ng-model="assign.searchText" >
+                    </md-input-container>
+                </div>
+            </div>
+            <div flex style="overflow: scroll;position: absolute;top: 130px;bottom: 40px;left: 0;right:0;">
+                <div layout="row"  layout-align="start start" style="margin: 5px 15px;"  ng-repeat="item in showAllState">
+                    <md-checkbox ng-disabled="!item.chooserole" ng-click="chooseAssignLockr(item)" aria-label="Checkbox 1">
+                    </md-checkbox>
+                    <div layout="row" layout-align="center start">
+                        <img alt="linley.tanner" ng-src="{{item.thumbnailUrl}}" style="width: 60px;height: 40px;"  />
+                    </div>
+                    <div flex style="margin-left: 10px;" layout="column" layout-align="center start">
+                        <div layout="row" layout-align="start center">
+                            <i style="line-height: 40px;" class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black"></i>
+                            <span  style="overflow:hidden;text-overflow:ellipsis;">{{item.name}}</span>
+                        </div>
+                        <md-input-container layout="row" style="margin: 0;width: 90%;">
+                            <md-select placeholder="CHOOSE A ROLE" ng-model="item.chooserole" md-on-open="loaduserrole()" style="width: 100%;">
+                                <md-optgroup label="CHOOSE A ROLE">
+                                    <md-option ng-value="d.name" ng-repeat="d in chooseuserrole">{{d.name}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            <div style="position: fixed;height:40px;bottom:0;left:0;right:0;background-color: #fff;" layout="row" layout-align="end center">
+                <md-button class="dal-btn dal-btn-primary dal-padding" style="padding: 0;font-size: 15px;font-weight: bold;" ng-click="updateAssgin()" >Update</md-button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

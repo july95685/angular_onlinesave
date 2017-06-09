@@ -1,0 +1,75 @@
+<div>
+    <div style="margin:20px;min-width: 260px;" layout="column">
+        <div layout-align="start center" ng-show="!showShareForm" layout="row" style="margin-bottom: 10px;">
+            <div layout="row" layout-align="center center" style="margin-right: 10px;">
+                <i class="mdi mdi-pencil" style="font-size: 25px;"></i>
+                <span style="font-size: 16px;margin-left: 5px;" ng-click="editShareForm()">EDIT</span>
+            </div>
+            <div layout="row" layout-align="center center">
+                <i class="mdi mdi-delete" style="font-size: 25px;"></i>
+                <span style="font-size: 16px;margin-left: 5px;" ng-click="deleteShare()">DELETE</span>
+            </div>
+        </div>
+        <div layout="row" layout-align="start center" style="margin-bottom: 10px;">
+            <i class="mdi icon-size-1 mdi-clock" style="padding-right:5px;"></i>
+            <span class="font-size-1 line-height-self">{{item.commentDate | date : 'dd MMM yyyy'}}</span>
+        </div>
+        <div layout="column" style="margin-bottom: 10px;">
+            <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">STATUS</span>
+            <span style="font-size: 12px;font-weight: bold;">{{item.state === 'Active'?'PUBLISH':'UNPUBLISH'}}</span>
+        </div>
+
+           <div ng-show="showShareForm">
+               <md-input-container style="margin: 0;width: 100%;">
+                   <label style="margin-bottom: -8px;">Title</label>
+                   <input ng-model="formData.title">
+               </md-input-container>
+               <md-input-container style="margin: 0;width: 100%;">
+                   <label style="margin-bottom: -8px;">Title</label>
+                   <input ng-model="formData.message">
+               </md-input-container>
+               <md-input-container style="margin: 0;width: 100%;">
+                   <label style="margin-bottom: -8px;">Title</label>
+                   <input ng-model="formData.customShareMsg">
+               </md-input-container>
+           </div>
+            <div ng-show="!showShareForm">
+                <div layout="column" style="margin-bottom: 10px;">
+                    <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">TITLE</span>
+                    <span style="font-size: 12px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 100%;">{{item.title}}</span>
+                </div>
+                <div ng-if="item.message" layout="column" style="margin-bottom: 10px;">
+                    <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">DESCRIPTION</span>
+                    <span style="font-size: 12px;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.message}}</span>
+                </div>
+                <div layout="column" ng-if="item.customShareMsg" style="margin-bottom: 10px;">
+                    <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">MESSAGE</span>
+                    <span style="font-size: 12px;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.customShareMsg}}</span>
+                </div>
+            </div>
+
+        <div layout="row" style="margin-bottom: 10px;">
+            <div layout="column" style="padding-right: 15px;border-right: 1px solid #aaa;">
+                <span style="color:#006fd5;font-size: 10px;margin-bottom: 5px;">SHARED ON</span>
+                <div layout="row">
+                    <div ng-repeat="socialChannel in item.byFormat"  style="padding: 0 3px;">
+                        <i class="mdi {{socialChannel[0].iconClass}}" style="margin-right:10px;font-size:12px;width: 14px;height: 14px;border-radius: 50%;line-height: 14px;text-align: center;color: white;background-color: #006fd5;display: block;"></i>
+                    </div>
+                </div>
+            </div>
+            <div layout="column" style="margin-left: 15px;">
+                <span style="color:#006fd5;font-size: 10px;margin-bottom: 5px;">SHARING RULE APPLIED</span>
+                <span style="font-size:10px;">{{currentAvaliableSharingRule.name}}</span>
+            </div>
+        </div>
+        <div layout-align="end center" ng-show="showShareForm" layout="row" style="margin-top: 10px;">
+            <div layout="row" layout-align="center center" style="margin-right: 10px;">
+                <span style="font-size: 16px;margin-left: 5px;" ng-click="backForm()">CANCEL</span>
+            </div>
+            <div layout="row" layout-align="center center" style="background-color: #006fd5;border-radius: 5%;">
+                <span style="font-size: 15px;padding: 5px 10px;color:#fff;" ng-click="updateShare()">SAVE</span>
+            </div>
+        </div>
+
+    </div>
+</div>

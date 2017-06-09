@@ -1,0 +1,27 @@
+<md-dialog aria-label="People Who Like This" ng-style="desktopStyle">
+    <md-toolbar style="background-color: #EDEDED;">
+        <div class="md-toolbar-tools" >
+            <h2 class="v2-color">People Who Like This</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2 v2-color"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="margin-bottom: 0;">
+        <div>
+            <md-list>
+                <div ng-repeat="item in likeObjects">
+                    <md-list-item class="md-2-line">
+                        <img ng-src="{{item.avatarPic}}" class="md-avatar" />
+                        <div class="md-list-item-text">
+                            <h3>{{ item.fromName }}</h3>
+                        </div>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                </div>
+            </md-list>
+        </div>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,17 @@
+<div class="dal-body-h">
+    <div class="dal-fix-footer">
+        <dalockr-header></dalockr-header>
+        <div ng-if="!mobileDevice" class="lockr-details-navbar container-fluid">
+            <div layout="row">
+                <div flex>
+                    <i class="mdi mdi-chevron-left vertical-align-middle" ng-click="backToHome()" style="color: white;line-height: 45px;cursor: pointer;outline: none;"></i>
+                    <a class="vertical-align-middle" style="text-decoration:none;display: inline-block;color: white;position: relative;font-size: 18px;outline: none;">Edit Sharing rules</a>
+                </div>
+            </div>
+        </div>
+        <div class="sharing-rule-wrapper" ng-class="{'mobile-account-region':mobileDevice,'pc-account-region':!mobileDevice}">
+            <user-sharing-rules></user-sharing-rules>
+        </div>
+    </div>
+    <dalockr-footer ng-if="!mobileDevice"></dalockr-footer>
+</div>

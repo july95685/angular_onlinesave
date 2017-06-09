@@ -1,0 +1,42 @@
+<div layout="column"  style="width: 100%">
+    <div ng-click="addColl()" style="width:135px;background-color: #ffd439;margin: 15px 0;white-space: nowrap;"   layout="row" layout-align="center  center" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">
+        <span  style="color: #006fd5;margin:6px 0;font-size: 10px;font-weight: bold;">ADD PERSONAL CHANNELS</span>
+    </div>
+
+
+    <div style="width: 100%" ng-show="showList">
+        <!--<md-input-container style="width: 100%">-->
+            <!--<label>CHOOSE YOUR SOCIAL CHANNEL</label>-->
+            <!--<md-select ng-model="ctrl.socialState">-->
+                <!--<md-option ng-repeat="state in socialList" ng-value="state.name" >-->
+                    <!--<div layout="row">-->
+                        <!--&lt;!&ndash;<i style="font-size:22px;color:#006fd5;" class="mdi {{type.iconClass}}"></i>&ndash;&gt;-->
+                        <!--<span>{{state.name}}</span>-->
+                    <!--</div>-->
+                <!--</md-option>-->
+            <!--</md-select>-->
+        <!--</md-input-container>-->
+        <md-menu class="add-sublockr-menu">
+            <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                <span style="padding: 0;color: rgba(0,0,0,0.26);font-weight: bold;">{{socialType}}</span>
+                <span flex></span>
+                <i class="mdi mdi-menu-down"></i>
+            </md-button>
+            <md-menu-content width="6">
+                <md-menu-item ng-if="key !== 'no'" ng-repeat="(key,state) in socialList">
+                    <md-button ng-click="selectType(state)" class="m-dash-btn-item">
+                        <i class="mdi {{state.iconClass}}"></i>
+                        <span>{{state.name}}</span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+        <md-input-container style="width: 100%;">
+            <label >ACCOUNT ADDRESS</label>
+            <input ng-model="ctrl.channelName">
+        </md-input-container>
+        <div style="width: 100%;" layout="row" layout-align="end center">
+            <span ng-click="hideList()" style="font-weight: bold;color:#006fd5;">SAVE</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<md-dialog class="follower-list" aria-label="Follower list" ng-cloak>
+        <md-toolbar>
+            <div bg="primary" class="md-toolbar-tools">
+                <h2 class="white">Followers ({{assetFollowers.length || 0}})</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="close" class="mdi white mdi-close" style="font-size: 30px;"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-padding">
+                <div ng-if="loading" layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div layout-align="start center" layout="row" class="item" ng-repeat="item in assetFollowers">
+                    <img class="avatar" ng-src="{{item.userPic}}" alt="{{item.follower.username}}">
+                    <span class="divider"></span>
+                    <span flex class="username-text">{{item.follower.firstName + ' ' + item.follower.lastName}}</span>
+                </div>
+            </div>
+
+        </md-dialog-content>
+
+</md-dialog>

@@ -1,0 +1,16 @@
+<md-dialog class="grant-permisions min-width-600" aria-label="Grant permisions">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Manage PublishingPoint</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <md-switch ng-change="changeModel()" ng-model="layoutParams.bannerActive" aria-label="Banner Active">
+            Active banner
+        </md-switch>
+    </md-dialog-content>
+</md-dialog>

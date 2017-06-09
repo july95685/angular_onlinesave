@@ -1,0 +1,68 @@
+<md-dialog class="min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #006fd5;">
+            <h2 style="font-size: 20px;color: #fff;">Activity flow</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #fff;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="activity-container" style="margin-bottom: 0;">
+            <div infinite-scroll-container="activityContainer" infinite-scroll="infiniteEvents.loadMoreEvents()" infinite-scroll-immediate-check="false" infinite-scroll-distance='2'>
+            <div style="padding-top: 20px;" >
+                <timeline>
+                    <timeline-event style="cursor: pointer;outline: none;" ng-click="enterDetails(event)" ng-repeat="event in events track by $index">
+                        <!--<timeline-badge class="timeline-custom-badge">-->
+                            <!--&lt;!&ndash;<img ng-src="{{event.userPic}}">&ndash;&gt;-->
+                            <!--<div style="background-color: #d8d8d8;width: 15px;height:15px;"></div>-->
+                        <!--</timeline-badge>-->
+                        <timeline-badge class="timeline-custom-badge" style="height: 15px;width: 15px;left: 33px;top: 10px;box-shadow: 0 0 0 0 ,inset 0 1px 0 white, 0 1px 0 1px white;">
+
+                        </timeline-badge>
+                        <timeline-panel style="margin:0;padding:0;">
+                            <!--<timeline-heading>-->
+                                <!--<h5 style="margin-bottom:0;">{{event.event.initiator_name}} <span class="v2-color">{{event.text}}</span>-->
+                                <!--<strong class="md-span-wordwrap">{{event.entity_name}}</strong></h5>-->
+                                <!--<div style="margin-bottom:10px;">-->
+                                    <!--<span style="font-size: 12px;">{{event.date | date : 'MMMM,d yyyy HH:mm' }}</span>-->
+                                <!--</div>-->
+                            <!--</timeline-heading>-->
+                            <div style="width: 100%;" layout="column" layout-align="start start">
+                            <div layout="row" layout-align="start start" style="width: 80%;margin:5px 5px  5px 5px;">
+                                <div >
+                                    <img style="width:36px;height: 36px;margin: 2px;" ng-src="{{event.userPic}}">
+                                </div>
+                                <div flex layout="column" style="margin:0 15px;" layout-align="start start">
+                                    <h5 style="margin-bottom:0;margin-top: 0;">{{event.event.initiator_name}} <span class="v2-color">{{event.text}}</span>
+                                    <strong class="md-span-wordwrap">{{event.entity_type}}</strong></h5>
+                                    <!--<span style="color: #333333;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;line-height:20px;font-size: 14px;">{{event.event.initiator_name}}</span>-->
+                                    <span style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:rgba(0,0,0,0.5);line-height:20px;font-size: 13px;">{{event.showtime}}</span>
+                                </div>
+                            </div>
+                            <div style="width:100%;background-color: #f7f7f7;" layout-align="start start" layout="row">
+                                <img style="width: 50%;height: auto;" ng-src="{{event.thumbnailUrl}}">
+                                <div layout="column" layout-align="start start" style="width:50%;padding-left: 5px;">
+                                    <span style="color:#006fd5;padding: 5px 0 0 5px;">{{event.entity_name}}</span>
+                                    <div layout-align="start center" layout="row">
+                                        <i class="mdi mdi-clock" style="font-size: 18px;"></i>
+                                        <span style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 10px;padding-left: 5px;">{{event.date | date : 'dd MMM yyyy' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div style="margin:5px 5px 5px 15px;" layout-align="start center" layout="row">-->
+                                <!--<span style="color: #333333;">This is an example of a nice comment about this beautiful picture :-)</span>-->
+                            <!--</div>-->
+                            </div>
+                        </timeline-panel>
+                    </timeline-event>
+                </timeline>
+            </div>
+        </div>
+        <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isLoading">
+            <div layout="row" layout-sm="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

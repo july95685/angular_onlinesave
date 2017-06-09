@@ -1,0 +1,30 @@
+<div>
+    <div style="background-color: #006fd5;height:50px;padding:0 15px;" layout="row" layout-align="space-between center">
+        <span style="color:#fff;font-size: 16px;font-weight: bold;">Share Asset</span>
+        <i class="mdi mdi-close icon-size-2" style="color:#fff;" ng-click="cancel()"></i>
+    </div>
+    <div layout="column"  style="position: relative;margin-top: 8px;height:460px;overflow: auto;">
+        <form name="reshare_asset_form" role="form" novalidate>
+            <div style="margin-top: 15px;padding: 0 16px;" layout="column">
+                <md-input-container >
+                    <input name="title" style="font-size: 14px;color:#006fd5;" ng-model="shareEntityDialog.title" placeholder='TITLE'>
+                </md-input-container>
+                <md-input-container style='margin-top:-18px'>
+                    <input name="description" style="font-size: 14px;" ng-model="shareEntityDialog.text" placeholder='DESCRIPTION'>
+                </md-input-container>
+                <md-input-container style='margin-top:-18px'>
+                    <input name="message" style="font-size: 14px;" ng-model="shareEntityDialog.shareMsg" placeholder='MESSAGE'>
+                </md-input-container>
+            </div>
+            <span style="padding:0 15px;font-weight: bold;" class="v2-color">SHARING RULE :</span>
+            <div layout="row" style="padding:8px 15px 0 15px;">
+
+                <span  style="padding-left: 3px;font-weight: bold;padding-bottom: 15px;" >{{currentAvaliableSharingRule.name || 'No available sharing rule'}}</span>
+            </div>
+            <share-on-list style-fromassetdetail="styleFromassetdetail" change-callback="changeCallback(items)" social-channels="socialChannels"></share-on-list>
+        </form>
+    </div>
+    <div style="position: fixed;bottom: 0;left: 0;right: 0;box-shadow: 0 -1px 6px #999;height: 50px;background-color: #fff;z-index: 2;" layout="row" layout-align="end center">
+        <md-button style="background-color: #006fd5;color:#fff;" ng-click="UseshareAsset()">Share</md-button>
+    </div>
+</div>

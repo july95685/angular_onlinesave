@@ -1,0 +1,50 @@
+<div flex flex-gt-sm="33" style="padding:10px;width: 100%;" class="assetDetailInfoMobile">
+    <div  class="card-shadow card-radius-2x" style="background-color: white;padding-bottom: 20px;">
+        <div style="padding:20px;width: 100%;"  class="clearfix">
+
+            <md-button class="pull-left" style="margin:0;text-transform:none;"  ng-click="openEditAssetDialog($event,currentAssetDetails)">
+                <i class="mdi mdi-pencil icon-size-2 vertical-align-middle"></i>
+                <span class="inline-block vertical-align-middle v2-color">Edit asset</span>
+            </md-button>
+            <md-button ng-show="!isFollowedByMe" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;"  ng-click="followAsset($event,{id:currentAssetDetails.id,name:currentAssetDetails.name})">
+                <i class="mdi mdi-heart icon-size-2 vertical-align-middle" style="color: #e1e1e1;"></i>
+                <span class="vertical-align-middle v2-color">Follow asset</span>
+            </md-button>
+            <md-button ng-show="isFollowedByMe" ng-click="unFollowAsset()" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;">
+                <i class="mdi mdi-heart icon-size-2 vertical-align-middle" style="color:#f27065;"></i>
+                <span class="vertical-align-middle v2-color">Unfollow</span>
+            </md-button>
+        </div>
+        <div style="padding:20px;">
+            <p style="margin:0;color:#555;font-size: 12px;position: relative;">{{currentAssetDetails.description}}</p>
+        </div>
+
+        <div style="padding:20px;" class="clearfix">
+            <div class="pull-left">
+                <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i><span class="vertical-align-middle font-size-1">Created: {{currentAssetDetails.dateCreated | date : 'MMMM,d yyyy'}}</span>
+            </div>
+
+            <div class="pull-right">
+                <i style="color: #f27065;padding-right: 3px;font-size:13px;" class="vertical-align-middle mdi mdi-heart icon-size-1"></i>
+                <span class="font-size-1 vertical-align-middle">{{followerCount || 0}}</span>
+            </div>
+            <div class="pull-left"  ng-show="currentAssetDetails.publishByDate">
+                <i class="mdi icon-size-1 mdi-calendar-clock  vertical-align-middle" style="padding-right: 5px; color: #EF584F;"></i><span class="vertical-align-middle font-size-1">Scheduled: {{currentAssetDetails.publishByDate | date : 'MMMM,d yyyy'}}</span>
+            </div>
+        </div>
+
+
+        <div class="clearfix" style="padding: 10px 0;background-color: #F9F9F9;">
+            <div style="padding:0 20px;">
+                <ul class="list-unstyled pull-left clearfix" style="padding-right: 5px;margin-bottom: 0;">
+                    <li class="pull-left" ng-repeat="item in currentAssetDetails.socialChannelView"><i class="mdi icon-size-1 {{item}}"></i></li>
+                </ul>
+                <div class="pull-right">
+                    <i style="padding-right: 5px;" class="mdi mdi-message-processing icon-size-1 vertical-align-middle"></i>
+                    <span class="font-size-1 vertical-align-middle">{{commentsNum}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

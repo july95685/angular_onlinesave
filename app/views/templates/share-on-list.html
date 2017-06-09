@@ -1,0 +1,44 @@
+<div class="dal-share-on-list" layout="column" >
+    <span class="v2-color" style="padding:0 15px;font-weight: bold;width:100%;">SHARE ON : </span>
+    <div layout="row" layout-align="start center">
+
+        <span class="dal-h-spacing-normal"></span>
+        <div flex class="list-tabs">
+            <div class="tabs-wrapper">
+                <a ng-class="{'active':item.active}" ng-click="activeThisChannel(item)" href="javascript:void (0);" ng-repeat="item in channelTypes">
+                    <i class="mdi {{item.iconClass}}"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-content">
+        <div style="margin-left:15px;">
+            <div ng-click="ChangeSocialAccountState(item)"  style="margin-bottom: 10px;display: inline-block;margin-left:15px;" ng-repeat="item in socialChannels | filter : {socialChannelType:currentChannel}">
+                <div layout="row">
+                    <div style="z-index:2;width:40px;height:40px;border-radius: 50%;background-color: #006fd5;">
+                        <img style=":40px;height:40px;border-radius: 50%;" ng-src="{{item.avatarPic}}"/>
+                    </div>
+                    <div ng-show="item.selected" style="margin-left:-20px;height:40px;background-color: #006fd5;color:#fff;">
+                        <span style="padding: 0 30px;line-height: 40px;">{{item.name.split('-')[1]}}</span>
+                    </div>
+                    <div ng-show="!item.selected" style="margin-left:-20px;height:40px;background-color: #9b9b9b;color:#fff;">
+                        <span style="padding: 0 30px;line-height: 40px;">{{item.name.split('-')[1]}}</span>
+                    </div>
+                    <div ng-show="item.selected" style="width:40px;margin-left:-20px;height:40px;background-color: #006fd5;z-index:2;border-radius: 50%;">
+                        <div  style="width:30px;height:30px;border-radius: 50%;background-color: #fff;margin-top:5px;" layout="row" layout-align="center center">
+                            <i  class="mdi mdi-check" style="font-size: 20px;font-weight: bold;" ></i>
+                        </div>
+                    </div>
+                    <div ng-show="!item.selected" style="width:40px;margin-left:-20px;height:40px;background-color: #9b9b9b;z-index:2;border-radius: 50%;">
+                        <div  style="border: 2px solid #fff;width:30px;height:30px;border-radius: 50%;background-color: #9b9b9b;margin-top:5px;" layout="row" layout-align="center center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

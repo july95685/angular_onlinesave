@@ -1,0 +1,36 @@
+<md-dialog aria-label="Crop And Upload Avatar"  ng-cloak>
+    <form>
+        <md-toolbar style="background-color: #006fd5;">
+            <div class="md-toolbar-tools">
+                <h2 style="color: #fff;">Crop Image</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #fff;"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div class="avatar-crop-area">
+
+
+                    <ui-cropper image="myImage" area-type="rectangle" aspect-ratio="1.5" result-image-size="{w:300,h:200}" result-image="croppedThumbnail" result-image-format="resImgFormat"></ui-cropper>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button aria-label="Cancel" ng-click="hide()">
+                Cancel
+            </md-button>
+            <md-button aria-label="Upload" ng-click="uploadAvatar()">
+                Upload
+            </md-button>
+        </md-dialog-actions>
+    </form>
+
+    <div layout="column" ng-if="uploading" layout-align="center center" class="loading-center">
+        <strong class="text-loading">{{determinateValue}}%</strong>
+        <md-progress-circular md-mode="determinate" class="md-v2" value="{{determinateValue}}"></md-progress-circular>
+    </div>
+</md-dialog>

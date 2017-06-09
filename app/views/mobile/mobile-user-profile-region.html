@@ -1,0 +1,109 @@
+<div class="profile" layout="column" style="background-color: white;">
+    <!--old silde bar header-->
+    <!--<div layout="row">-->
+        <!--<div style="padding-right: 8px;">-->
+            <!--<img alt="avatar" class="mobile-avatar" ng-src="{{userOriginAvatar}}">-->
+        <!--</div>-->
+        <!--<div flex layout="column" style="padding-top:10px;">-->
+        <!--<span style="color: #4a4a4a;font-size: 18px;width: 155px;overflow: hidden;text-overflow: ellipsis;">-->
+            <!--{{userName}}-->
+        <!--</span>-->
+            <!--<div class="dropdown">-->
+                <!--<div class="dropdown-toggle" style="cursor: pointer;" id="see-storage-details" data-toggle="dropdown" aria-expanded="true">-->
+                    <!--<div class="profile-space progress" style="height: 6px;border-radius: 0;width: 155px;position: relative;margin-top:5px;">-->
+                        <!--<div class="progress-bar profile-progress-color" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{(storageData.totalBytes / storageData.maxBytes).toFixed(2)*100 || 0}}%;"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<ul class="dropdown-menu" role="menu" aria-labelledby="see-storage-details" style="width:240px;right:30px;left:auto;top: 20px;position: absolute;z-index:1022;">-->
+                    <!--<dashboard-right-region></dashboard-right-region>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--<ul class="list-unstyled">-->
+                <!--<li><a ng-click="openProfileDialog($event)" style="cursor: pointer;padding: 5px 0;display:inline-block;">Profile</a></li>-->
+                <!--<li><a ng-click="openSharingRuleDialog($event)" style="cursor: pointer;padding: 5px 0;display:inline-block;"  ng-if="notContentManager" >Sharing Rules</a> </li>-->
+                <!--<li><a ng-click="openFollowingDialog($event)" style="cursor: pointer;padding: 5px 0;display:inline-block;">Following</a> </li>-->
+                <!--<li><a ng-click="logout()" style="cursor: pointer;padding: 5px 0;display:inline-block;">Log out</a> </li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div layout="row" style="padding: 15px 10px 0 10px;">
+        <div layout="row" style="width: 80%;">
+        <div style="padding-right: 8px;">
+            <img alt="avatar" class="mobile-avatar" ng-src="{{userOriginAvatar}}">
+        </div>
+        <div flex layout="column" style="padding-top:10px;">
+        <span style="color: #4a4a4a;font-size: 16px;white-space:nowrap;margin:5px 0;font-weight:bold;color:#006fd5;overflow: hidden;text-overflow: ellipsis;">
+            {{userName}}
+        </span>
+            <div class="dropdown" style="height: 15px;">
+                <div class="dropdown-toggle" style="cursor: pointer;" id="see-storage-details" data-toggle="dropdown" aria-expanded="true">
+                    <div class="profile-space progress" style="height: 6px;border-radius: 0;position: relative;margin-top:5px;">
+                        <div class="progress-bar" style="background-color: #33b5e5" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{(storageData.totalBytes / storageData.maxBytes).toFixed(2)*100 || 0}}%;"></div>
+                    </div>
+                </div>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="see-storage-details" style="width:200px;right:30px;left:auto;top: 20px;position: absolute;z-index:1022;">
+                    <dashboard-right-region></dashboard-right-region>
+                </ul>
+            </div>
+            <ul class="list-unstyled">
+            <li><a ng-click="openProfileDialog($event)" style="cursor: pointer;padding: 8px 0;display:inline-block;color: #006fd5;">View Profile</a></li>
+            </ul>
+        </div>
+        </div>
+        <span flex></span>
+        <i class="mdi mdi-close" ng-click="closeSlideBar()" style="color: #000;font-size: 24px;margin-top: -10px;" ></i>
+    </div>
+    <md-divider ng-show="accounts.length" style="width: 100%;border-top-color: rgba(211,208,208,0.5);"></md-divider>
+
+    <!--  cluster  -->
+    <div ng-if="isIntegrator" aria-label="show account" layout="column" layout-align="center center" style="padding:6px 10px;">
+        <div layout="row" layout-align="start center" style="width:100%;">
+            <i class="mdi dalello-icon-cluster_black" style="font-size: 26px;"></i>
+            <span style="font-size: 15px;color: #3c3c3c;font-weight: bold;">Cluster</span>
+            <span flex></span>
+            <span style="background-color: #ffd439;padding: 2px 5px;font-size:11px;color: #006fd5;font-weight: bold;">ADMIN</span>
+        </div>
+        <div layout-align="end center" layout="row" style="width: 100%;">
+            <md-select ng-model="ClusterAccount.show" aria-label="show account" style="width: 90%;margin-top: 0;color: #006fd5;">
+                <md-option ng-repeat="item in Cluster" ng-value="item.name" style="height: 40px;">{{item.name}}</md-option>
+                <md-option ng-value="" layout="row" layout-align="start center" style="padding: 5px 10px;border-top: 1px solid #d3d1d1;" ng-click="addAccount()">
+                    <i class="mdi mdi-plus-circle" style="font-size: 28px; vertical-align: middle;"></i>
+                    <span style="font-size: 16px;margin: 0 0 5px 10px;color: #3c3c3c; vertical-align: middle;">Create Account</span>
+                </md-option>
+            </md-select>
+        </div>
+    </div>
+    <md-divider ng-show="accounts.length" style="width: 100%;border-top-color: rgba(211,208,208,0.5);"></md-divider>
+    <div layout="row" layout-align="start center" style="padding:6px 10px;">
+        <i class="mdi dalello-icon-account-folder_black" style="font-size: 26px;"></i>
+        <span style="font-size: 15px;color: #3c3c3c;font-family: SansPro;padding-left: 8px;">My accounts & Lockrs</span>
+    </div>
+
+    <div layout="column" ng-show="accounts.length" style="width:100%;background-color: #006fd5;">
+        <div layout="column" style="padding: 15px 15px 0 15px;">
+            <div layout="row">
+            <div style="width: 70px;height: 70px;background-color: black;position: relative;" layout="row" layout-align="center center">
+                <img on-error ng-src="{{account.thumbnailUrl}}" style="height: 70px;;">
+            </div>
+             <div flex layout="column" style="padding-left: 8px;">
+                 <span style="color: #fff;font-size: 16px;padding-bottom: 0;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;width:100%;" >
+                     {{account.name}}
+                 </span>
+                 <div layout="column" style="padding-top: 5px;">
+                     <div>
+                         <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="font-size: 20px;font-weight:bold;color: #fff;padding-right: 5px;"></i>
+                         <span style="color: #fff;" class="vertical-align-middle font-size-12">{{account.dateCreated | date : 'd MMM yyyy'}}</span>
+                     </div>
+                     <div layout="row" style="padding-top: 3px;" layout-align="start center">
+                         <a style="color: #fff;font-size: 11px;" href="javascript:void (0)" ng-click="enterAccountDetails(account)">View Details</a>
+                         <span flex></span>
+                      </div>
+                 </div>
+             </div>
+        </div>
+            <a href="javascript:void(0)" style="margin-top: 12px;font-size:12px;outline: none;color: #fff;" ng-click="changeAccount($event)">Switch Account/ Lockr</a>
+        </div>
+        <md-divider style="margin-left:5%;width: 95%;border-top-color: rgba(211,208,208,0.2);margin-top: 15px;"></md-divider>
+    </div>
+
+</div>

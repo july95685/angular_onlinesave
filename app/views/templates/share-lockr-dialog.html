@@ -1,0 +1,85 @@
+<md-dialog aria-label="Share Lockr" class="share-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Share lockr</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="share_lockr_form" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+
+            <div ng-show="loadingSocialChannels" style="text-align: center;width: 100%;margin-top:30px;position: relative;">
+                <div layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+            <div ng-show="noSocialChannels" style="text-align: center;width: 100%;margin-top:10px;">
+                <span>No social channels</span>
+            </div>
+
+            <md-grid-list
+                    md-cols-sm="6" md-cols="6" md-cols-md="6" md-cols-gt-md="6"
+                    md-row-height-gt-md="1:1" md-row-height="2:2"
+                    md-gutter="12px" md-gutter-gt-sm="8px" ng-show="!loadingSocialChannels">
+                <md-grid-tile ng-repeat="item in socialChannels" md-rowspan="1" md-colspan="1" class="social-grid-normal {{item.bgClass}}" id="social-{{item.id}}" ng-click="selectShareSocialChannels(item.id)">
+
+
+                    <i class="{{item.iconClass}} mdi" style="color: white;font-size: 50px;">
+
+                    </i>
+                    <md-tooltip>{{item.name}}</md-tooltip>
+
+                </md-grid-tile>
+            </md-grid-list>
+
+
+                <div style="margin-top: 15px;" layout="column">
+                    <md-input-container flex>
+                        <label>Share title</label>
+                        <input name="title" ng-model="shareEntity.title">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Share description</label>
+                        <input name="description" ng-model="shareEntity.text">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Share message</label>
+                        <input name="message" ng-model="shareEntity.shareMsg">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-switch style="margin-left: 0;" ng-model="isScheduling" aria-label="Schedule share">
+                        Schedule share
+                    </md-switch>
+                    <div style="margin-top: 10px;" ng-show="isScheduling">
+                        <div layout="row" class="md-padding">
+                            <mdp-date-picker ng-model="shareDate"></mdp-date-picker>
+                            <mdp-time-picker ng-model="shareDate"></mdp-time-picker>
+                        </div>
+                    </div>
+                </div>
+
+
+        </md-dialog-content>
+    </form>
+
+    <md-dialog-actions layout="row" style="padding: 0;">
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;width: 100%;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-disabled="noSocialChannels"  ng-click="shareLockr()" style="margin-right:20px;padding: 0 20px;">
+                SHARE
+            </md-button>
+        </div>
+    </md-dialog-actions>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

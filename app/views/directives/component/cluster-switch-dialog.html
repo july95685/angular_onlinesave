@@ -1,0 +1,36 @@
+<md-dialog aria-label="clusters switch" class="switch-account-dialog" ng-class="{'mobile-dialog':mobileDevice}">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Select account</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="padding:16px;margin-bottom: 0;">
+        <md-grid-list
+                md-cols="2"
+                md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
+                md-row-height="4:5" md-row-height-sm="4:5"
+                md-gutter="8px">
+            <md-grid-tile class="card-shadow" ng-repeat="item in clustersLockr" ng-click="selectLockr(item)" style="overflow: hidden;cursor: pointer;outline: none;">
+                <div style="position: absolute;top:0;left: 0;right: 0;bottom: 0;" layout="row" layout-align="center center">
+                    <img ng-src="{{item.thumbnailUrl}}">
+                </div>
+                <md-grid-tile-footer>
+                    <h3>{{item.name}}</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+
+        <div ng-show="noAccount" style="padding:30px 0;" layout="row" layout-sm="column" layout-align="center center">
+            <span style="font-size: 30px;color: #ececec;">No accounts</span>
+        </div>
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular ng-show="isLoading" md-mode="indeterminate"></md-progress-circular>
+            <md-button ng-click="reloadData()" ng-show="!isLoading && loadError">load error !  click to reload</md-button>
+        </div>
+    </md-dialog-content>
+
+</md-dialog>

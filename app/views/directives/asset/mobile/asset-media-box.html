@@ -1,0 +1,74 @@
+<div ng-switch="mediaType" layout="row" layout-align="center center">
+    <div flex ng-switch-when="image" layout="row" layout-align="center center" style="height: 290px;overflow: hidden;background-color: black;position: relative;">
+
+        <img ng-src="{{imageSrc}}" image-loaded auto-resize data-size="currentAssetDetails.publicDimensions">
+
+        <div layout="row" ng-if="currentAssetDetails.imageLoading" style="position:absolute;top:0;left:0;right:0;bottom: 0;" layout-align="center center">
+            <md-progress-circular  md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div ng-if="type === 'publish' " class="dal-asset-status">
+            <img width="24" ng-click="changeAssetDetails()"  src="images/publishicon.png"  style="width:18px;margin-left: 3px;height: 14px;margin-top: 4px;">
+        </div>
+        <div ng-if="type === 'unpublish' " class="dal-asset-status">
+            <img width="24" ng-click="changeAssetDetails()"  src="images/unpublishicon.png" style="width:18px;margin-left: 3px;height: 14px;margin-top: 4px;" >
+        </div>
+        <i class="mdi mdi-fullscreen"  ng-click="fullscreen(imageSrc)" style="position: absolute;top: 10px;right: 10px;"></i>
+
+        <div class="dal-m-additional-info" layout="column">
+            <div style="padding:2px 10px 5px 10px;font-size: 14px;color:#30cdff;" layout="row" layout-align="space-between center">
+                <span  style="display: block;">{{currentAssetDetails.name}}</span>
+                <i class="mdi mdi-pencil" ng-click="openEditTags(currentAssetDetails)" style="font-size: 20px;color: #30cdff;"></i>
+            </div>
+            <div descasset  id="assatdescription" style="padding:2px 10px;width:100%;font-size: 12px;color:#ffffff;">
+                <span  style="display: block;">{{currentAssetDetails.description}}</span>
+            </div>
+            <div layout="column" layout-align="start start" style="width: 100%;color: #fff;padding: 2px 10px;" ng-show="showTags">
+                <span style="color: #30cdff;">Tags</span>
+                <div layout="row" ng-if="currentAssetDetails.tags[0]">
+                    <div ng-repeat="item in currentAssetDetails.tags">
+                        {{item}},
+                    </div>
+                </div>
+                <div layout="row" ng-if="!currentAssetDetails.tags[0]">
+                    <div>
+                        null
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div ng-switch-when="video" style="width: 100%;">
+        <videogular style="width: 100%;">
+            <vg-media vg-src="videoConfig.sources"
+            >
+            </vg-media>
+            <vg-controls>
+                <vg-play-pause-button></vg-play-pause-button>
+                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                </vg-scrub-bar>
+                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+                <vg-fullscreen-button></vg-fullscreen-button>
+            </vg-controls>
+            <vg-overlay-play></vg-overlay-play>
+            <vg-poster vg-url='videoConfig.plugins.poster'></vg-poster>
+        </videogular>
+    </div>
+    <div ng-switch-when="audio" class="md-padding">
+        <audio ng-src="{{mobileAudioSrc}}" controls></audio>
+    </div>
+    <div ng-switch-when="article" style="text-align: center;min-height: 300px;">
+        <div ng-bind-html="assetArticleContent"></div>
+    </div>
+    <div ng-switch-default style="width: 100%;">
+        <pdf-view current-asset-id="{{currentAssetId}}"></pdf-view>
+    </div>
+    <!-- mediaType === 'pdf' || mediaType === 'ppt' || mediaType === 'doc' || mediaType === 'xls' -->
+</div>

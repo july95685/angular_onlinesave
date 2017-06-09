@@ -1,0 +1,53 @@
+<md-dialog class="add-article-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Add new asset</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="upload_article_form" role="form" novalidate>
+        <md-dialog-content>
+            <div style="margin: 10px;" layout="column" class="card-radius-2x" >
+                <!--<wysiwyg style="padding: 10px;" textarea-id="question"   textarea-height="270px" textarea-name="textareaQuestion" textarea-required ng-model="newArticle.articleText" enable-bootstrap-title="true" textarea-menu="menu"></wysiwyg>-->
+                <div text-angular name="articleEditor" ng-model="newArticle.articleText" style="outline: none;"></div>
+
+                <md-input-container flex>
+                    <label>Name</label>
+                    <input name="shareMsg" required ng-model="newArticle.articleName">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Description</label>
+                    <input name="description" required ng-model="newArticle.articleDescription">
+                </md-input-container>
+                <div>
+                    <div class="md-raised file-upload-btn" style="text-transform: none; margin-left: 0;padding:0 15px;" ngf-select required ng-model="headlineImage" accept="image/*" name="content">Browse file</div>
+                    <span class="file-input-name">{{fileName}}</span>
+                    <span ng-if="noSelectFile">Add headline image.</span>
+                </div>
+            </div>
+        </md-dialog-content>
+    </form>
+
+    <md-dialog-actions layout="row" style="padding: 0;">
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;width: 100%;">
+            <div class="v2-color form-close" ng-click="cancel()">
+                CANCEL
+            </div>
+            <md-button ng-disabled="upload_article_form.$invalid" class="md-raised md-primary" ng-click="uploadArticle()" style="margin-right:20px;padding: 0 20px;">
+                {{buttonText}}
+            </md-button>
+        </div>
+    </md-dialog-actions>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center" style="top: 50%;position: absolute;
+        left: 50%;
+        transform: translate(-50%,-50%);">
+            <md-progress-circular md-mode="determinate" class="md-v2" value="{{determinateValue}}"></md-progress-circular>
+        </div>
+    </div>
+
+</md-dialog>

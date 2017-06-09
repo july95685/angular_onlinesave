@@ -1,0 +1,172 @@
+<div>
+    <div ng-if="mobileDevice">
+        <div ng-show="openFilterBackground" ng-click="closeFilterBackground()" style="background-color:rgba(0,0,0,0.5);width: 100%;height: 100%;z-index: 6;position: absolute;">
+
+        </div>
+        <dal-fab-button show-drop-menu="showDropMenu()" is-manager="isManager" select-operate="selectOperate(ev)" is-menu-open="ismenuopen"></dal-fab-button>
+    </div>
+
+    <div ng-if="!mobileDevice" style="position: fixed;right:40px;z-index:48;top: 80px;">
+
+        <div style="display: inline-block;" class="fixed-menu">
+            <div>
+                <md-button aria-label="menu" class="md-fab v2-bg-color" ng-click="showDropMenu()">
+                    <i style="color:white;transition:transform .2s;" ng-class="{'openmenu': ismenuopen}" class="mdi vertical-align-middle mdi-plus"> </i>
+                </md-button>
+
+                <div class="dropdown-fixed-menu" style="position: relative;left:7px;" ng-show="!isBatchHandle">
+
+                    <div ng-if="mobileDevice">
+                        <md-button aria-label="ADD ASSET" style="overflow: visible;text-transform: none;" class="menu-item md-fab md-raised md-mini block" ng-click="openAddAssetDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-image"></i>
+                            <span style="position: absolute;right: 50px;color: white;">Add new Assets</span>
+                        </md-button>
+                        <md-button aria-label="create channel" style="overflow: visible;text-transform: none;" class="menu-item md-fab md-raised md-mini block" ng-click="openCreateChannalsDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-star"></i>
+                            <span style="position: absolute;right: 50px;color: white;">Add new channel</span>
+                        </md-button>
+                        <md-button aria-label="ADD ARTICLE" style="overflow: visible;text-transform: none;" class="menu-item md-fab md-raised md-mini block" ng-click="openAddArticleDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-file"></i>
+                            <span style="position: absolute;right: 50px;color: white;">Add new article</span>
+                        </md-button>
+
+                        <md-button aria-label="ADD LOCKR" style="overflow: visible;text-transform: none;" class="menu-item md-fab md-raised md-mini block" ng-click="notifyOpenAddSafeLockrDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-lock"></i>
+                            <span style="position: absolute;right: 50px;color: white;">Add safe Lockr</span>
+                        </md-button>
+                        <md-button aria-label="ADD LOCKR" style="overflow: visible;text-transform: none;" class="menu-item md-fab md-raised md-mini block" ng-click="openCreateSubLockrDialog($event,issublockr)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-plus"></i>
+                            <span style="position: absolute;right: 50px;color: white;">Add new Lockr</span>
+                        </md-button>
+                    </div>
+
+                    <div ng-if="!mobileDevice">
+                        <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="openAddAssetDialog()">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-plus-circle-outline"></i>
+                            <md-tooltip>
+                                upload asset
+                            </md-tooltip>
+                        </md-button>
+
+                        <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="openAddArticleDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-file"></i>
+                            <md-tooltip>
+                                add article
+                            </md-tooltip>
+                        </md-button>
+
+                        <md-button aria-label="create subLockr" class="menu-item md-fab md-raised md-mini block" ng-click="openCreateSubLockrDialog($event,issublockr)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-plus"></i>
+                            <md-tooltip>
+                                create subLockr
+                            </md-tooltip>
+                        </md-button>
+                        <md-button aria-label="create subLockr" class="menu-item md-fab md-raised md-mini block" ng-click="openCreateChannalsDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-star"></i>
+                            <md-tooltip>
+                                create channel
+                            </md-tooltip>
+                        </md-button>
+                        <md-button aria-label="Add safe lockr" class="menu-item md-fab md-raised md-mini block" ng-click="notifyOpenAddSafeLockrDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-lock"></i>
+                            <md-tooltip>
+                                add safe lockr
+                            </md-tooltip>
+                        </md-button>
+                        <md-button ng-hide="isLockr === 'true'" aria-label="Add cloud service lockr" class="menu-item md-fab md-raised md-mini block" ng-click="notifyOpenAddCloudServiceLockrDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-cloud-download"></i>
+                            <md-tooltip>
+                                add cloud service lockr
+                            </md-tooltip>
+                        </md-button>
+                        <md-button ng-if="pathLevel !== '0'" aria-label="share lockr" ng-hide="currentLockrDetails.lockrType.toLowerCase() === 'safelockr'" class="menu-item md-fab md-raised md-mini block">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-share-variant" ng-click="openShareLockrDialog($event)"></i>
+                            <md-tooltip>
+                                share lockr
+                            </md-tooltip>
+                        </md-button>
+
+                        <md-button ng-if="pathLevel !== '0' && noContentManager" aria-label="assign lockr" class="menu-item md-fab md-raised md-mini block">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-folder-lock-open" ng-click="openAssignLockrDialog($event)"></i>
+                            <md-tooltip>
+                                grant permissions to user
+                            </md-tooltip>
+                        </md-button>
+
+                        <md-button ng-show="currentLockrDetails.hiddenFromPublicView"  aria-label="Twitter" class="menu-item md-fab md-raised md-mini block">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-account-plus" ng-click="openCurrentLockrInviteUser($event)"></i>
+                            <md-tooltip>
+                                invite user
+                            </md-tooltip>
+                        </md-button>
+
+                        <md-button ng-show="canShareLockr" aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="openShareWithUserDialog($event)">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-share"></i>
+                            <md-tooltip>
+                                share with another user
+                            </md-tooltip>
+                        </md-button>
+
+
+                        <md-button aria-label="preview" class="menu-item md-fab md-raised md-mini block" ng-click="previewLockr()">
+                            <i class="mdi icon-size-2 vertical-align-middle mdi-eye"></i>
+                            <md-tooltip>
+                                Preview
+                            </md-tooltip>
+                        </md-button>
+
+                    </div>
+
+                </div>
+
+                <div class="dropdown-fixed-menu" style="position: relative;left:7px;" ng-show="isBatchHandle">
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'copy')">
+                        <i  class="mdi icon-size-2 vertical-align-middle mdi-file-outline"></i>
+                        <md-tooltip>
+                            copy assets
+                        </md-tooltip>
+                    </md-button>
+
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'move')">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-swap-horizontal"></i>
+                        <md-tooltip>
+                            move assets
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'delete')">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-delete"></i>
+                        <md-tooltip>
+                            delete assets
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'addToArticle')">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-open-in-app"></i>
+                        <md-tooltip>
+                            add to article
+                        </md-tooltip>
+                    </md-button>
+
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'mark')">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-checkbox-multiple-marked-outline"></i>
+                        <md-tooltip>
+                            check all
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini block" ng-click="batchHandle($event,'unMark')">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-checkbox-multiple-blank-outline"></i>
+                        <md-tooltip>
+                            uncheck all
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Google" class="menu-item md-fab md-raised md-mini fixed-menu-active block">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-view-module"></i>
+                    </md-button>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

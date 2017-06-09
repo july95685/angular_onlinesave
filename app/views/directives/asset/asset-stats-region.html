@@ -1,0 +1,53 @@
+<div class="asset-stats-region">
+    <div style="display: block;padding: 10px 30px;">
+        <div style="display: inline-block;position: relative;">
+            <md-datepicker ng-model="currentDateRange.startDate" placeholder="Enter date"
+                           md-max-date="currentDateRange.endDate" ng-change="updateData()">
+            </md-datepicker>
+            <i class="mdi mdi-calendar icon-size-2" style="position: absolute;z-index:1;top:5px;right:3px;"></i>
+        </div>
+
+        <span style="padding: 0 5px;">to</span>
+
+        <div style="display: inline-block;position: relative;">
+            <md-datepicker ng-model="currentDateRange.endDate" placeholder="Enter date"
+                           md-min-date="currentDateRange.startDate" md-max-date="todayDate" ng-change="updateData()">
+            </md-datepicker>
+            <i class="mdi mdi-calendar icon-size-2" style="position: absolute;z-index:1;top:5px;right:3px;"></i>
+        </div>
+
+        <md-button ng-disabled="!isChangeDate" ng-click="updateAllData()" style="padding-right:5px;padding-left: 5px;margin:0;"><i class="mdi mdi-check icon-size-2 vertical-align-middle"></i>
+            <md-tooltip>Update</md-tooltip>
+        </md-button>
+    </div>
+    <div style="padding: 30px;margin-top: 30px;position: relative;">
+        <div class="daily-stats">
+            <ul class="list-unstyled" style="text-align: center;position: absolute;top:0;left:30px;">
+                <li ng-repeat="icon in iconList" class="pull-left" style="padding-bottom: 8px;">
+                    <i class="mdi {{icon}} icon-size-2"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="switchViewType clearfix">
+            <div style="padding:10px 30px 5px 30px;display: inline-block;float: left;cursor: pointer;" ng-class="{'active-status':viewType === 'views'}" ng-click="changeViewMode('views')">
+                <span>Visits</span>
+            </div>
+            <div style="padding:10px 30px 5px 30px;display: inline-block;float: right;cursor: pointer;" ng-class="{'active-status':viewType === 'comments'}" ng-click="changeViewMode('comments')">
+                <span>Comments</span>
+            </div>
+        </div>
+        <div style="width: 100%;height: 300px;">
+            <div id="assetCanvasWrapper" style="width:100%;height: 100%;">
+                <canvas id="myChartView"></canvas>
+            </div>
+        </div>
+        <div class="pull-right" ng-show="viewType === 'views'">
+            <span class="v2-color vertical-align-middle icon-size-1" style="padding:20px;padding-right: 10px;border-right: 1px solid #006fd5;">Total visits</span>
+            <span class="vertical-align-middle" style="font-size: 60px;color: #505559;padding-left: 10px;">{{totalNum || 0}}</span>
+        </div>
+        <div class="pull-right" ng-show="viewType === 'comments'">
+            <span class="v2-color vertical-align-middle icon-size-1" style="padding:20px;padding-right: 10px;border-right: 1px solid #006fd5;">Total comments</span>
+            <span class="vertical-align-middle" style="font-size: 60px;color: #505559;padding-left: 10px;">{{totalNum || 0}}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div ng-class="{'mobile-account-region':mobileDevice,'pc-account-region':!mobileDevice}">
+
+    <asset-details-fixed-menu current-asset-id="currentAssetId" current-asset-details="currentAssetDetails"></asset-details-fixed-menu>
+    <fixed-menu-mask region-size="regionSize" is-show="maskIsShow"></fixed-menu-mask>
+
+    <!--<lockr-details-navbar path-data="pathData" navbar-fixed="{{false}}"></lockr-details-navbar>-->
+    <lockr-details-navbar ng-if="!mobileDevice" path-data="pathData"></lockr-details-navbar>
+
+
+
+    <div class="container" ng-if="currentAssetDetails">
+        <asset-details-top current-asset-details="currentAssetDetails" media-type="{{mediaType}}" current-asset-id="{{currentAssetId}}"></asset-details-top>
+        <asset-details-bottom current-asset-details="currentAssetDetails" current-asset-id="currentAssetId"></asset-details-bottom>
+    </div>
+
+    <div ng-if="currentAssetDetails == null" class="text-center" style="margin: 100px 0;">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+<div class="modal fade" id="following">
+    <div class="modal-dialog" style="width: 100%">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Following</h4>
+            </div>
+            <div class="modal-body">
+                <div id="main-content">
+                    <div class="lockr-assets thumb-view mCustomScrollbar">
+                        <ul class="thumbnails">
+                            <li class="asset ng-scope" ng-repeat="value in followings">
+                                <div ng-show="(value.lockr!==undefined)">
+                                    <div class="thumbnail thumbnail-block">
+                                        <div style="position: absolute; top: 0; right: 0; z-index: 100">
+                                            <!--<i class="fa fa-times-circle delete-follow"></i>-->
+                                            <i class="fa fa-times-circle selector" data-toggle="tooltip"
+                                               data-title="click here to delete following"
+                                               rel="tooltip" ng-click="deleteFollowing(value)"></i>
+                                        </div>
+                                        <div class="image">
+                                            <img ng-src="{{value.lockr.thumbnail}}">
+                                        </div>
+
+                                        <div class="caption" style="position: relative;">
+                                            <span class="thumb-name" title="{{value.lockr.name}}">{{value.lockr.name}}</span>
+                                            <p>lockr</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div ng-show="(value.user!==undefined)">
+                                    <div class="thumbnail thumbnail-block">
+                                        <div style="position: absolute; top: 0; right: 0; z-index: 100">
+                                            <!--<i class="fa fa-times-circle delete-follow"></i>-->
+                                            <i class="fa fa-times-circle selector" data-toggle="tooltip"
+                                               data-title="click here to delete following"
+                                               rel="tooltip" ng-click="deleteFollowing(value)"></i>
+                                        </div>
+                                        <div class="image">
+                                            <img ng-src="{{value.user.thumbnail}}">
+                                        </div>
+
+                                        <div class="caption" style="position: relative;">
+                                            <span class="thumb-name" title="{{value.user.name}}">{{value.user.firstName}} {{value.user.lastName}}</span>
+                                            <p>user</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+
+        </div>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

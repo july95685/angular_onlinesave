@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dl_login">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0">
+    <title>Login with daLockr</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.1/angular-material.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <style type="text/css">
+        body{
+            /*background: url("../static/auth/images/bg.jpg") no-repeat fixed;*/
+            /*background-size: cover;*/
+            /*background-color: #0064bf;*/
+        }
+        .dl-body-pc{
+            background: url("images/bg1.jpg") no-repeat fixed;
+            background-size: cover;
+        }
+        .dl-body-mobile{
+            background-color: #0064bf;
+        }
+        .dl-all{
+            /*background-color: #0064bf;*/
+            /*color: #FFFFFF;*/
+        }
+        .dl-login-mobile{
+            background-color: #FFFFFF;
+        }
+        .dl-md-content{
+            color: #FFFFFF;
+            background-color: transparent;
+        }
+        .dl-login-pc{
+            background-color: #0064bf !important;
+            color: #ffffff !important ;
+            width: 100%;
+            margin: 0;
+            margin-top: 20px;
+        }
+        .scroll-box{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: scroll;
+        }
+        .auth-wrapper{
+            width: 360px;
+            background-color: white;
+            margin-top: 60px;
+            margin-bottom: 80px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .active-btn{
+            background-color: #1EB6E1 !important;
+            color: white !important;
+            width: 100%;
+            margin: 0;
+            margin-top: 20px;
+        }
+        .dl-logo{
+            /*background-color: #0064bf;*/
+            height: 130px;
+            padding:20px 0 15px 0;
+            text-align: center;
+        }
+        .dl-logo > img{
+            width: 290px;
+        }
+        .dl-register-logo{
+            background-color: #0064bf;
+            height: 130px;
+            padding:20px 0 15px 0;
+            text-align: center;
+        }
+        .dl-register-logo-pc{
+            background-color:transparent;
+            height: 130px;
+            padding:20px 0 15px 0;
+            text-align: center;
+        }
+        .dl-register-logo > img{
+            width: 240px;
+        }
+        .dl-register-logo-pc > img{
+            width: 240px;
+        }
+        .dl-form{
+            padding:0 5px;
+        }
+        md-toast.md-default-theme{
+            color: rgb(255,255,255);
+            font-weight: 500;
+            font-size: 14px;
+            background-color: rgb(255,87,34);
+        }
+        .disable-user-interface{
+            pointer-events: none;
+        }
+        .other-way-icon i.fa{
+            padding:5px;
+            cursor: pointer;
+        }
+        button > span{
+            text-transform: none;
+        }
+        .mb-ton{
+            color: #30cdff;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .dl-input-pc{
+            border-color: #FFFFFF !important;
+        }
+        .dl-input-mobile{
+            border-color: rgba(200,200,200,0.5) !important;
+        }
+        .dl-bton{
+            background-color: #FFFFFF  !important;  color:#0064bf  !important;
+            width: 100%;
+            margin: 0;
+            margin-top: 20px;
+        }
+        .dl-label{
+            color: #FFFFFF;
+        }
+        md-input-container:not(.md-input-invalid) label {
+            color: #FFFFFF !important;
+        }
+        md-input-container.md-default-theme > input{
+            color:#FFFFFF !important;
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="MainCtrl" ng-show="Pc" class="dl-body-pc scroll-box">
+    <div layout="row" layout-align="center center" class="scroll-box">
+        <div ng-show="loginPage" ng-controller="LoginCtrl" class="dl-all">
+            <div layout="column">
+                <div flex="1">
+                    <div style="width:100%; height: 40px"></div>
+                </div>
+                <div flex="1" style="margin-bottom: 50px;">
+                    <div class="dl-logo">
+                        <img src="images/login-header.png">
+                        <!--<span style="vertical-align: bottom;position: relative;bottom: 14px;color:white;">V{{currentVersion}}</span>-->
+                    </div>
+                </div>
+                <div flex="1" class="dl-form">
+                    <md-content  class="dl-md-content md-padding" >
+                        <form name="dlLoginForm" ng-submit="startLogin()" ng-class="{'disable-user-interface':isLogining}">
+                            <md-input-container class="md-block">
+                                <label class="dl-label">Username</label>
+                                <input ng-class="{'dl-input-pc':Pc}" type="text" name="username" ng-model="loginInfo.username"  required>
+                                <div ng-messages="dlLoginForm.username.$error" ng-if="!dlLoginForm.username.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container  class="md-block" >
+                                <label class="dl-label">Password</label>
+                                <input   ng-class="{'dl-input-pc':Pc}" class="dl-input" type="password" name="password" ng-model="loginInfo.password" required>
+                                <div ng-messages="dlLoginForm.password.$error" ng-if="!dlLoginForm.password.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <div layout="row" layout-align="center center">
+                                <md-button class="mb-ton" ng-click="toRegisterOrLogin()">Register Now</md-button>
+                                <span flex></span>
+                                <md-button class="mb-ton" ng-click="toForgotpassword()">Forgot password</md-button>
+                            </div>
+                            <md-button ng-class="{'dl-login-pc':Pc} " class="md-raised">{{isLogining ? 'Login...' : 'Login'}}</md-button>
+                        </form>
+                    </md-content>
+                </div>
+                <div flex="1">
+                    <div style="width:100%; height: 80px"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div ng-show="!loginPage" ng-controller="RegisterCtrl ">
+            <div layout="column">
+                <div flex="1">
+                    <div class="dl-register-logo-pc">
+                        <img src="images/login-header.png">
+                    </div>
+                </div>
+                <div flex="1">
+                    <md-content class="dl-md-content md-padding" ng-class="{'dl-body-mobile':!Pc}">
+                        <form name="dlRegisterForm" ng-submit="startRegister()" ng-class="{'disable-user-interface':isRegistering}">
+                            <md-input-container class="md-block">
+                                <label class="dl-label">firstName</label>
+                                <input class="dl-input-pc" type="text" name="firstName" ng-model="registerInfo.firstName" required>
+                                <div ng-messages="dlRegisterForm.firstName.$error" ng-if="!dlRegisterForm.firstName.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label class="dl-label">lastName</label>
+                                <input class="dl-input-pc"type="text" name="lastName" ng-model="registerInfo.lastName" required>
+                                <div ng-messages="dlRegisterForm.lastName.$error" ng-if="!dlRegisterForm.lastName.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label class="dl-label">Username</label>
+                                <input class="dl-input-pc"type="text" name="username" ng-model="registerInfo.username" required>
+                                <div ng-messages="dlRegisterForm.username.$error" ng-if="!dlRegisterForm.username.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label class="dl-label">Email</label>
+                                <input class="dl-input-pc"type="email" name="email" ng-model="registerInfo.email" required>
+                                <div ng-messages="dlRegisterForm.email.$error" ng-if="!dlRegisterForm.email.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                    <div ng-message="email">Your email address is invalid.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label class="dl-label">Password</label>
+                                <input class="dl-input-pc"type="password" name="password" ng-model="registerInfo.password" required>
+                                <div ng-messages="dlRegisterForm.password.$error" ng-if="!dlRegisterForm.password.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label class="dl-label">Confirm Password</label>
+                                <input class="dl-input-pc"type="password" name="rePassword" confirm-passwd real-password="registerInfo.password" ng-model="rePassword" required>
+                                <div ng-messages="dlRegisterForm.rePassword.$error" ng-if="!dlRegisterForm.rePassword.$untouched">
+                                    <div ng-message="required">This is required.</div>
+                                    <div ng-message="passwordSame">Not same with your password.</div>
+                                </div>
+                            </md-input-container>
+                            <md-button class="md-raised active-btn" style="background-color:#0064bf  !important">{{isRegistering ? 'REGISTER...' : 'REGISTER'}}</md-button>
+                        </form>
+                        <div layout="row" layout-align="center center" style="margin-top: 10px;" >
+                            <md-button ng-click="toRegisterOrLogin()">Login</md-button>
+                        </div>
+                    </md-content>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-controller="MainCtrl" ng-show="Mobile" class="dl-body-mobile scroll-box">
+    <div layout="row" layout-align="center center" class="scroll-box">
+            <div ng-show="loginPage" ng-controller="LoginCtrl" class="dl-all">
+                <div layout="column">
+                    <div flex="1">
+                        <div style="width:100%; height: 40px"></div>
+                    </div>
+                    <div flex="1" style="margin-bottom: 50px;">
+                        <div class="dl-logo">
+                            <img src="images/login-header.png">
+                            <!--<span style="vertical-align: bottom;position: relative;bottom: 14px;color:white;">V{{currentVersion}}</span>-->
+                        </div>
+                    </div>
+                    <div flex="1" class="dl-form">
+                        <md-content  class="dl-md-content dl-all md-padding" >
+                            <form name="dlLoginForm" ng-submit="startLogin()" ng-class="{'disable-user-interface':isLogining}">
+                                <md-input-container class="md-block ">
+                                    <label class="dl-label">Username</label>
+                                    <input ng-class="{'dl-input-mobile':Mobile}" type="text" name="username" ng-model="loginInfo.username" required>
+                                    <div ng-messages="dlLoginForm.username.$error" ng-if="!dlLoginForm.username.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container  class="md-block" >
+                                    <label class="dl-label">Password</label>
+                                    <input   ng-class="{'dl-input-mobile':Mobile}" class="dl-input" type="password" name="password" ng-model="loginInfo.password" required>
+                                    <div ng-messages="dlLoginForm.password.$error" ng-if="!dlLoginForm.password.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-button style="display: none;"></md-button>
+                                <div layout="row" layout-align="center center">
+                                    <md-button class="mb-ton" ng-click="toRegisterOrLogin()">Register Now</md-button>
+                                    <span flex></span>
+                                    <md-button class="mb-ton" ng-click="toForgotpassword()">Forgot password</md-button>
+                                </div>
+                                <md-button class="dl-bton md-raised">{{isLogining ? 'Login...' : 'Login'}}</md-button>
+                            </form>
+                        </md-content>
+                    </div>
+                    <div flex="1">
+                        <div style="width:100%; height: 80px"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-show="!loginPage" ng-controller="RegisterCtrl ">
+                <div layout="column">
+                    <div flex="1" style="margin-top: 200px;">
+                        <div class="dl-register-logo">
+                            <img src="images/login-header.png">
+                        </div>
+                    </div>
+                    <div flex="1">
+                        <md-content class="md-padding" ng-class="{'dl-body-mobile':!Pc}">
+                            <form name="dlRegisterForm" ng-submit="startRegister()" ng-class="{'disable-user-interface':isRegistering}">
+                                <md-input-container class="md-block">
+                                    <label>firstName</label>
+                                    <input type="text" name="firstName" ng-model="registerInfo.firstName" required>
+                                    <div ng-messages="dlRegisterForm.firstName.$error" ng-if="!dlRegisterForm.firstName.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>lastName</label>
+                                    <input type="text" name="lastName" ng-model="registerInfo.lastName" required>
+                                    <div ng-messages="dlRegisterForm.lastName.$error" ng-if="!dlRegisterForm.lastName.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Username</label>
+                                    <input type="text" name="username" ng-model="registerInfo.username" required>
+                                    <div ng-messages="dlRegisterForm.username.$error" ng-if="!dlRegisterForm.username.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Email</label>
+                                    <input type="email" name="email" ng-model="registerInfo.email" required>
+                                    <div ng-messages="dlRegisterForm.email.$error" ng-if="!dlRegisterForm.email.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="email">Your email address is invalid.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Password</label>
+                                    <input type="password" name="password" ng-model="registerInfo.password" required>
+                                    <div ng-messages="dlRegisterForm.password.$error" ng-if="!dlRegisterForm.password.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="rePassword" confirm-passwd real-password="registerInfo.password" ng-model="rePassword" required>
+                                    <div ng-messages="dlRegisterForm.rePassword.$error" ng-if="!dlRegisterForm.rePassword.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="passwordSame">Not same with your password.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-button class="md-raised active-btn" style="background-color:#fff !important; color: #0064bf !important;">{{isRegistering ? 'REGISTER...' : 'REGISTER'}}</md-button>
+                            </form>
+                            <div layout="row" layout-align="center center" style="color:#fff; margin-top: 10px;" >
+                                <md-button ng-click="toRegisterOrLogin()">Login</md-button>
+                            </div>
+                        </md-content>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.1/angular-material.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+<script>
+    /**
+     * Created by Administrator ddz on 2016/12/22.
+     */
+    'use strict';
+    angular.module('dl_login',[
+        'ngMessages',
+        'ngMaterial',
+    ])
+            .controller('MainCtrl',['$dalMedia','$scope','$rootScope',function ($dalMedia,$scope,$rootScope) {
+                $scope.Mobile=$dalMedia('xs');
+                $scope.Pc=!$scope.Mobile;
+                $scope.loginPage = true;
+                $scope.toRegisterOrLogin = function () {
+                    $scope.loginPage = !$scope.loginPage;
+                }
+                $scope.toForgotpassword=function () {
+
+                }
+            }])
+            .controller('LoginCtrl',['$scope','userServices','toaster','authConfig',function ($scope,userServices,toaster,authConfig) {
+                $scope.isLogining = false;
+                $scope.loginInfo = {
+                    username:'',
+                    password:''
+                };
+                $scope.startLogin = function () {
+
+                    if($scope.dlLoginForm.$invalid) return;
+                    $scope.isLogining = true;
+                    userServices.loginWithUserInfo($scope.loginInfo)
+                            .then(function () {
+                                window.location.replace( authConfig.API_ADDRESS + "/api/oauth/authorize?"+userServices.urlParams());
+                            }).
+                            catch(function (error) {
+                                toaster.error(error.data.message);
+                                $scope.isLogining = false;
+
+                            });
+
+                }
+                $scope.loginWithSocial = function(name){
+
+                    var url = null;
+                    var ru =  encodeURIComponent( authConfig.REDIRECT_URL_ADDRESS + '#/login');
+
+                    if(name === 'facebook'){
+                        url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/Facebook?redirectUri=' + ru;
+                    } else if(name === 'google'){
+                        url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/Google?redirectUri=' + ru;
+                    } else if(name === 'linkedin'){
+                        url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/LinkedIn?redirectUri=' + ru;
+                    }
+                    window.location.href = url;
+
+                };
+
+            }])
+            .controller('RegisterCtrl',['$scope','$dalMedia','userServices','toaster','authConfig',function ($scope,$dalMedia,userServices,toaster,authConfig){
+                var clusterId;
+
+                $scope.Mobile=$dalMedia('xs');
+                $scope.Pc=!$scope.Mobile;
+
+                console.log($scope.Pc);
+                $scope.isRegistering = false;
+                $scope.registerInfo = {
+                    firstName:'',
+                    lastName:'',
+                    username:'',
+                    email:'',
+                    password:''
+                };
+                $scope.rePassword = '';
+
+                $scope.startRegister = function () {
+
+                    if($scope.dlRegisterForm.$invalid) return;
+                    $scope.isRegistering = true;
+                    if(clusterId = userServices.getParameterByName('clusterId')){
+                        $scope.registerInfo.clusterId = clusterId;
+                    }
+                    userServices.registerWithUserInfo($scope.registerInfo).then(function () {
+                        window.location.replace( authConfig.API_ADDRESS + "/api/oauth/authorize?"+userServices.urlParams());
+                    }).catch(function (error) {
+                        toaster.error(error.data.message);
+                        $scope.isRegistering = false;
+                    });
+
+                }
+            }])
+            .service('userServices',['$http', '$location','authConfig',function ($http, $location,authConfig) {
+                var apiAddress = authConfig.API_ADDRESS + '/api/user/';
+
+                function loginWithUserInfo(userInfo){
+                    var loginUrl = apiAddress + 'login';
+                    return $http.post(loginUrl, userInfo);
+                }
+
+                function registerWithUserInfo(userInfo){
+                    var registerUrl = apiAddress + 'register';
+                    return $http.post(registerUrl, userInfo);
+                }
+
+                function getParameterByName(name) {
+                    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                            results = regex.exec(window.location.search);
+                    return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+                }
+
+                return {
+                    loginWithUserInfo:loginWithUserInfo,
+                    registerWithUserInfo:registerWithUserInfo,
+                    getParameterByName:getParameterByName,
+                    urlParams: function () {
+                        return window.location.href.split('?')[1];
+                    }
+                }
+            }])
+            .service('toaster',['$mdToast',function ($mdToast) {
+                var last = {
+                    bottom: false,
+                    top: true,
+                    left: false,
+                    right: true
+                };
+                var toastPosition = angular.extend({},last);
+
+                function getToastPosition() {
+                    sanitizePosition();
+                    return Object.keys(toastPosition)
+                            .filter(function(pos) { return toastPosition[pos]; })
+                            .join(' ');
+                }
+                function sanitizePosition() {
+                    var current = toastPosition;
+                    if ( current.bottom && last.top ) current.top = false;
+                    if ( current.top && last.bottom ) current.bottom = false;
+                    if ( current.right && last.left ) current.left = false;
+                    if ( current.left && last.right ) current.right = false;
+                    last = angular.extend({},current);
+                }
+
+                function toastError(text){
+                    $mdToast.show(
+                            $mdToast.simple()
+                                    .content(text)
+                                    .position(getToastPosition())
+                                    .hideDelay(3000)
+                    );
+                }
+
+                return {
+                    error:toastError
+                }
+            }])
+            .directive('confirmPasswd',[function () {
+                return {
+                    restrict: 'A',
+                    require: '^ngModel',
+                    scope:{
+                        realPassword:'=realPassword'
+                    },
+                    link: function(scope, element, attrs, ngModelCtrl) {
+                        ngModelCtrl.$parsers.push(function (value) {
+                            if(value === scope.realPassword){
+                                ngModelCtrl.$setValidity('passwordSame', true);
+                            } else {
+                                ngModelCtrl.$setValidity('passwordSame', false);
+                            }
+                            return value;
+                        })
+
+
+                    }
+                };
+            }])
+            .constant('authConfig',{
+                API_ADDRESS:'https://account.dalockr.com'
+            })
+            .run(['$rootScope','$dalMedia',function ($rootScope,$dalMedia) {
+                $rootScope.Mobile= $dalMedia('xs') ? true : false;
+            }])
+            .factory('$dalMedia',['$mdMedia',function ($mdMedia) {
+                return function (size) {
+                    if(size == 'xs'){
+                        return $mdMedia('max-width: 767px');
+                    }
+                    else {
+                        return $mdMedia(size);
+                    }
+                }
+            }]);
+
+
+
+</script>
+</body>
+</html>

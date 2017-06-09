@@ -1,0 +1,16 @@
+<div id="asset-details-view">
+    <div class="container">
+        <div style="background-color: #F9F9F9;margin: 60px 0;border-radius: 3px;">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+                    <h2 class="v2-color">{{currentAssetDetails.name}}</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="close()">
+                        <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;line-height: 48px;"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <asset-details-region></asset-details-region>
+        </div>
+    </div>
+</div>

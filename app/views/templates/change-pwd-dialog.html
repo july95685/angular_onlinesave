@@ -1,0 +1,48 @@
+<md-dialog aria-label="Change password" class="chnage-pwd-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Change password</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="changePwdForm" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+
+            <div layout="column">
+                <md-input-container>
+                    <label>Old password</label>
+                    <input name="oldPwd" type="password" ng-model="pwdData.oldPassword" required>
+                    <div ng-messages="changePwdForm.oldPwd.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>New password</label>
+                    <input name="newPwd" type="password" ng-model="pwdData.newPassword"  required>
+                    <div ng-messages="changePwdForm.newPwd.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer()">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="changePwd()" style="margin-right:20px;padding: 0 20px;">
+                UPDATE
+            </md-button>
+        </div>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isChaning">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

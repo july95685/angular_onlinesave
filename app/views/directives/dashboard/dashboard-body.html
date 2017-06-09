@@ -1,0 +1,57 @@
+<div id="dashboard-body" ng-class="{'mobile-account-region':mobileDevice,'pc-account-region':!mobileDevice}">
+    <div layout="row">
+        <div hide-xs hide-sm style="width: 275px;background-color: white;padding-top: 20px;position: relative;">
+            <accounts-list all-accounts="allAccounts" select-account="selectAccount(index)"></accounts-list>
+        </div>
+
+        <div flex>
+            <!--<div layout="row" layout-align="center center" ng-if="isLoading" class="loading-view">-->
+                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+            <!--</div>-->
+
+            <div class="md-padding" style="padding-bottom: 0;">
+                <div class="v2-color icon-size-3" layout="row" layout-no-wrap style="position:relative;">
+                    <span style="width:180px;">Dashboard for</span>
+                    <strong flex style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{currentAccount.name}}</strong>
+                </div>
+
+                <div layout="row"  style="padding: 0;padding-top: 15px;" layout-align="start center">
+                    <div ng-class="{'am-disabled':!isChangeDate}" style="display: inline-block;position: relative;">
+                        <md-datepicker style="padding: 0;margin: 0;" ng-model="currentDateRange.startDate" placeholder="Enter date"
+                                       md-max-date="currentDateRange.endDate">
+                        </md-datepicker>
+                        <i ng-disabled="!isChangeDate" class="mdi mdi-calendar icon-size-2 date-picker-icon"></i>
+                    </div>
+                    <span style="padding: 0 5px;">to</span>
+                    <div ng-class="{'am-disabled':!isChangeDate}" style="display: inline-block;position: relative;">
+                        <md-datepicker  style="padding: 0;margin: 0;"  ng-model="currentDateRange.endDate" placeholder="Enter date"
+                                       md-min-date="currentDateRange.startDate" md-max-date="todayDate">
+                        </md-datepicker>
+                        <i class="mdi mdi-calendar icon-size-2 date-picker-icon"></i>
+
+                    </div>
+                    <span style="height: 8px;width: 8px;"></span>
+                    <div layout="row" flex layout-align="center center" ng-click="isChangeDate ? updateAllData() : updateData()" style="margin:0;padding: 0;"><i ng-class="{'mdi-pencil':!isChangeDate,'mdi-check':isChangeDate}" class="mdi icon-size-2"></i><span ng-if="!isChangeDate">Edit</span><span ng-if="isChangeDate">OK</span></div>
+                </div>
+            </div>
+            <div>
+                <md-content class="md-padding" style="background: transparent;overflow: visible;">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Stats across account">
+                            <md-content style="background: transparent;overflow: visible;">
+                                <dashboard-stats-across></dashboard-stats-across>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Asset & lockr performance" md-on-select="switchToPerformace()">
+                            <md-content style="background: transparent;">
+                                <dashboard-performance></dashboard-performance>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+        </div>
+    </div>
+
+
+</div>

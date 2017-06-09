@@ -1,0 +1,14 @@
+<div>
+    <div ng-show="loading">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <div ng-show="notShare" style="padding-top: 60px;" layout="row" layout-sm="column" layout-align="center center">
+        <span style="font-size: 30px;color: #ececec;text-align: center;">This {{entityType === 'lockr' ? 'lockr' : 'asset'}} hasn't been shared yet.</span>
+    </div>
+
+    <div layout="column" ng-repeat="post in comments | orderBy : 'commentDate' : true" style="padding-bottom: 20px;">
+        <mobile-post-item entity-type="entityType" entity-id="entityId" post="post"></mobile-post-item>
+    </div>
+</div>

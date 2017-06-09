@@ -1,0 +1,14 @@
+<div class="card-shadow" style="width:856px;padding:20px;text-align: center;display: inline-block;background-color: white;position: relative;">
+    <div class="pdf-toolbar" style="position: absolute;bottom: 20px;right:20px;">
+        <i class="mdi mdi-magnify-plus" ng-click="scaleLarge()"></i>
+        <i class="mdi mdi-magnify-minus" ng-click="scaleSmall()"></i>
+    </div>
+    <div class="pdf-viewer"  style="height: 500px;overflow: auto;">
+    </div>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);z-index: 2;" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

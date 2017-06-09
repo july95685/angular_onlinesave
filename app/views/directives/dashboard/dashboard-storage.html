@@ -1,0 +1,28 @@
+<div style="padding: 10px;padding-top: 20px; margin-top: -10px">
+    <div class="db-storage-usage">
+        <h5 style="margin-bottom: 0;margin-top:0;padding-bottom: 10px;border-bottom: 1px solid #e3e3e3;">Storage Usage</h5>
+        <div>
+            <span style="font-size: 12px;color:#acacac;">You have used {{((storageData.totalBytes / storageData.maxBytes).toFixed(2) )*100 || 0}}% of your {{(storageData.maxBytes | ByteToMb)  || 0}}MB</span>
+            <div class="progress" style="height:12px;margin-top: 1px;margin-bottom: 10px;">
+                <div class="progress-bar photos progress-bar-success" role="progressbar" aria-valuenow="{{perMimeTypeStorage.image[1]}}" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{perMimeTypeStorage.image.spaceInTotal || 0}}%">
+                    <!--<span class="sr-only">20% Complete</span>-->
+                </div>
+                <div class="progress-bar video progress-bar-warning" role="progressbar" aria-valuenow="{{perMimeTypeStorage.video[1]}}" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{perMimeTypeStorage.video.spaceInTotal || 0}}%">
+                    <!--<span class="sr-only">20% Complete</span>-->
+                </div>
+                <div class="progress-bar audio progress-bar-danger" role="progressbar" aria-valuenow="{{perMimeTypeStorage.audio[1]}}" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{perMimeTypeStorage.audio.spaceInTotal || 0}}%">
+                    <!--<span class="sr-only">80% Complete (danger)</span>-->
+                </div>
+                <div class="progress-bar text progress-bar-info" role="progressbar" aria-valuenow="{{perMimeTypeStorage.text[1]}}" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{perMimeTypeStorage.text.spaceInTotal || 0}}%">
+                    <!--<span class="sr-only">80% Complete (danger)</span>-->
+                </div>
+            </div>
+            <ul class="list-group" style="margin-bottom: 0;">
+                <li class="list-group-item"><i class="fa fa-square" style="color:transparent; width:20px;height: 20px;display: block;float: left; background-color: #5cb85c; margin-right: 10px;border-radius: 2px;"></i><span class="db-su-type">Photos</span> <span class="db-su-type-volume"> - {{perMimeTypeStorage.image.spaceInTotal || 0}}% / {{(perMimeTypeStorage.image.bytes | ByteToMb) || 0}}M</span></li>
+                <li class="list-group-item"><i class="fa fa-square" style="color:transparent; width:20px;height: 20px;display: block;float: left;background-color: #f0ad4e; margin-right: 10px;border-radius: 2px;"></i><span class="db-su-type">Video</span> <span  class="db-su-type-volume"> - {{perMimeTypeStorage.video.spaceInTotal || 0}}% / {{(perMimeTypeStorage.video.bytes | ByteToMb) || 0}}M</span></li>
+                <li class="list-group-item"><i class="fa fa-square" style="color:transparent; width:20px;height: 20px;display: block;float: left;background-color: #eb2218; margin-right: 10px;border-radius: 2px;"></i><span class="db-su-type">Audio</span> <span  class="db-su-type-volume"> - {{perMimeTypeStorage.audio.spaceInTotal || 0}}% / {{(perMimeTypeStorage.audio.bytes | ByteToMb) || 0}}M</span></li>
+                <li class="list-group-item" style="padding-bottom: 10px;"><i class="fa fa-square" style="color:transparent; width:20px;height: 20px;display: block;float: left;background-color: #43bfdf; margin-right: 10px;border-radius: 2px;"></i><span class="db-su-type">Text</span> <span  class="db-su-type-volume"> - {{perMimeTypeStorage.text.spaceInTotal || 0}}% / {{(perMimeTypeStorage.text.bytes | ByteToMb) || 0}}M</span></li>
+            </ul>
+        </div>
+    </div>
+</div>

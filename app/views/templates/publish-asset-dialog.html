@@ -1,0 +1,45 @@
+<md-dialog aria-label="Publish asset by date" ng-class="{'min-width-600':mobileDevice}">
+    <form name="update_asset_form" role="form" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+                <h2 class="v2-color">Publish asset by date</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="answer()">
+                    <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-padding">
+            <div layout="column" style="min-height: 600px;" class="publish-date-box" ng-class="{'mobile':mobileDevice}">
+                <div style="margin-top: 10px;">
+                    <span>Publish date</span>
+                    <div layout="row" layout-xs="column" class="md-padding">
+                        <mdp-date-picker ng-model="publishDate"></mdp-date-picker>
+                        <mdp-time-picker ng-model="publishDate"></mdp-time-picker>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span>Unpublish date</span>
+                    <div layout="row" layout-xs="column"  class="md-padding">
+                        <mdp-date-picker ng-model="unpublishByDate"></mdp-date-picker>
+                        <mdp-time-picker ng-model="unpublishByDate"></mdp-time-picker>
+                    </div>
+                </div>
+            </div>
+            <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                <div layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <div class="v2-color form-close" ng-click="answer()">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="publishAsset()" style="margin-right:20px;padding: 0 20px;">
+                UPDATE
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

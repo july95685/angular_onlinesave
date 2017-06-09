@@ -1,0 +1,341 @@
+{
+
+  //header
+  "MyLockr":"My Lockrs",
+  "GoToDash":"Go to dashboard",
+  "ActFlow":"Activity flow",
+  "Pubpoint":"Publishing point",
+  "ManageSev":"Manage Services",
+  "profile":"Profile",
+  "SharingRules":"Sharing Rules",
+  "Following":"Following",
+  "StorageUsage":"Storage Usage",
+  "SearchLockr":"Search for your asset lockr",
+
+
+  //footer
+  "footer":"© Copyright 2015-2016 - Dalockr - Terms and conditions - Dalockr Support",
+
+  //profile
+  "roles":"roles",
+  "UserAdmin":"USER INTEGRATOR ADMIN",
+  "ChangePsd":"CHANGE PASSWORD",
+  "ExplainAttached":"Social channels attached to profile",
+  "ExplainActivateChannels":"Click on thumbnail to activate channels to share assets",
+  "ExplainChannels":"Channels with are active channels",
+  "AddChannel":"ADD NEW SOCIAL CHANNEL",
+
+  //share rules
+  "EditRules":"Edit Sharing rules",
+  "FilterRules":"Filter Sharing rules",
+  "ShareName":"Sharing rule name",
+  "DefineType":"Define your licence type",
+  "ChoicesLicence":"Your choices will update the licence type",
+  "AllowShared":"Allow adaptations of your work to be shared?",
+  "AllowUsesWork?":"Allow commercial uses of your work?",
+  "AgreeMentY":"Creative Commons Attribution 4.0 International License Agreement",
+  "AgreeMentN":"Creative Commons Attribution - No Derivative Works 4.0 International License Agreement",
+  "AgreeMentO":"Creative Commons Attribution - Share Alike 4.0 International License Agreement",
+  "AgreeMentYN":"Creative Commons Attribution - NonCommercial 4.0 International License Agreement",
+  "AgreeMentNN":"Creative Commons Attribution - NonCommercial - No Derivative Works 4.0 International License Agreement",
+  "AgreeMentON":"Creative Commons Attribution - NonCommercial - Share Alike 4.0 International License Agreement",
+  "CC_BY_NC":"CC_BY_NC",
+  "CC_BY_NC_explain":"This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.",
+  "ViewLegalCode":"View Legal Code",
+  "ViewLicenseDeed":"View License Deed",
+  "ApplyToTypes":"Apply to mime types",
+  "SelectShare":"Select the channel you want to share",
+  "SetdeFault":"Set as default *",
+
+
+
+
+
+
+
+
+  //list
+  "InputRequired":"This is required !",
+  "ChangePwdBtnLabel":"Change password",
+  "NodeCcription":"No description",
+  "AddExistLockr":"add to existing lockr",
+  "AddAssetAndPost":"ADD NEW ASSET AND POST",
+  "UserOrEmail":"username or email",
+  "UserName":"user name",
+  "Email":"email",
+  "Password":"password",
+  "FirName":"First name",
+  "LastName":"Last name",
+  "Phone":"Phone Number",
+  "AddDropBox":"Add DropBox and Box",
+
+  //share lockr or asset
+  "ShareTitle":"Share title",
+  "ShareDes":"share description",
+  "ShareMsg":"share message",
+  "ShareSche":"Schedule share",
+  "ShareRole":"Applying sharing rule",
+
+
+  //grant permissions
+  "Grant":"GRANT",
+  "GrantRer":"Grant permission",
+  "WithRole":"With Role",
+  "WithPermission":"With permission",
+  "CONTENTMANAGER":"CONTENT MANAGER",
+  "COMMUNITYMANAGER":"COMMUNITY MANAGER",
+  "READMANAGE":"READ AND MANAGE CONTENT",
+  "WRITEMANAGE":"WRITE AND MANAGE CONTENT",
+  "GrantTo":"Grant to",
+  "GoToGrant":"Go to grant",
+
+  //filter toolbar
+  "FTHidden":"hidden",
+  "FTLocked":"locked",
+  "FTDraft":"draft",
+  "FTFollow":"follow",
+  "FTStore":"store",
+  "FTAudio":"audio",
+
+  //asset
+  "Comments":"comments",
+  "Stats":"STATS",
+  "Views":"views",
+  "TotalViews":"Total views",
+  "AssetUnshare":"This asset hasn't been shared yet.",
+  "AssetComment":"Write your comment ...",
+
+  //tooltip
+  "TTUploadAsset":"Upload Asset",
+  "TTAddAafeLockr":"add cloud service lockr",
+  "Preview":"Preview",
+  "PublishData":"publish asset by date",
+
+  //publish asset by date
+  "PubDate":"publish date",
+  "UnpubDate":"unpublish date",
+
+  //go to dashboard
+  "DashFor":"Dashboard for",
+  "STATSACCOUNT":"STATS ACROSS ACCOUNT",
+  "PERFORMANCE":"ASSET & LOCKR PERFORMANCE",
+  "TotalViewsChannal":"Total Views across Channels",
+  "ConversationRate":"Conversation rate across channels",
+  "ApplauseRate":"Applause rate across channels",
+  "AmplificationRate":"Amplification rate across channels",
+  "TotalShares":"Total Shares across Channels",
+  "TotalLikes":"Total Likes across Channels",
+  "SentimentRate":"Sentiment rating across Channels",
+  "DailyStats":"My Daily Stats",
+  "AcrossWorld":"Channels across the world",
+  "Toplockr":"Top lockr",
+  "Topasset":"Top asset",
+  "OtherLockrs":"Other Lockrs",
+  "OtherAssets":"Other Assets",
+  "Statschannel":"Stats across channels",
+  "Socialchannel":"Social channel penetration "
+  "Topassetinlockr":"Top asset in lockr",
+  "followby":"Followed by",
+  "title":"Title",
+  "Metatags":"Metatags",
+  "SeeMoreAssets":"See more assets",
+  "SeeMoreLockrs":"See more lockrs"
+
+
+  //publishing point
+  "ChangPpLayout":"Change your Publishing point layout",
+  "ChangeTheme":"CHANGE THEME",
+  "ActBanner":"ACTIVATE BANNER",
+  "DeaBanner":"DEACTIVATE BANNER",
+  "RecommendLockr":"Recommended lockr",
+  "OtherRecAssets":"Other recommended assets",
+  "BrandTimeLine":"Brand timeline",
+
+  //manage service
+  "DddService":"Add new Service",
+  "DropboxSev":"Add/Update DropBox credentials",
+  "BoxSev":"Add/Update Box credentials",
+  "EvernoteSev":"Add/Update Evernote credentials",
+
+  //mobile accounts
+  "SelectAccount":"Select account to manage asset",
+  "AccountDetails":"Account details",
+  "Manage":"Manage",
+  "ClusterId":"clusterId",
+  "AccountLicense":"Account License",
+  "Premium":"Premium",
+  "Trial":"Trial",
+  "AddUser":"ADD NEW USER",
+  "AccountManager":"account manager",
+  "CollDetails":"Collaborator details",
+  "EditUser":"Edit user",
+  "AssignLockr":"ASSIGN MORE　LOCKR",
+  "ComManager":"Community manager",
+  "ConManager":"Connent manager",
+  "SearchForLockr":"SEARCH FOR LOCKR",
+
+  //mobile sharing rule
+  "AharedOn":"shared on",
+  "MineType":"Mine type",
+  "SelectShare":"Please select the type of asset & social channel to share",
+
+
+  //mobile lockr
+  "InsertAsset":"Insert asset details",
+  "UnfollowAsset":"Unfollow asset",
+  "NewPost":"NEW POST",
+
+
+  //toastr
+  "SetThumbnailSuc":"Thumbnail {text} has been set",
+  "ArticleUpdated":"Article has been updated",
+  "SucDel":"Successfully deleted",
+  "AssetUpdateSuc":"Asset {text} has successfully been updated",
+  "LockrUpdateSuc":"Lockr {text} has successfully been updated",
+  "AssetDelSuc":"Asset {text} has successfully been deleted",
+  "LockrDelSuc":"Lockr {text} has successfully been deleted",
+  "FollowCreateSuc":"Follow {text} has successfully been created",
+  "MoveAssetSuc":"Moving of assets from lockr {text}  to {text} has completed)",
+  "CopyAssetSuc":"Copying of assets from lockr {text}  to {text} has completed)",
+  "AssetDel":"Asset deleted",
+  "LockrDel":"Lockr deleted",
+  "LockrDelFail":"Lockr deleted error",
+  "AssetDelFail":"Asset delete error",
+  "AssetNotPulish":"The asset can't be published!",
+  "LockFail":"Lock failed",
+  "AddFoldLockr":"You have added this folder to daLockr",
+  "AddFileToLockr":"You have added this file to daLockr",
+  "ShareError":"{text} share error",
+  "ShareFail":"{text} share failed",
+  "Shared":"shared",
+  "UpdateError":"Update error",
+  "UpdateSuc":"Update success",
+  "AddSuc":"Add success",
+  "CheckYourActivity":"You have an update, please check your activity flow",
+  "DropboxLockrDel":"Delete success, dropbox lockr will remain active for 3h before being deleted from system",
+  "ModerationFeed":"Moderation feed",
+  "ArticleCre":"Article has been created",
+  "Active":"Active",
+  "Deactivate":"Deactivate",
+  "EntityPermissionCre":"EntityPermission has successfully been created",
+  "WarnSelectUser":"You must to select one user at least !",
+  "WarnSelectType":"You must to select one type at least !",
+  "MoveError":"Move error",
+  "MoveSuc":"Move success",
+  "CopyError":"Copy error",
+  "CopySuc":"Copy success",
+  "WarnNeedShareRule":"A Lockr needs to have at least one SharingRule, assign another rule before unassigning this one.",
+  "DelFollow":"delete following",
+  "DelError":"Delete error",
+  "DelSuc":"Delete success",
+  "Notfound":"Not Found",
+  "WarnModifyChannal":"You can modify social channels now",
+  "UserUpdate":"User updated",
+  "ReplySuc":"Reply success",
+  "RepFail":"Reply error",
+  "NoAccount":"No account",
+  "ChooseLockr":"Please choose Lockr and Userrole",
+  "ApproveSuc":"APPROVE SUCCESS",
+  "DenySuc":"DENY SUCCESS",
+  "ReloadPp":"Reloading publishing point",
+  "GetResourceFail":"Get resource error",
+
+
+
+  //word
+  "login":"login",
+  "lockr":"Lockr",
+  "asset":"Asset",
+  "safeLockr":"Safe Lockr",
+  "channel":"Channel",
+  "subLockr":"subLockr",
+  "shareon": "shared on",
+  "download":"Download",
+  "lock":"Lock",
+  "unlock":"Unlock",
+  "logout":"Logout",
+  "cancel":"Cancel",
+  "image":"Images",
+  "PDF":"PDFs",
+  "video":"Videos",
+  "Powerpoint":"Powerpoints",
+  "wordDocs":" Word Docs",
+  "exceldocs":"Excel Docs",
+  "article":"article",
+  "lisencetype":"Lisence type",
+  "ownby":"Own by",
+  "Collaborators":"Collaborators",
+  "update":"UPDATE",
+  "all":"ALL",
+  "YES":"YES",
+  "NO":"NO",
+  "OK":"OK",
+  "Channels":"Channels",
+  "save":"SAVE",
+  "Normal":"Normal",
+  "Private":"Private",
+  "created":"created",
+  "tags":"Tags",
+  "date":"date",
+  "like":"Like",
+  "unlike":"Unlike",
+  "reply":"Reply",
+  "send":"send",
+
+  //sidebar
+  "read":"Read",
+  "unread":"Unread",
+  "notifications":"Notifications",
+  "Moderation":"Moderation",
+  "OtherShare":"Yes as long as other share alike",
+
+
+
+
+
+  //button
+  "DashBoard":"Go to dashboard",
+  "ActivityFlow":"Activity flow",
+  "PublishPoint":"Publishing point",
+  "ManageService":"Manage Services",
+  "LockrExplain":"lock or unlock lockr",
+  "PublishExplain":"publish or unpublish asset",
+  "SetSrceen":"set as Lockr thumbnail",
+  "AddComment":"add comment",
+  "SeeContent":"SEE CONTENT",
+  "PrivateLockr":"Private Lockr",
+  "ActiveModer":"Active moderation",
+  "BrowseFile":"Browse file",
+  "AddImg":"Add headline image",
+
+
+
+
+  //string
+  "add":"Add {text}",
+  "addto":"ADD TO {text}",
+  "addnew":"Add new {text}",
+  "select":"select {text}",
+  "edit":"Edit {text}",
+  "follow":"Follow {text}",
+  "assign":"Assign {text}",
+  "create":"create {text}",
+  "name":"{text} Name",
+  "description":"{text} Description",
+  "Publish":"Publish {text}",
+  "selecttype":"Select your {text} type",
+  "share":"Share {text}",
+  "join":"Join {text}",
+  "new":"New {text}",
+  "delete":"Delete {text}",
+  "progressbar":"You have used {num}% of your {num}MB",
+  "total":"titla {text}",
+  "managechannels":"Add/Update {text} credentials",
+
+
+  //explain long text
+  "TotalLockr":"Total SubLockrs in lockr",
+  "ExplainPublishAsset":"Publish asset to your publishing point and enable sharing on you social channels or save as draft and publish later…",
+  "ExplainUsers":"Users ( You need to grant user permission to this lockr to be able to do moderation )"
+
+}

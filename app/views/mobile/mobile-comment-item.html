@@ -1,0 +1,81 @@
+<div style="padding-left: 2px;" ng-class="{'asset-firstchild-comments':!otherComment}">
+    <div layout="row" style="padding-top:12px;">
+
+        <div layout="row" layout-align="start start">
+            <div layout="row" layout-align="start center">
+                <!--<i style="width: 20px;height: 20px;line-height: 20px;text-align: center;border-radius: 50%;background-color: #006fd5;color: white;" ng-if="comment.level_1" class="icon-size-1 mdi {{bys(comment.by)[0].iconClass}}"></i>-->
+                <img ng-click="closeExpand()" ng-class="{'asset-comment-avatarimg':littleSize}" style="width: 50px;height: 50px;border-radius: 50%;text-align: center;" ng-src="{{getUserPic(comment.commentType.toLowerCase(),comment)}}">
+                <div style="margin:35px 15px 0 -15px;width: 16px;height: 16px;border-radius: 50%;background-color: #006fd5;color: white;">
+                    <i style="width:16px;height:16px;-webkit-transform:scale(0.5);text-align: center;transform:scale(0.5);z-index:3;font-size: 12px;" class="mdi {{bys(comment.by)[0].iconClass}}"  ng-show="comment.commentType == 'daLockr'"></i>
+                    <i style="-webkit-transform:scale(0.5);text-align: center;transform:scale(0.5);z-index:3;font-size: 26px;color: #fff;margin-left: -5px;margin-top: -10px;" ng-show="comment.commentType != 'daLockr'" class="mdi {{bys(comment.by)[0].iconClass}}"></i>
+                </div>
+                <!--<span style="width: 1px;height: 50px;background-color: #aaaaaa;margin: 0 8px;"></span>-->
+            </div>
+        </div>
+
+
+        <div layout="column" flex>
+            <p ng-bind="comment.by[0].username || comment.by[0].fromName" class="v2-color" style="margin:0 2px 5px 0;font-size:15px"></p>
+            <p  style="font-size: 12px;" transform-smileys ng-bind="comment.message"></p>
+            <div>
+                <i class="mdi mdi-clock icon-size-1"></i>
+                <span style="font-weight: bold;font-size: 12px;">{{comment.commentDate | date : 'dd MMM yyyy'}}</span>
+            </div>
+            <div layout="row" layout-no-wrap layout-align="start center" style="padding-top: 8px;font-size:12px;">
+                <!--<a href="javascript:void(0)" layout="row" layout-no-wrap ng-click="likeThisComment()">-->
+                <!--<i ng-class="{'toolbar-icon-normal':!comment.isLiked,'toolbar-icon-active':comment.isLiked}" class="mdi toolbar-icon-normal mdi-thumb-up icon-size-1"></i>-->
+                <!--<span ng-class="{'toolbar-icon-normal':!comment.isLiked,'toolbar-icon-active':comment.isLiked}" class="toolbar-icon-normal">{{comment.isLiked ? 'Unlike':'Like'}}</span>-->
+                <!--<a ng-click="seeWhoLikes()" ng-class="{'toolbar-icon-normal':!comment.isLiked,'toolbar-icon-active':comment.isLiked}"> ({{comment.likeObjects.length}}) </a>-->
+                <!--</a>-->
+                <!--<span style="width: 8px;"></span>-->
+                <!--<a href="javascript:void(0)" layout="row" layout-no-wrap ng-click="openReply()">-->
+                <!--<i ng-class="{'toolbar-icon-normal':!comment.reply_active,'toolbar-icon-active':comment.reply_active}" class="mdi mdi-reply icon-size-1"></i>-->
+                <!--<span style="white-space: nowrap;text-overflow: ellipsis;" ng-class="{'toolbar-icon-normal':!comment.reply_active,'toolbar-icon-active':comment.reply_active}" class="toolbar-icon-normal">Reply ({{comment.comments.length}})</span>-->
+                <!--</a>-->
+                <span class="toolbar-icon-normal v2-color" style="text-decoration:underline">Like  </span>
+                <div>
+                    <svg style="width:8px;height:8px;margin-left: 8px;" viewBox="0 0 24 24">
+                        <path fill="#006fd5" d="M19,12C19,15.86 15.86,19 12,19C8.14,19 5,15.86 5,12C5,8.14 8.14,5 12,5C15.86,5 19,8.14 19,12Z" />
+                    </svg>
+                </div>
+                <i style="margin:0 8px;" ng-click="likeThisComment()" ng-class="{'toolbar-icon-normal':!comment.isLiked,'toolbar-icon-active':comment.isLiked}" class="mdi toolbar-icon-normal mdi-heart icon-size-1"></i>
+                <a ng-click="seeWhoLikes()"> ({{comment.likeObjects.length}}) </a>
+
+                <span style="width: 14px;"></span>
+                <a href="javascript:void(0)" layout="row" layout-no-wrap ng-click="openReply()">
+                    <i  class="v2-color mdi mdi-reply icon-size-1"></i>
+                    <span style="white-space: nowrap;text-overflow: ellipsis;margin-left: 8px;" class="v2-color toolbar-icon-normal">Reply</span>
+                    <!--<span style="white-space: nowrap;text-overflow: ellipsis;" ng-class="{'toolbar-icon-normal':!comment.reply_active,'toolbar-icon-active':comment.reply_active}" class="toolbar-icon-normal">Reply ({{comment.comments.length}})</span>-->
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="comment.reply_active" style="padding: 15px 0;">
+        <div layout="column">
+            <div flex>
+                <md-input-container class="md-block" style="margin-bottom: 0;">
+                    <input ng-disabled="isReplying" ng-model="replyData.text" placeholder="ADD REPLY">
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end center">
+                <md-button ng-click="reply()" style="margin:0;background-color: #006fd5;color: white;" ng-disabled="isReplying || replyText ===''">ADD REPLY</md-button>
+            </div>
+        </div>
+    </div>
+    <div layout="column">
+        <div ng-if="c.expand" ng-repeat="c in comment.comments">
+            <mobile-comment-item entity-type="entityType" entity-id="entityId" comment="c" little-size="true" first-child-comments-open="firstChildCommentsOpen"></mobile-comment-item>
+        </div>
+    </div>
+    <div layout="row" layout-align="start center" layout-wrap style="padding-top: 8px;padding-left: 8px;">
+        <img ng-if="!comment.expand" ng-click="expandComment(comment)" style="width: 40px;height: 40px;border-radius: 50%;text-align: center;margin-right:8px;margin-bottom: 8px;cursor: pointer;"  ng-src="{{getUserPic(comment.commentType.toLowerCase(),comment)}}"  ng-repeat="comment in comment.comments" alt="">
+        <div ng-show="!comment.loadingMore && comment.numberOfComments > 10 && comment.comments.length !== comment.numberOfComments">
+            <md-button ng-click="loadMoreComments(event)" style="text-transform: none;color: #999;">
+                <span>Loading More</span>
+            </md-button>
+        </div>
+        <div ng-show="comment.loadingMore">
+            <md-progress-circular md-mode="indeterminate" md-diameter="20"></md-progress-circular>
+        </div>
+    </div>
+</div>

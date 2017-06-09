@@ -1,0 +1,180 @@
+<div class="dal-fixed-fullscreen dal-add-asset desktop">
+
+    <div class="nav-bar" layout="row" bg="primary" layout-align="start center">
+        <i class="mdi mdi-chevron-left white" ng-click="closeView()"></i>
+        <a href="javascript:void (0);" class="md-subhead white">ADD NEW ASSET AND POST</a>
+    </div>
+
+    <div class="content-wrapper">
+        <div layout="row" style="padding: 20px 0;max-width: 900px;margin: 0 auto;">
+            <div class="md-padding" ng-class="{'align-self':mobileDevice}" style="width: 240px;box-sizing: content-box;">
+                <div class="shadow-box">
+                    <div class="preview-box" layout="row" layout-align="center center">
+
+                        <md-button ng-click="retryRequest()" ng-if="myAsset == null" class="dal-btn dal-btn-primary">
+                            ADD ASSET
+                        </md-button>
+
+                        <span class="primary" ng-if="myAsset !== null && fileType.isOther">Not support file</span>
+                        <i class="mdi dal-icon {{fileIcon}}" style="font-size:40px;" ng-if="myAsset !== null && !fileType.isOther && !fileType.isImage"></i>
+
+                    </div>
+                </div>
+
+                <div layout="column" layout-align="center" class="md-padding" ng-if="myAsset !== null">
+                    <md-button ng-click="retryRequest()" class="dal-btn dal-btn-primary">
+                        ADD ASSET
+                    </md-button>
+                </div>
+
+            </div>
+            <div flex class="md-padding">
+
+                <form name="addAssetForm">
+                    <div layout="column">
+                        <md-input-container class="dal-input-container">
+                            <label>Add asset title <span class="require-dot">*</span></label>
+                            <input name="name" ng-model="uploadAssetEntity.name" required>
+                            <div ng-messages="addAssetForm.name.$error" ng-show="addAssetForm.name.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="dal-input-container">
+                            <label>Add asset description <span class="require-dot">*</span></label>
+                            <input name="description" ng-model="uploadAssetEntity.description" required>
+                            <div ng-messages="addAssetForm.description.$error" ng-show="addAssetForm.description.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div style="padding: 0 2px;">
+                        <md-chips
+                                ng-model="uploadAssetEntity.tags"
+                                readonly="false"
+                                placeholder="+ TAG"
+                                delete-button-label="Remove Tag"
+                                delete-hint="Press delete to remove tag"
+                                secondary-placeholder="ADD TAGS TO ASSET"></md-chips>
+                    </div>
+
+
+                    <div style="padding-top: 20px;">
+
+                        <div layout="row" layout-align="start center">
+                            <md-switch class="dal-primary" style="margin-left: 0;" ng-model="uploadAssetEntity.publish" aria-label="publish asset">
+                                Publish asset
+                            </md-switch>
+                            <md-checkbox class="dal-primary" style="margin-bottom: 0;margin-left: 20px;" aria-label="share now" ng-model="toShare">
+                                <span>Share now</span>
+                            </md-checkbox>
+                        </div>
+
+                        <p style="color: #aaaaaa;">
+                            Publish asset to your publishing point and enable sharing on you social channels
+                            or save as draft and publish later…
+                        </p>
+
+                        <div>
+                            <md-switch class="dal-primary" ng-model="openOther" aria-label="select other lockr">
+                                add to existing lockr
+                            </md-switch>
+                            <div ng-if="openOther">
+
+                                <div style="margin-top: 20px;" ng-controller="SearchLockrAutoCompleteCtrl as ctrl">
+                                    <md-autocomplete
+                                            class="dal-progress"
+                                            ng-disabled="ctrl.isDisabled"
+                                            md-no-cache="ctrl.noCache"
+                                            md-selected-item="ctrl.selectedItem"
+                                            md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                            md-search-text="ctrl.searchText"
+                                            md-selected-item-change="ctrl.selectedItemChange(item)"
+                                            md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                            md-item-text="item.name"
+                                            md-min-length="0"
+                                            placeholder="SEARCH FOR LOCKR"
+                                            md-menu-class="autocomplete-custom-template">
+                                        <md-item-template>
+                                          <span class="item-title" layout="row" layout-align="start center">
+                                              <i class="mdi mdi-folder dl-icon"></i>
+                                              <span class="dal-h-spacing-normal"></span>
+                                              <span class="dal-nowrap"> {{item.name}} </span>
+                                          </span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </div>
+
+                                <md-button ng-click="createOtherNewLockr()" class="dal-btn" style="margin-left: 0;margin-top: 20px;">
+                                    ADD NEW LOCKR
+                                </md-button>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+
+                <div class="add-share-asset" layout="column" style="padding-top: 50px;" ng-show="toShare">
+                    <h4 class="primary">
+                        Add asset and share
+                    </h4>
+
+                    <md-input-container class="dal-input-container" style="padding-bottom: 15px;" data-text-number="{{shareAssetEntity.shareMsg.length + ' / 140' }}">
+                        <label>Share message</label>
+                        <input name="shareMsg" share-limit="{{hasTwitter}}" ng-model="shareAssetEntity.shareMsg">
+                    </md-input-container>
+
+
+                    <div layout="row" style="padding-top: 8px;">
+                        <span>Sharing Rule :</span>
+                        <span class="dal-h-spacing-normal"></span>
+                        <span class="v2-color">{{currentAvaliableSharingRule.name || 'No available sharing rule'}}</span>
+                    </div>
+
+                    <div layout="column">
+                        <div layout="row" style="padding-top: 15px;" ng-repeat="item in socialChannels">
+                            <div>
+                                <i bg="primary" class="mdi sc-icon {{item.icon}}"></i>
+                            </div>
+                            <div flex>
+                                <ul class="list-unstyled" layout="row">
+                                    <li ng-click="selectShareSocialChannels(social.id)" class="sc-grid" ng-repeat="social in item.data">
+                                        <div layout="row" layout-align="center center">
+                                            <i class="mdi sc-icon-grey {{item.icon}}"></i>
+                                            <i class="mdi mdi-checkbox-marked-outline primary" ng-show="social.active" style="font-size: 24px;"></i>
+                                        </div>
+                                        <div class="text-center" style="width: 100%;font-size: 12px;color: #aaaaaa;">{{social.name.split('-')[1]}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-sm="column" ng-show="loadSharingRule" layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+
+
+
+                <div layout="row" style="padding-bottom: 60px;padding-top: 20px;">
+                    <md-button ng-hide="toShare" flex class="dal-btn" ng-click="closeView()">Cancel</md-button>
+                    <md-button ng-show="toShare" ng-disabled="addAssetForm.$invalid" flex class="dal-btn" ng-click="uploadAsset()">Just add to lockr</md-button>
+                    <md-button ng-hide="toShare" ng-disabled="addAssetForm.$invalid" flex class="dal-btn dal-btn-primary" ng-click="uploadAsset()">Add to lockr</md-button>
+                    <md-button ng-show="toShare" ng-disabled="addAssetForm.$invalid" flex class="dal-btn dal-btn-primary" ng-click="uploadAsset(true)">Share asset</md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-if="isUploading" class="loading-center" layout="column" layout-align="center center">
+        <md-progress-circular class="dal-primary" md-mode="determinate" value="{{determinateValue}}"></md-progress-circular>
+    </div>
+
+
+</div>

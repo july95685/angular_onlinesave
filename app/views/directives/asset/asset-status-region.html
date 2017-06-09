@@ -1,0 +1,181 @@
+<div flex id="asset-status-region" style="width:100%;padding:10px;">
+    <md-tabs md-dynamic-height md-no-ink md-border-bottom md-selected="selectedIndex" class="card-shadow">
+        <md-tab label="Shared on">
+            <md-content class="md-padding" style="background-color: white;overflow: visible;position: relative;">
+
+                <div layout="row" layout-align="center center" style="min-height:400px;" ng-hide="assetCanShare">
+                    <span style="font-size: 30px;color: #ececec;">Safe asset, can't share !</span>
+                </div>
+
+                <div style="position: relative;min-height:400px;"  id="share-on-dialog-box" ng-show="assetCanShare">
+                    <div layout="row" layout-align="start center">
+                        <div class="md-padding" flex layout="row" style="padding-left: 20px;" layout-align="start center">
+                            <ul class="list-unstyled clearfix">
+                                <li class="pull-left" ng-repeat="item in shareSocialChannelsList" style="margin-right: 10px;">
+                                    <i class="mdi {{item.iconClass}} icon-size-2 vertical-align-middle"></i>
+                                    <span class="vertical-align-middle v2-color">{{item.name.split('-')[1]}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div layout="column" ng-show="shareBtnMessage" style="padding: 6px;">
+                            <span>Applying sharing rule:</span>
+                            <span class="v2-color">{{currentAvaliableSharingRule.name || "No available sharing rule"}}</span>
+                        </div>
+                        <div class="md-padding">
+                            <md-button aria-label="Open Share" style="border: 1px solid #006fd5;padding: 0 15px;" ng-disabled="loadingCommentFlow" class="v2-color" ng-show="shareBtnMessage" ng-click="openShareDialog()">{{shareBtnMessage}}</md-button>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-sm="column" ng-show="loadingCommentFlow" layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <div ng-hide="isShared" layout="row" layout-align="space-around">
+                        <span style="font-size: 30px;color: #ececec;">This asset hasn't been shared yet.</span>
+                    </div>
+
+
+
+                    <div ng-show="isShared" class="md-padding" style="padding-left: 30px;padding-right: 30px;">
+                        <ul class="list-unstyled">
+                            <li style="border-left: 1px solid #ececec;padding-top: 0;position: relative;" class="md-padding" ng-repeat="item in commentsDetails.comments" ng-if="item.by.length !== 0">
+                                <i style="position: absolute;width: 16px;height:16px;left:-8px;top:0;border-radius: 50%;" class="v2-bg-color"></i>
+                                <div style="border: 1px solid #ececec;">
+                                    <div style="background-color: #ededed;padding:5px 10px;">
+                                        <span class="v2-color">Shared on</span>
+                                        <div style="display: inline-block;">
+                                            <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i><span class="vertical-align-middle font-size-1">{{item.commentDate | date : 'MMMM,d yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 10px;">
+                                        <div class="clearfix">
+                                            <div class="pull-left" style="text-align: left;width: 60px;margin-bottom: 8px;margin-right: -60px;">
+                                                <span class="v2-color">Status</span>
+                                            </div>
+                                            <p class="font-size-12" style="float: right;width: 100%;padding-left: 60px;padding-top: 2px;">
+                                                {{item.customShareMsg}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="pull-left" style="text-align: left;width: 60px;margin-bottom: 8px;margin-right: -60px;">
+                                                <span class="v2-color">Title</span>
+                                            </div>
+                                            <p class="font-size-12" style="float: right;width: 100%;padding-left: 60px;padding-top: 2px;">
+                                                {{item.title}}
+
+                                            </p>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="pull-left" style="text-align: left;width: 60px;margin-bottom: 8px;margin-right: -60px;">
+                                                <span class="v2-color">Text</span>
+                                            </div>
+                                            <p class="font-size-12" style="float: right;width: 100%;padding-left: 60px;padding-top: 2px;">
+                                                {{item.message}}
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="share-dialog" ng-show="!shareDialogHidden" style="position: absolute;left:0;top:0;bottom:0;right:0;background-color: #ececec;overflow: scroll;">
+                        <div  style="width: 90%;background-color: white;margin:20px auto;" class="share-asset-dialog card-shadow">
+                            <div class="md-padding" style="position: relative;">
+
+                                <form name="reshare_asset_form" role="form" novalidate>
+
+                                    <div layout="row">
+                                        <ul flex class="list-unstyled clearfix" ng-class="{'am-disabled':assetDetails.iscontent}">
+                                            <li ng-repeat="item in socialChannels" style="cursor: pointer;" class="reshare-social-normal pull-left" ng-class="{'reshare-social-grid-selected':item.active}" ng-click="selectShareSocialChannels(item.id)">
+                                                <i class="{{item.iconClass}} mdi"></i>
+                                                <md-tooltip>{{item.name.split('-')[1] ? item.name.split('-')[1] : item.name}}</md-tooltip>
+                                            </li>
+                                        </ul>
+                                        <div>
+                                            <div class="form-close" style="display: inline-block;min-width: 40px;margin-right: 0;" ng-disabled="noSocialChannels"  ng-click="shareAsset()">
+                                                <i class="mdi mdi-check icon-size-3 vertical-align-middle"></i>
+                                            </div>
+                                            <div class="v2-color form-close" style="display: inline-block;min-width: 40px;margin-left: 0;" ng-click="closeReshareDialog()">
+                                                <i class="mdi mdi-close icon-size-3 vertical-align-middle" style="color: #555;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <div layout="row" layout-sm="column" ng-show="loadSharingRule" layout-align="center center">
+                                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                </div>
+
+                                <div style="margin-top: 15px;" layout="column">
+                                    <md-input-container flex>
+                                        <label>Share title</label>
+                                        <input name="title" ng-model="shareEntity.title">
+                                    </md-input-container>
+                                    <md-input-container flex>
+                                        <label>Share description</label>
+                                        <input name="description" ng-model="shareEntity.text">
+                                    </md-input-container>
+                                    <md-input-container flex data-text-number="{{shareEntity.shareMsg.length + ' / 140' }}">
+                                        <label>Share message</label>
+                                        <input name="message" share-limit="{{hasTwitter}}" ng-model="shareEntity.shareMsg">
+                                    </md-input-container>
+                                </div>
+
+                                <div style="min-height: 300px;">
+                                    <md-switch style="margin-left: 0;" ng-model="isScheduling" aria-label="Schedule share">
+                                        Schedule share
+                                    </md-switch>
+                                    <div style="margin-top: 10px;" ng-show="isScheduling">
+                                        <am-calendar ng-model="shareDate" format="MM/dd/yyyy HH:mm" input-class="form-control" date-modal-position="35-0"></am-calendar>
+                                    </div>
+                                </div>
+
+
+                                </form>
+
+                                <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                                    <div layout="row" layout-sm="column" layout-align="space-around">
+                                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Comments">
+            <md-content style="background-color: white;min-height: 300px;" class="md-padding">
+                <dl-comments show-see-all="true" entity-type="asset" entity-id="{{currentAssetId}}"></dl-comments>
+                <!--<asset-details-comments></asset-details-comments>-->
+            </md-content>
+        </md-tab>
+        <md-tab label="Stats">
+            <md-content style="background: white;">
+                <div style="min-height: 400px;">
+                    <daily-stats series-data="seriesData" show-title="false"></daily-stats>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Followers">
+            <md-content style="background: transparent;">
+                <div style="min-height: 400px;padding: 30px;">
+                    <div class="love-people clearfix" ng-repeat="item in assetFollowers" style="padding:8px;margin-bottom: 10px;">
+                        <i class="mdi mdi-heart icon-size-1 pull-left" style="color:#f27065;line-height: 56px;"></i>
+                        <md-list-item class="md-with-secondary pull-left"  style="padding-left:5px;padding-right: 5px;">
+                            <div class="md-list-item-inner" style="width:500px;">
+                                <img ng-src="{{item.userPic}}" class="md-avatar" alt=""/>
+                                <p class="v2-color">{{item.follower.firstName}} {{item.follower.lastName}}</p>
+                            </div>
+                        </md-list-item>
+                    </div>
+                </div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</div>

@@ -1,0 +1,52 @@
+/**
+* 第二主题
+**/
+
+span[color="default"],
+p[color="default"]{
+    color:#30cdff;
+}
+div[bg="default"],
+p[bg="default"]{
+    background-color: #30cdff;
+}
+.dal-btn-primary{
+    color: #fff;
+    background-color: #30cdff;
+    border-color: #30cdff;
+}
+
+/**
+*
+*  Material Input Style Override
+*  md-input-container add class: dal-input-container
+*
+**/
+md-select-menu md-option[selected]{
+    color: #30cdff !important;
+}
+md-input-container:not(.md-input-invalid).dal-input-container md-select:not([disabled]):focus .md-select-value{
+    border-bottom-color: #30cdff !important;
+}
+md-input-container.md-input-invalid.dal-input-container .md-select-value{
+    border-bottom-color: red !important;
+}
+md-input-container:not(.md-input-invalid).dal-input-container .md-select-value .md-select-icon:after{
+    color: #30cdff;
+}
+
+md-input-container:not(.md-input-invalid).dal-input-container.md-input-has-value label,
+md-input-container:not(.md-input-invalid).dal-input-container.md-input-focused label
+{
+    color: #30cdff;
+}
+md-input-container:not(.md-input-invalid).dal-input-container.md-input-focused .md-input{
+    border-color: #30cdff;
+}
+
+md-input-container.md-input-invalid.dal-input-container.md-input-focused label{
+    color: red;
+}
+md-input-container.md-input-invalid.dal-input-container.md-input-focused .md-input{
+    border-color: red;
+}

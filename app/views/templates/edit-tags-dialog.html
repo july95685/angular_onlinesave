@@ -1,0 +1,37 @@
+<md-dialog aria-label="sharing rule" style="max-width: 100%;max-height: 100%;min-width: 100%;min-height: 100%;border-radius:0;">
+    <md-content>
+        <div layout="column" layout-align="center start">
+            <div style="width: 100%;max-height: 480px;background-color: #000;" layout-align="center center" layout="row">
+                <img ng-src="{{assetsData.srcUrl}}" style="max-height: 480px;"/>
+            </div>
+        </div>
+        <div layout="column" layout-align="center start">
+            <div style="color: #006fd5;font-size: 16px;padding: 10px 15px;">
+                <span>Change asset details</span>
+            </div>
+            <div style="padding: 0 15px;">
+                <md-input-container style="width: 100%;margin-bottom: 0;">
+                    <label style="color: rgba(0,0,0,0.38);margin-bottom: -5px;">ASSET TITLE</label>
+                    <input ng-model="assetsData.name" style="font-size: 16px;color: #006fd5;">
+                </md-input-container>
+                <md-input-container style="width: 100%;margin-bottom: 0;">
+                    <label style="color: rgba(0,0,0,0.38);margin-bottom: -5px;">Description</label>
+                    <input ng-model="assetsData.description" style="font-size: 16px;color: rgba(0,0,0,0.87);">
+                </md-input-container>
+                <md-input-container style="width: 100%;margin-bottom: 0;">
+                    <label style="color: rgba(0,0,0,0.38);margin-bottom: -5px;">Tags</label>
+                    <input ng-model="tags" style="font-size: 16px;color:#3c3c3c;">
+                </md-input-container>
+
+            </div>
+        </div>
+        <div layout="row" layout-align="end center" style="height: 60px;">
+            <div ng-click="hide()" style="color: #3c3c3c;font-size: 15px;">
+                <span>CANCEL</span>
+            </div>
+            <div ng-click="changeAsset()" style="margin:0 20px;background-color: #006fd5;font-size: 14px;color: #fff;padding: 6px 12px;font-weight: bold;border-radius: 5%;">
+                <span>UPDATE</span>
+            </div>
+        </div>
+    </md-content>
+</md-dialog>

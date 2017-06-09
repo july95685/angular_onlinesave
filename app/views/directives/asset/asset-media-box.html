@@ -1,0 +1,104 @@
+<div ng-switch="mediaType" class="asset-media-box">
+    <div ng-switch-when="image" style="text-align: center;">
+        <div class="image-box card-shadow card-radius-2x" style="background-color: white;position: relative;display: inline-block;">
+            <i class="mdi mdi-fullscreen icon-size-3" ng-click="fullscreen(imageSrc)" ng-show="fullscreenBtnShow" style="position: absolute;top:20px;right:20px;font-size: 40px;cursor: pointer;z-index: 1;">
+                <md-tooltip>fullscreen</md-tooltip>
+            </i>
+            <div class="imageWrapper" style="overflow: hidden;width:100%;height:100%; position: relative;padding: 20px;
+           ">
+                <div style="background-color: rgba(255,255,255,0.5);padding:50px;" ng-show="!fullscreenBtnShow">
+                    <div layout="row" layout-sm="column" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+            </div>
+
+            <md-button hide-xs hide-sm aria-label="menu" class="md-fab md-raised" ng-click="pre()" ng-disabled="isFirst" style="position: absolute;top:50%;left:-80px;z-index:1;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);transform: translate(-50%,-50%);">
+                <i class="mdi v2-color vertical-align-middle mdi-chevron-left"></i>
+            </md-button>
+
+            <md-button hide-xs hide-sm aria-label="menu" class="md-fab md-raised" ng-click="next()" ng-disabled="isLast" style="position: absolute;top:50%;right:-135px;z-index:1;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);transform: translate(-50%,-50%);">
+                <i class="mdi v2-color vertical-align-middle mdi-chevron-right"></i>
+            </md-button>
+        </div>
+    </div>
+
+    <div class="asset-video-box" ng-switch-when="video" >
+        <videogular>
+            <vg-media vg-src="videoConfig.sources"
+                      >
+            </vg-media>
+            <vg-controls>
+                <vg-play-pause-button></vg-play-pause-button>
+                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                </vg-scrub-bar>
+                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+                <vg-fullscreen-button></vg-fullscreen-button>
+            </vg-controls>
+            <vg-overlay-play></vg-overlay-play>
+            <vg-poster vg-url='videoConfig.plugins.poster'></vg-poster>
+        </videogular>
+
+
+        <!--<video id="asset_video_1" class="video-js vjs-default-skin"-->
+               <!--controls preload="auto" width="100%" height="160"-->
+               <!--poster=""-->
+               <!--data-setup='{}'>-->
+            <!--<source class="mp4-sour" src="" type='video/mp4' />-->
+            <!--<source class="webm-sour" src="" type='video/webm'>-->
+            <!--<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>-->
+        <!--</video>-->
+    </div>
+
+    <div class="asser-audio-box" style="text-align: center;" ng-switch-when="audio">
+        <div class="card-shadow" style="padding:20px;display: inline-block;background-color: white;vertical-align: middle;-webkit-transition:width 500ms ;-moz-transition:width 500ms ;-ms-transition:width 500ms ;-o-transition:width 500ms ;transition:width 500ms ;">
+            <div class="audio-thumb-box" ng-click="audio.paused ? audio.play() : audio.pause()">
+                <img class="audio-thumb" style="-webkit-animation-play-state: {{(audio.paused === true) ? 'paused':'running'}};-moz-animation-play-state: {{(audio.paused === true) ? 'paused':'running'}};-o-animation-play-state: {{(audio.paused === true) ? 'paused':'running'}};animation-play-state: {{(audio.paused === true) ? 'paused':'running'}};" ng-src="{{audioThumbnail}}">
+
+                <div class="audio-thumb-border absolute-center">
+                    <i class="mdi icon-size-1 absolute-center" style="position: absolute;" ng-class="{'mdi-play':audio.paused,'mdi-pause':!audio.paused}">
+                    </i>
+                </div>
+            </div>
+            <div style="display: inline-block;width: 240px;margin-left:10px;vertical-align: middle;position: relative;">
+                <input class='form-control' style="
+                height: 5px;
+                border: none;
+                background: none;
+                position: absolute;
+                opacity: 0;
+                width: 100%;
+                margin: 0;
+                z-index: 2;
+                cursor: pointer;
+                padding: 0;"
+                       type=range min=0 max=1 step=0.01 ng-model='audio.progress'>
+                <md-progress-linear md-mode="determinate" style="cursor: pointer;outline: none;" value="{{audio.progress*100}}"></md-progress-linear>
+            </div>
+
+            <div class="audio-toolbar" style="display: inline-block;vertical-align: middle;font-size: 12px;position: relative;top:4px;">
+                <!--<span>{{'-' + (rMin.toString().length === 1 ? ('0'+ rMin) : rMin) + ':' + (rSec.toString().length === 1 ? ('0'+ rSec) : rSec) }}</span>-->
+                <span style="width:50px;">{{audio.currentTime | trackTime}}</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="asset-pdf-box" ng-switch-when="article" style="text-align: center;min-height: 300px;">
+        <div class="article-desc col-md-7 col-sm-7">
+            <div ng-bind-html="assetArticleContent"></div>
+        </div>
+    </div>
+
+    <div ng-switch-default class="asset-pdf-box" style="text-align: center;">
+        <pdf-view current-asset-id="{{currentAssetId}}"></pdf-view>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,20 @@
+<md-dialog aria-label="sharing rule" style="max-width: 100%;max-height: 100%;min-width: 100%;min-height: 100%;border-radius:0;">
+    <md-toolbar >
+        <div class="md-toolbar-tools" style="background-color: #006fd5;height: 56px;min-height: 56px;max-height: 56px;">
+            <h2 style="color:#fff;font-size:16px;font-weight: bold;">Create New Sharing Rule</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" style="color:#fff;" class="mdi mdi-close icon-size-2" ></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div style="position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;">
+        <sharing-rule-item lockr-id="{{lockrId}}"></sharing-rule-item>
+    </div>
+
+</md-dialog>

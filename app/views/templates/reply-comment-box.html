@@ -1,0 +1,11 @@
+<div style="width: 100%;padding-left:0;margin-top: 10px;">
+    <!--<div contenteditable="true">-->
+        <!--<span data-contents="true"></span>-->
+    <!--</div>-->
+       <textarea data-ng-model="replyMessage" ng-disabled="isReplying" style="border-radius: 3px;outline:none;border: 1px solid #006fd5;resize:vertical;width: 100%;padding:3px 6px;">
+       </textarea>
+       <div class="pull-right">
+            <md-button style="margin-right:0;" ng-disabled="isReplying" ng-click="cancelComment()" >Cancel</md-button>
+            <md-button style="margin-right:0;" class="v2-color" ng-disabled="replyMessage === '' || isReplying" ng-click="reply()">Reply</md-button>
+       </div>
+</div>

@@ -1,0 +1,12 @@
+<md-bottom-sheet class="md-list md-has-header" ng-cloak>
+    <md-subheader>Select date</md-subheader>
+    <div layout="column" class="md-padding">
+        <mdp-date-picker ng-model="shareDate"></mdp-date-picker>
+        <mdp-time-picker ng-model="shareDate"></mdp-time-picker>
+    </div>
+    <md-list>
+        <md-list-item>
+            <md-button style="width: 100%;" class="v2-color" ng-click="schedulePostThisShare()"><span>POST</span></md-button>
+        </md-list-item>
+    </md-list>
+</md-bottom-sheet>

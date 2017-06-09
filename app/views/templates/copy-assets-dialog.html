@@ -1,0 +1,52 @@
+<md-dialog aria-label="Copy" class="copy-assets-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Copy Assets</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="download_lockr_form" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+
+            <div ng-show="isLocked" style="text-align: center;">This Lockr is locked !</div>
+
+            <div ng-show="!isLocked">
+                <p>Are you sure you want to copy this asset(s) ?</p>
+
+                <ul class="list-unstyled" ng-repeat="item in haveSelectedItem">
+                    <li>
+                        <strong style="color:#006fd5;">{{ item.name }}</strong>
+                    </li>
+                </ul>
+
+                <p>Select a lockr :</p>
+                <div ng-show="isLoadingLockrsData" style="text-align: center;width: 100%;margin-top:30px;position: relative;">
+                    <div layout="row" layout-sm="column" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+                <md-radio-group ng-model="copyToLockrId">
+                    <md-radio-button ng-disabled="item.locked" value="{{item.id}}" class="md-v2" style="margin-left: 0;" ng-repeat="item in currentLockrsData">{{item.name}} <i class="mdi mdi-lock-outline icon-size-1" ng-show="item.locked"></i></md-radio-button>
+                </md-radio-group>
+
+            </div>
+
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary download-btn" ng-disabled="isLoadingLockrsData || currentLockrsData.length === 1 || isLocked" ng-click="startCopyAssets()" style="margin-right:20px;padding: 0 20px;">
+                COPY
+            </md-button>
+        </div>
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isCopying">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

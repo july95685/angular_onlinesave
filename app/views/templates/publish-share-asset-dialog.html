@@ -1,0 +1,77 @@
+<div>
+    <div class="mobile-header md-whiteframe-4dp">
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" style="background-color: white;">
+                <md-button style="margin-left: 0;padding-left: 0;width: 30px;" class="md-icon-button" ng-click="hide()" aria-label="Hide">
+                    <md-icon><i class="mdi mdi-close tb-icon"></i></md-icon>
+                </md-button>
+                <span style="color: #3a3a3a;">
+                    Publish and Share Asset
+                </span>
+            </div>
+        </md-toolbar>
+    </div>
+
+    <md-content class="dal-scroll-container">
+        <div class="md-padding" layout-align="column">
+            <h3 class="primary">{{assetTitle}}</h3>
+            <div layout="row">
+                <md-switch class="dal-primary" ng-model="events.publish" aria-label="publish asset">
+                    Publish
+                </md-switch>
+                <span flex></span>
+                <md-switch class="dal-primary" ng-model="events.share" aria-label="share asset">
+                    Share
+                </md-switch>
+            </div>
+
+            <md-divider></md-divider>
+            <div layout="column" ng-style="{'opacity':events.share ? 1 : 0.5,'pointer-events':events.share ? 'auto' : 'none'}">
+                <h5 style="margin:25px 0;" class="primary">CREATE NEW POST FOR SHARING</h5>
+                <div layout="column">
+                    <form novalidate layout="column">
+                        <md-input-container style="margin-bottom: 0;">
+                            <input name="title" ng-model="shareEntity.title" placeholder='ADD TITLE'>
+                        </md-input-container>
+                        <md-input-container style="margin-bottom: 0;">
+                            <input name="description" ng-model="shareEntity.text" placeholder='DESCRIPTION'>
+                        </md-input-container>
+                        <md-input-container style='margin-bottom: 0;'>
+                            <input name="message" ng-model="shareEntity.shareMsg" placeholder='MESSAGE'>
+                        </md-input-container>
+                    </form>
+
+                    <div layout="row" style="padding-top: 8px;">
+                        <span>Sharing Rule :</span>
+                        <span class="dal-h-spacing-normal"></span>
+                        <span class="v2-color">{{sharingRule.name || 'No available sharing rule'}}</span>
+                    </div>
+
+                    <share-on-list change-callback="changeCallback(items)" social-channels="socialChannels"></share-on-list>
+                </div>
+            </div>
+            <div layout="row">
+                <span flex></span>
+                <md-button ng-click="publishAsset()" class="dal-btn dal-btn-primary" ng-if="!events.share && events.publish">PUBLISH</md-button>
+                <md-button ng-click="schedulePostForMobile()" ng-if="events.share" class="dal-btn">
+                        <span layout="row" layout-align="start center">
+                            <i class="mdi mdi-clock icon-size-2"></i>
+                            <span>Schedule Post</span>
+                        </span>
+                </md-button>
+                <md-button ng-if="events.share" ng-click="shareAsset()" class="dal-btn dal-btn-primary">SHARE NOW</md-button>
+            </div>
+        </div>
+    </md-content>
+
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+
+
+
+</div>

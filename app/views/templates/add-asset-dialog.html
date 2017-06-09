@@ -1,0 +1,123 @@
+<md-dialog class="add-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Add new asset</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="upload_asset_form" role="form" novalidate>
+        <md-dialog-content style="padding-top:10px;">
+            <md-input-container flex ng-class="{'md-input-invalid':(upload_asset_form.name.$invalid && upload_asset_form.name.$dirty) || (upload_asset_form.name.$error.required && submitted)}">
+            <label>Name</label>
+            <input name="name" ng-model="currentEntity.name" required>
+            <div ng-messages="upload_asset_form.name.$error" ng-show="upload_asset_form.name.$dirty || submitted">
+                <div ng-message="required" ng-show="upload_asset_form.name.$error.required">This is required!</div>
+            </div>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Description</label>
+                <input name="description" ng-model="currentEntity.description">
+            </md-input-container>
+            <md-input-container flex>
+                <label>Share message</label>
+                <input name="shareMsg" ng-model="currentEntity.shareMsg">
+            </md-input-container>
+            <md-input-container flex>
+                <label>Tags (tag,tag2,tag3,...)</label>
+                <input name="tags" ng-model="currentEntity.tags">
+            </md-input-container>
+            <md-input-container >
+                <label>Select a lockr</label>
+                <md-select ng-model="otherLockrId" ng-disabled="isCreateSublockr">
+                    <md-option ng-repeat="sublockr in canSelectedSublockrs" ng-value="sublockr.id">
+                        {{sublockr.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <div style="display: inline-block;">
+                <md-switch style="margin-left: 0;" ng-model="currentEntity.draft" aria-label="Switch">
+                    Draft (Dont publish):
+                </md-switch>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div class="md-raised file-upload-btn" style="text-transform: none; margin-left: 0;padddng:0 15px;" ngf-select ng-model="myAsset" name="content">Browse file</div>
+                <span class="file-input-name">{{fileName}}</span>
+                <span style="color: rgb(244,67,54);" ng-show="noSelectFile && submitted">please select a file !</span>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div>or you can</div>
+                <div style="display: inline-block;">
+                    <md-switch style="margin-left: 0;" ng-model="isCreateSublockr" aria-label="Switch">
+                        Create sublockr
+                    </md-switch>
+                </div>
+                <div ng-show="isCreateSublockr">
+
+                        <div layout="row">
+                            <div flex="55">
+                                <md-input-container flex>
+                                    <label>Lockr Name</label>
+                                    <input name="title" ng-model="currentLockrEntity.name">
+
+                                    <!--<div ng-messages="create_lockr_form.title.$error" ng-show="create_lockr_form.title.$dirty || submitted">-->
+                                        <!--<div ng-message="required" ng-show="create_lockr_form.title.$error.required">This is required!</div>-->
+                                    <!--</div>-->
+
+                                </md-input-container>
+                            </div>
+                            <div flex></div>
+                        </div>
+                        <div layout="row">
+                            <div flex="55">
+                                <label style="color: #777;font-size: 12px;padding-left: 3px;">Lockr Description</label>
+                                <div flex style="padding-left: 1px;">
+                                    <textarea aria-label="description" style="border:1px solid rgba(0,0,0,0.12);;width:100%;outline:none;height:120px;resize: none;overflow: scroll;" ng-model="currentLockrEntity.description"></textarea>
+                                </div>
+                            </div>
+                            <div flex>
+                                <div style="padding-left:20px;">
+                                    <label style="color: #777;font-size: 12px;padding-left: 3px;">Select your lockr type</label>
+                                    <md-input-container>
+                                        <md-select ng-model="createType" style="padding-top: 5px;">
+                                            <md-option value="normal">Normal</md-option>
+                                            <md-option value="private">Private</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+
+
+
+                <!--<md-button style="text-transform: none;margin-left:0;" class="v2-color" ng-click="toCreateLockr()">Create a sublockr</md-button>-->
+            </div>
+
+
+
+
+
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="uploadAsset()" style="margin-right:20px;padding: 0 20px;">
+                ADD ASSET
+            </md-button>
+        </div>
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <!--<img style="position: absolute; left: 50%; top: 50%;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);transform: translate(-50%,-50%);" src="images/loading-icon.gif">-->
+        <div layout="row" layout-sm="column" layout-align="center center" style="top: 50%;position: absolute;
+        left: 50%;
+        transform: translate(-50%,-50%);">
+            <md-progress-circular md-mode="determinate" class="md-v2" value="{{determinateValue}}"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

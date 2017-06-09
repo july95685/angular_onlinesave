@@ -1,0 +1,43 @@
+<div class="modal fade" id="select-asset-modal" tabindex="-1" role="dialog" aria-labelledby="Select asset">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+                    <h2 class="v2-color">Select asset(s)</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="cancel()">
+                        <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div style="padding: 20px;">
+                <h5 ng-show="assets.length === 0" style="text-align: center;">No assets</h5>
+                <md-grid-list
+                        md-cols="2"
+                        md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+                        md-row-height-gt-md="1:1" md-row-height="2:2"
+                        md-gutter="12px" md-gutter-gt-sm="8px">
+                    <md-grid-tile ng-repeat="item in assets | filter : {mimeType:'image/'}" ng-click="selectItem($event,item)"  md-rowspan="2" md-colspan="2" style="overflow: hidden;cursor: pointer;outline: none;">
+                        <img ng-src="{{item.thumbnailUrl}}" style="width: 100%;height: auto;position: absolute;top: 0;left:0;">
+
+                        <md-grid-tile-footer>
+                            <h3>{{item.name}}</h3>
+                        </md-grid-tile-footer>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+
+            <div class="md-actions clearfix" style="background-color: #EDEDED;">
+                <div class="pull-right" style="width: 100%;">
+                    <md-button class="md-raised md-primary pull-right" ng-disabled="canSubmit()"  ng-click="commitSelect()" style="margin-right:20px;padding: 0 20px;">
+                        SHARE
+                    </md-button>
+                    <div class="v2-color form-close pull-right" ng-click="cancel()">
+                        CANCEL
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

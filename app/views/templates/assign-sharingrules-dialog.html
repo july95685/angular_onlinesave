@@ -1,0 +1,36 @@
+<md-dialog aria-label="Add Account" class="add-account-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Assign Sharing Rules</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <div layout="row" layout-align="center center">
+            <label style="color: #777;font-size: 12px;padding-left: 3px;padding-right:10px;position: relative;top: 8px;">Select Sharing Rules</label>
+            <md-input-container>
+                <md-select ng-model="assignSharingRules.ruleId" style="padding-top: 5px;">
+                    <md-option value="{{rule.id}}" ng-repeat="rule in allSharingRules">{{rule.name}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+        <div class="v2-color form-close" ng-click="answer()">
+            CANCEL
+        </div>
+        <md-button class="md-raised md-primary" ng-click="toAssign()" style="margin-right:20px;padding: 0 20px;">
+            UPDATE
+        </md-button>
+    </div>
+
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

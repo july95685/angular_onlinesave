@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dlAuthorize">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0">
+    <title>daLockr login</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.1/angular-material.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+
+    <style type="text/css">
+        body{
+            background: url("images/bg.jpg") no-repeat fixed;
+            background-size: cover;
+        }
+        .dl-all{
+            background-color: #0064bf;
+            color: #FFFFFF;
+        }
+        .scroll-box{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: scroll;
+        }
+        .auth-wrapper{
+            width: 360px;
+            background-color: white;
+            margin-top: 60px;
+            margin-bottom: 80px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .active-btn{
+            background-color: #1EB6E1 !important;
+            color: white !important;
+            width: 100%;
+            margin: 0;
+            margin-top: 20px;
+        }
+        .dl-logo{
+            background-color: #0064bf;
+            height: 130px;
+            padding:20px 0 15px 0;
+            text-align: center;
+        }
+        .dl-logo > img{
+            width: 290px;
+        }
+        .dl-register-logo{
+            background-color: #0064bf;
+            height: 130px;
+            padding:20px 0 15px 0;
+            text-align: center;
+        }
+        .dl-register-logo > img{
+            width: 240px;
+        }
+        .dl-form{
+            padding:0 5px;
+        }
+        md-toast.md-default-theme{
+            color: rgb(255,255,255);
+            font-weight: 500;
+            font-size: 14px;
+            background-color: rgb(255,87,34);
+        }
+        .disable-user-interface{
+            pointer-events: none;
+        }
+        .other-way-icon i.fa{
+            padding:5px;
+            cursor: pointer;
+        }
+        button > span{
+            text-transform: none;
+        }
+        .mb-ton{
+            color: #30cdff;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .dl-input{
+            border-color: rgba(200,200,200,0.5) !important;
+        }
+        .dl-bton{
+        background-color: #FFFFFF  !important;  color:#0064bf  !important;
+        }
+    </style>
+</head>
+<body>
+
+<div ng-controller="MainCtrl as main" class="scroll-box">
+    <div layout="row" layout-align="center center">
+        <md-whiteframe class="auth-wrapper md-whiteframe-2dp">
+            <div ng-show="main.loginPage" ng-controller="LoginCtrl as login" class="dl-all">
+                <div layout="column">
+                    <div flex="1">
+                        <div style="width:100%; height: 40px"></div>
+                    </div>
+                    <div flex="1" style="margin-bottom: 50px;">
+                        <div class="dl-logo">
+                            <img src="images/login-header.png">
+                            <!--<span style="vertical-align: bottom;position: relative;bottom: 14px;color:white;">V{{currentVersion}}</span>-->
+                        </div>
+                    </div>
+                    <div flex="1" class="dl-form">
+                        <md-content class="dl-all md-padding" >
+                            <form name="dlLoginForm" ng-submit="login.startLogin()" ng-class="{'disable-user-interface':login.isLogining}">
+                                <md-input-container class="md-block">
+                                    <label class="dl-all">Username</label>
+                                    <input class="dl-input" type="text" name="username" ng-model="login.loginInfo.username" required>
+                                    <div ng-messages="dlLoginForm.username.$error" ng-if="!dlLoginForm.username.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="dl-all md-block" >
+                                    <label class="dl-all">Password</label>
+                                    <input  class="dl-input" type="password" name="password" ng-model="login.loginInfo.password" required>
+                                    <div ng-messages="dlLoginForm.password.$error" ng-if="!dlLoginForm.password.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-button style="display: none;"></md-button>
+                                <div layout="row" layout-align="center center">
+                                    <md-button class="mb-ton" ng-click="main.toRegisterOrLogin()">Register Now</md-button>
+                                    <span flex></span>
+                                    <md-button class="mb-ton" ng-click="main.toForgotpassword()">Forgot password</md-button>
+                                </div>
+                                <md-button class="dl-bton md-raised active-btn">{{login.isLogining ? 'Login...' : 'Login'}}</md-button>
+                            </form>
+
+                            <!--<div layout="row" layout-align="center center" style="margin-top: 10px;">-->
+                                <!--<md-button ng-click="main.toRegisterOrLogin()">Register</md-button>-->
+                            <!--</div>-->
+                        </md-content>
+                        <!--<div style="margin-bottom:10px;">-->
+                             <!--<span style="font-size: 20px;display:block;color:#9b9ba2; text-align: center;">or</span>-->
+                        <!--<span style="font-size: 20px;display:block;color:#9b9ba2; text-align: center;">Use your social account</span>-->
+                        <!--<div class="other-way-icon" style="padding:15px;text-align: center; font-size:30px;">-->
+                            <!--<a style="display: inline-block; outline:none;" ng-click="loginWithSocial('facebook')"><i class="fa fa-facebook-official"></i></a>-->
+                            <!--<a style="display: inline-block; outline:none;" ng-click="loginWithSocial('google')"><i class="fa fa-google-plus-square"></i></a>-->
+                            <!--<a style="display: inline-block; outline:none;" ng-click="loginWithSocial('linkedin')"><i class="fa fa-linkedin-square"></i></a>-->
+                            <!---->
+                        <!--</div>-->
+                       <!--</div>-->
+                    </div>
+                    <div flex="1">
+                       <div style="width:100%; height: 80px"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-show="!main.loginPage" ng-controller="RegisterCtrl as register">
+                <div layout="column">
+                    <div flex="1">
+                        <div class="dl-register-logo">
+                            <img src="images/login-header.png">
+                        </div>
+                    </div>
+                    <div flex="1">
+                        <md-content class="md-padding">
+                            <form name="dlRegisterForm" ng-submit="register.startRegister()" ng-class="{'disable-user-interface':register.isRegistering}">
+                                <md-input-container class="md-block">
+                                    <label>firstName</label>
+                                    <input type="text" name="firstName" ng-model="register.registerInfo.firstName" required>
+                                    <div ng-messages="dlRegisterForm.firstName.$error" ng-if="!dlRegisterForm.firstName.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>lastName</label>
+                                    <input type="text" name="lastName" ng-model="register.registerInfo.lastName" required>
+                                    <div ng-messages="dlRegisterForm.lastName.$error" ng-if="!dlRegisterForm.lastName.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Username</label>
+                                    <input type="text" name="username" ng-model="register.registerInfo.username" required>
+                                    <div ng-messages="dlRegisterForm.username.$error" ng-if="!dlRegisterForm.username.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Email</label>
+                                    <input type="email" name="email" ng-model="register.registerInfo.email" required>
+                                    <div ng-messages="dlRegisterForm.email.$error" ng-if="!dlRegisterForm.email.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="email">Your email address is invalid.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Password</label>
+                                    <input type="password" name="password" ng-model="register.registerInfo.password" required>
+                                    <div ng-messages="dlRegisterForm.password.$error" ng-if="!dlRegisterForm.password.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="rePassword" confirm-passwd real-password="register.registerInfo.password" ng-model="register.rePassword" required>
+                                    <div ng-messages="dlRegisterForm.rePassword.$error" ng-if="!dlRegisterForm.rePassword.$untouched">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="passwordSame">Not same with your password.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-button class="md-raised active-btn" style="background-color:#0064bf  !important">{{register.isRegistering ? 'REGISTER...' : 'REGISTER'}}</md-button>
+                            </form>
+                            <div layout="row" layout-align="center center" style="margin-top: 10px;">
+                                <md-button ng-click="main.toRegisterOrLogin()">Login</md-button>
+                            </div>
+                        </md-content>
+                        
+                    </div>
+                    </div>
+                </div>
+        </md-whiteframe>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.1/angular-material.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+
+<script type="text/javascript">
+
+    angular.module('dlAuthorize',['ngMaterial','ngMessages'])
+            .controller('MainCtrl',MainCtrl)
+            .controller('LoginCtrl',LoginCtrl)
+            .controller('RegisterCtrl',RegisterCtrl)
+            .service('userServices',userServices)
+            .service('toaster',toaster)
+            .directive('confirmPasswd',confirmPasswd)
+            .constant('authConfig',{
+               API_ADDRESS:'https://account.dalockr.com'
+            });
+
+    function MainCtrl(){
+        var self = this;
+        self.loginPage = true;
+        self.toRegisterOrLogin = function () {
+            self.loginPage = !self.loginPage;
+        }
+    }
+
+    function LoginCtrl($scope,userServices,toaster,authConfig){
+        var self = this;
+
+        self.isLogining = false;
+        self.loginInfo = {
+            username:'',
+            password:''
+        };
+        self.startLogin = function () {
+
+            if($scope.dlLoginForm.$invalid) return;
+            self.isLogining = true;
+            userServices.loginWithUserInfo(self.loginInfo)
+                    .then(function () {
+                        window.location.replace( authConfig.API_ADDRESS + "/api/oauth/authorize?"+userServices.urlParams());
+                    }).
+                    catch(function (error) {
+                        toaster.error(error.data.message);
+                        self.isLogining = false;
+
+                    });
+
+        }
+        $scope.loginWithSocial = function(name){
+
+            var url = null;
+            var ru =  encodeURIComponent( authConfig.REDIRECT_URL_ADDRESS + '#/login');
+
+            if(name === 'facebook'){
+              url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/Facebook?redirectUri=' + ru;
+            } else if(name === 'google'){
+              url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/Google?redirectUri=' + ru;
+            } else if(name === 'linkedin'){
+              url = authConfig.API_ADDRESS + '/api/dalockrv2/auth/social/channel/LinkedIn?redirectUri=' + ru;
+            } 
+            window.location.href = url;
+
+      };
+    }
+
+    function RegisterCtrl($scope,userServices,toaster,authConfig){
+        var self = this;
+        var clusterId;
+
+        self.isRegistering = false;
+        self.registerInfo = {
+            firstName:'',
+            lastName:'',
+            username:'',
+            email:'',
+            password:''
+        };
+        self.rePassword = '';
+
+        self.startRegister = function () {
+
+            if($scope.dlRegisterForm.$invalid) return;
+            self.isRegistering = true;
+            if(clusterId = userServices.getParameterByName('clusterId')){
+                self.registerInfo.clusterId = clusterId;
+            }
+            userServices.registerWithUserInfo(self.registerInfo).then(function () {
+                window.location.replace( authConfig.API_ADDRESS + "/api/oauth/authorize?"+userServices.urlParams());
+            }).catch(function (error) {
+                toaster.error(error.data.message);
+                self.isRegistering = false;
+            });
+
+        }
+    }
+
+    function userServices($http, $location,authConfig){
+
+        var apiAddress = authConfig.API_ADDRESS + '/api/user/';
+
+        function loginWithUserInfo(userInfo){
+            var loginUrl = apiAddress + 'login';
+            return $http.post(loginUrl, userInfo);
+        }
+
+        function registerWithUserInfo(userInfo){
+            var registerUrl = apiAddress + 'register';
+            return $http.post(registerUrl, userInfo);
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(window.location.search);
+            return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        return {
+            loginWithUserInfo:loginWithUserInfo,
+            registerWithUserInfo:registerWithUserInfo,
+            getParameterByName:getParameterByName,
+            urlParams: function () {
+                return window.location.href.split('?')[1];
+            }
+        }
+    }
+
+    function confirmPasswd(){
+        return {
+            restrict: 'A',
+            require: '^ngModel',
+            scope:{
+                realPassword:'=realPassword'
+            },
+            link: function(scope, element, attrs, ngModelCtrl) {
+                ngModelCtrl.$parsers.push(function (value) {
+                    if(value === scope.realPassword){
+                        ngModelCtrl.$setValidity('passwordSame', true);
+                    } else {
+                        ngModelCtrl.$setValidity('passwordSame', false);
+                    }
+                    return value;
+                })
+
+
+            }
+        };
+    }
+
+    function toaster($mdToast){
+
+        var last = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+        var toastPosition = angular.extend({},last);
+
+        function getToastPosition() {
+            sanitizePosition();
+            return Object.keys(toastPosition)
+                    .filter(function(pos) { return toastPosition[pos]; })
+                    .join(' ');
+        }
+        function sanitizePosition() {
+            var current = toastPosition;
+            if ( current.bottom && last.top ) current.top = false;
+            if ( current.top && last.bottom ) current.bottom = false;
+            if ( current.right && last.left ) current.left = false;
+            if ( current.left && last.right ) current.right = false;
+            last = angular.extend({},current);
+        }
+
+        function toastError(text){
+            $mdToast.show(
+                    $mdToast.simple()
+                            .content(text)
+                            .position(getToastPosition())
+                            .hideDelay(3000)
+            );
+        }
+
+        return {
+            error:toastError
+        }
+    }
+
+
+</script>
+</body>
+</html>

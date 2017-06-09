@@ -1,0 +1,24 @@
+<div class="mobile-asset-region mobile-account-region" scroll-me-fixed-bar>
+    <lockr-details-navbar class="m-fixed-navbar" path-data="pathData" asset-menu="true" ></lockr-details-navbar>
+    <div style="margin: 65px 10px 0 10px;">
+        <asset-details-fixed-menu ng-hide="true" current-asset-id="currentAssetId" current-asset-details="currentAssetDetails"></asset-details-fixed-menu>
+        <div ng-if="currentAssetDetails">
+            <asset-details-top current-asset-details="currentAssetDetails" media-type="{{mediaType}}" current-asset-id="{{currentAssetId}}"></asset-details-top>
+            <asset-details-bottom current-asset-details="currentAssetDetails" current-asset-id="currentAssetId"></asset-details-bottom>
+        </div>
+
+        <div ng-if="currentAssetDetails == null" class="text-center" style="margin-top: 100px;">
+            <div layout="row" layout-sm="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+    <!--<div class="dal-fab-btn" style="position: absolute;background-color:transparent;right:0;z-index:4;bottom:0;height:70px;width: 80px;overflow: hidden;">-->
+        <!--<div style="position: relative;">-->
+            <!--<md-button aria-label="menu" class="md-fab" ng-click="openRobot()">-->
+                <!--<i style="font-size:24px;color:#006fd5;" class="mdi vertical-align-middle mdi-robot"> </i>-->
+            <!--</md-button>-->
+            <!--<div class="fb-background"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

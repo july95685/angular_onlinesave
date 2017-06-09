@@ -1,0 +1,242 @@
+<div class="max-990 mobile-account-region">
+    <div style="background-color:#f5f5f5;padding-top: 15px" layout="column" layout-align="start center">
+        <div style="width:92%;" ng-class="{'align-self':mobileDevice}">
+            <div id="profile-upload-avatar-area"  style="height:100%;min-height:220px;padding-top:10px;background-color: #f5f5f5;" layout="column" layout-align="center center">
+                <div style="overflow: hidden;">
+                    <img ng-src="{{userAvatarPreview}}" style="height: 220px;" alt="avatar">
+                </div>
+                <span style="padding-top: 16px;"></span>
+                <i class="mdi mdi-pencil" style="position:absolute;top: 20px;right:20px;font-size: 23px;"></i>
+                <input id="profile-upload-avatar-input" accept="image/*" type="file" class="hidden">
+            </div>
+        </div>
+        <div style="background-color:#fff;width: 92%;margin-top: 10px;">
+            <div class="m-tabs m-tabs-normal" layout="row" style="padding-top: 16px;background-color: #fff;">
+                <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('info')" ng-class="{'active':currentTabItem === 'info'}"  layout-align="center center">
+                    <i class="mdi black-icon dalello-icon-info_black" style="color:#000;"  ng-class="{'active':currentTabItem === 'info'}"></i>
+                </div>
+                <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('role')" ng-class="{'active':currentTabItem === 'role'}"  layout-align="center center">
+                    <i class="mdi black-icon mdi-account-circle"  style="color:#000;" ng-class="{'active':currentTabItem === 'role'}"></i>
+                </div>
+                <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('channels')" ng-class="{'active':currentTabItem === 'channels'}"   layout-align="center center">
+                    <i class="mdi black-icon dalello-icon-social_channels_black" style="color:#000;" ng-class="{'active':currentTabItem === 'channels'}" ></i>
+                </div>
+            </div>
+            <div class="content" style="background-color: #fff;" ng-if="currentTabItem === 'info'">
+                <div class="md-padding" layout="column">
+                    <div ng-if="!EditUser">
+                        <div layout="row">
+                            <div layout="column" style="width: 90%;margin-top: 5px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">
+                                <span style="color:rgba(0,0,0,0.38);font-size: 11px;">First Name</span>
+                                <div layout="row" style="width: 100%;;" layout-align="start center">
+                                    <span style="color: #006fd5;font-size: 16px;font-weight: bold;">{{userDetailsData.firstName}}</span>
+                                </div>
+                            </div>
+                            <i class="mdi mdi-pencil"  style="font-size: 22px;margin-left: 10px;" ng-click="mbEditUser()"></i>
+                        </div>
+                        <div layout="column" style="width: 100%;margin-top: 20px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">
+                            <span style="color:rgba(0,0,0,0.38);font-size: 11px;">Last Name</span>
+                            <div layout="row" style="width: 100%;;" layout-align="start center">
+                                <span style="color: #006fd5;font-size: 16px;font-weight: bold;">{{userDetailsData.lastName}}</span>
+                            </div>
+                        </div>
+                        <div layout="column" style="width: 100%;margin-top: 20px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">
+                            <span style="color:rgba(0,0,0,0.38);font-size: 11px;">Email</span>
+                            <div layout="row" style="width: 100%;;" layout-align="start center">
+                                <span style="font-size: 13px;">{{userDetailsData.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="EditUser">
+                        <form name="profile_change_form" role="form" novalidate>
+                            <md-input-container style="margin-bottom: 0;width: 100%;">
+                                <label style="margin-bottom: 0;">First Name</label>
+                                <input name="firstname" ng-model="userDetailsData.firstName">
+                                <div ng-messages="profile_change_form.firstname.$error">
+                                    <div ng-message="required">This is required !</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container style="margin-bottom: 0;width: 100%;margin-top: -6px;">
+                                <label style="margin-bottom: 0;">Last Name</label>
+                                <input name="lastname" ng-model="userDetailsData.lastName">
+                                <div ng-messages="profile_change_form.lastname.$error">
+                                    <div ng-message="required">This is required !</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container style="margin-bottom: 0;width: 100%;margin-top: -6px;">
+                                <label style="margin-bottom: 0;">Email</label>
+                                <input name="email" ng-model="userDetailsData.email" required>
+                                <div ng-messages="profile_change_form.email.$error">
+                                    <div ng-message="required">This is required !</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container style="width: 100%;" md-no-float>
+                                <label style="margin-bottom: 0;margin-left: 0;">Phone Number</label>
+                                <input type="text" name="phoneNumber" ng-model="userDetailsData.phoneNumber">
+                            </md-input-container>
+                            <div layout="row">
+                                <span style="color: #006fd5;font-size: 16px;margin-right: 15px;font-weight: bold;" ng-click="closeEditUser()">Back</span>
+                                <span flex></span>
+                                <span style="color: #006fd5;font-size: 16px;margin-right: 15px;font-weight: bold;" ng-click="updateUser()">Save</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div flex>
+                        <md-button style="margin:16px 0 0 0;" ng-click="changePassWord()" class="dal-btn dal-btn-accent accent-small-btn">
+                            CHANGE PASSWORD
+                        </md-button>
+                    </div>
+
+
+                    <div flex layout="column" ng-show="mbChangePwd">
+                        <md-input-container style="margin-bottom: 0;width: 100%;">
+                            <label>Old password</label>
+                            <input name="title" ng-model="mbChangePwdData.oldPassword">
+                        </md-input-container>
+                        <md-input-container style="margin-bottom: 0;width: 100%;margin-top: -6px;">
+                            <label>New password</label>
+                            <input name="title" ng-model="mbChangePwdData.newPassword">
+                        </md-input-container>
+                        <md-input-container style="margin-bottom: 0;width: 100%;margin-top: -6px;">
+                            <label>Confirm New password</label>
+                            <input name="title" ng-model="mbChangePwdData.confirmNewPassword">
+                        </md-input-container>
+                        <div layout="row">
+                            <span style="color: #006fd5;font-size: 16px;margin-right: 15px;font-weight: bold;" ng-click="changePassWord()">Back</span>
+                            <span flex></span>
+                            <span style="color: #006fd5;font-size: 16px;margin-right: 15px;font-weight: bold;" ng-click="SaveNewPsd()">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <md-content class="content" style="background-color: #fff;" ng-if="currentTabItem === 'role'">
+                <div  class="md-padding" layout="column"  ng-class="{'container':!mobileDevice}">
+                   <div ng-if="item.isManager" layout="row" layout-align="start center" style="padding-bottom: 20px;" ng-repeat="item in accounts">
+                       <img  ng-src="{{item.thumbnailUrl}}" style="width: 35px;height: 35px;border-radius: 50%;"/>
+                       <div  layout="column" style="max-width: 170px;margin-left: 15px;" layout-align="center start">
+                           <span style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#006fd5;line-height:16px;font-size: 16px;">{{item.name}}</span>
+                           <span  style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 12px;line-height:16px;color:#9b9b9b;">Account manager</span>
+                       </div>
+                       <span flex></span>
+                       <i ng-click="deleteAccount(item)" class="mdi mdi-close" style="font-size: 25px;color: #000;" ></i>
+
+                   </div>
+                    <div layout="row" layout-align="start center" style="padding-bottom: 20px;" ng-repeat="item in userData.enterpriseLockrRoles">
+                        <img ng-src="{{item.img}}" style="width: 35px;height: 35px;border-radius: 50%;"/>
+                        <div  layout="column" style="max-width: 170px;margin-left: 15px;" layout-align="center start">
+                            <span style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#006fd5;line-height:20px;font-size: 16px;">{{item.lockrName}}</span>
+                            <span  style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 12px;line-height:16px;color:#9b9b9b;">{{item.role}}</span>
+                        </div>
+                        <span flex></span>
+                        <i ng-click="openDeleteLockrDialog(item)" class="mdi mdi-close" style="font-size: 25px;color: #000;" ></i>
+
+                    </div>
+
+                </div>
+            </md-content>
+            <md-content class="content" style="background-color: #fff;height:450px;" ng-if="currentTabItem === 'channels'">
+                <div  class="md-padding" layout="column"  ng-class="{'container':!mobileDevice}">
+                    <div layout="row" layout-align="start center">
+                        <span flex></span>
+                        <!--<span style="color:#006fd5;margin-right: 10px;font-size: 15px;" ng-click="updateSocialChannels()">Save</span>-->
+                    </div>
+                    <div style="height: 48px;width: 100%;overflow: scroll;">
+                        <div layout="row" style="width:{{ 40 * channelTypes.length + 'px'}};height: 42px;">
+                            <a ng-click="switchChannelType(type)" ng-class="{'dal-account-info-underline':type.active}"  layout="row" layout-align="center center" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                                <i ng-if="!type.active" style="font-size:22px;color:#000;" class="mdi {{type.iconClass}}"></i>
+                                <i ng-if="type.active" style="font-size:22px;color:#006fd5;" class="mdi {{type.iconClass}}"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div style="margin-top: 6px;">
+                        <md-progress-circular  md-mode="indeterminate" ng-show="!isLoadingChannel"></md-progress-circular>
+                        <div   style="margin-bottom: 10px;display: inline-block;margin-left:15px;" ng-repeat="channel in channelUserData">
+
+                            <div ng-click="chooseSocialChannels(channel)"  layout="row">
+                                <div style="z-index:2;width:30px;height:30px;border-radius: 50%;background-color: #006fd5;">
+                                    <img style="height:30px;border-radius: 50%;" ng-src="{{channel.avatarPic}}"/>
+                                </div>
+                                <div ng-show="!channel.remove" style="margin-left:-15px;height:30px;background-color: #006fd5;color:#fff;">
+                                    <span style="padding: 0 30px;line-height: 30px;">{{channel.name}}</span>
+                                </div>
+                                <div ng-show="channel.remove" style="margin-left:-15px;height:30px;background-color: #9b9b9b;color:#fff;">
+                                    <span style="padding: 0 30px;line-height: 30px;">{{channel.name}}</span>
+                                </div>
+                                <div ng-show="!channel.remove" style="width:30px;margin-left:-15px;height:30px;background-color: #006fd5;z-index:2;border-radius: 50%;">
+                                    <div  style="width:20px;height:20px;border-radius: 50%;background-color: #fff;margin-top:5px;" layout="row" layout-align="center center" ng-click="deleteSC(channel.id)">
+                                        <i  class="mdi mdi-close" style="font-size: 18px;font-weight: bold;" ></i>
+                                    </div>
+                                </div>
+                                <div ng-show="channel.remove" style="width:30px;margin-left:-15px;height:30px;background-color: #9b9b9b;z-index:2;border-radius: 50%;">
+                                    <div  style="border: 2px solid #fff;width:20px;height:20px;border-radius: 50%;background-color: #9b9b9b;margin-top:5px;" layout="row" layout-align="center center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="start start" style="padding-bottom: 20px;">
+                        <collaborators-add-personal></collaborators-add-personal>
+                        <!--<div class="dropdown">-->
+                            <!--<div ng-click="changePassWord()" style="width:135px;background-color: #ffd439;margin: 15px 0;"  layout="row" layout-align="center  center" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">-->
+                                <!--<span  style="color: #006fd5;margin:6px 0;font-size: 10px;font-weight: bold;">ADD PERSONAL CHANNELS</span>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<span id="add-social-channel" data-toggle="dropdown" aria-expanded="true">1111</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<md-button style="margin:0;text-align:center;background:#006fd5;padding:0px 18px;border:0px;color:#fff;" id="add-social-channel" data-toggle="dropdown" aria-expanded="true"> Add new social channel </md-button>&ndash;&gt;-->
+                            <!--<ul class="dropdown-menu" ng-click="preventDefaultEvent($event)"  role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;outline: none;cursor: pointer;">-->
+
+                                <!--<li ng-show="showFacebookPage">-->
+                                    <!--<div style="height: 30px;padding: 0 8px;" layout="row">-->
+                                        <!--<i class="mdi mdi-arrow-left" style="font-size: 24px;" ng-click="showFacebookPage = false"></i>-->
+                                        <!--<span flex></span>-->
+                                        <!--<span>Pages</span>-->
+                                        <!--<span flex></span>-->
+                                    <!--</div>-->
+                                    <!--<div ng-show="loadingPage && showFacebookPage">-->
+                                        <!--<div layout="row" layout-sm="column" layout-align="center center">-->
+                                            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+
+                                <!--<li role="presentation" ng-show="showFacebookPage" ng-repeat="item in needToAddedPages"><a role="menuitem" tabindex="-1"><div layout="row"><span class="vertical-align-middle" layout="row" layout-align="start center">{{item.name}}</span><span flex></span><i style="font-size: 24px;" class="mdi mdi-plus vertical-align-middle" ng-click="addFacebookPage(item)"><md-tooltip>Add page</md-tooltip></i></div></a></li>-->
+                                <!--<li role="presentation" ng-show="showFacebookPage && !loadingPage && !needToAddedPages.length" style="min-height: 50px;"  layout="row" layout-align="center center"><span style="color: #999;font-size:13px;">Not found facebook page</span></li>-->
+
+                                <!--<li role="presentation" ng-show="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook',true)"><md-button>Add Facebook Account</md-button></a></li>-->
+
+
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Google')"><i class="mdi icon-size-1 mdi-youtube-play" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Google &amp; YouTube credentials</a></li>-->
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook')"><i class="mdi icon-size-1 mdi-facebook" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Facebook credentials</a></li>-->
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Twitter')"><i class="mdi icon-size-1 mdi-twitter" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Twitter credentials</a></li>-->
+                                <!--&lt;!&ndash;<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('DropBox')}}"><i class="fa fa-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>&ndash;&gt;-->
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('LinkedIn')"><i class="mdi icon-size-1 mdi-linkedin" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update LinkedIn credentials</a></li>-->
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Pinterest')"><i class="mdi icon-size-1 mdi-pinterest" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Pinterest credentials</a></li>-->
+                                <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Instagram')"><i class="mdi icon-size-1 mdi-instagram" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Instagram credentials</a></li>-->
+
+                                <!--&lt;!&ndash;<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('Evernote')}}"><i style="width:20px;"></i>&nbsp;Add/Update Evernote credentials</a></li>&ndash;&gt;-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    </div>
+
+                </div>
+            </md-content>
+
+
+        </div>
+    </div>
+
+
+    <div layout="row" layout-align="center center" class="loading-center" ng-if="isUpdating">
+        <md-progress-circular  md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+
+    <div>
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular  md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+            <md-button ng-click="reloadData()" ng-show="!isLoading && loadError">load error !  click to reload</md-button>
+        </div>
+    </div>
+
+
+</div>

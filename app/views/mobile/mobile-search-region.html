@@ -1,0 +1,140 @@
+<div>
+    <div class="mobile-header"  layout="row" style="background-color: white;padding: 0 10px;" layout-align="start center">
+        <i class="mdi mdi-magnify"></i>
+        <span style="width: 5px;"></span>
+
+        <form flex name="searchForm" ng-submit="searchContent()" novalidate>
+            <md-input-container  md-no-float class="md-block error-spacer-hide" style="margin: 0;">
+            <input ng-model="searchKeyword" placeholder="Search">
+            </md-input-container>
+        </form>
+
+
+        <span style="width: 10px;"></span>
+        <i class="mdi mdi-close" ng-click="backMainPage()" style="color: #006fd5;"></i>
+    </div>
+    <div class="mobile-account-region">
+
+        <div class="text-center" ng-show="loading" style="margin-top: 100px;">
+            <div layout="row" layout-sm="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+        <div class="text-center" ng-show="noSearchData" style="margin-top: 100px;">
+            <div layout="row" layout-sm="column" layout-align="center center">
+               <p style="font-size: 16px;">Sorry, we can't find {{searchKeyword}}.</p>
+            </div>
+        </div>
+
+        <div masonry reload-on-show load-images="false" style="margin:1%;">
+            <div ng-style="marginStyle" ng-repeat="item in searchData | orderBy : 'dateCreated' : true" class="masonry-brick" style="width: 50%;">
+                <div class="card-shadow" ng-click="seeAssetOrLockr({id:item._id, type:item.fileType})"  style="background-color: white;" layout="column">
+                    <!--<div class="image-wrapper" style="position: relative;overflow: hidden;">-->
+                        <!--<div ng-if="item.isChannel" style="height: 165px;width: 100%;" bg="primary"></div>-->
+                        <!--<img width="{{item.tnSize.showWidth}}" height="{{item.tnSize.showHeight}}"  data-ng-src="{{::item.thumbnailUrl}}" style="max-width: 400px;">-->
+                        <!--<md-button aria-label="{{::item.fileType}}" class="md-fab type-icon v2-bg-color md-mini">-->
+                            <!--<i class="mdi vertical-align-middle icon-size-2 {{::item.fileTypeIcon}} white"></i>-->
+                        <!--</md-button>-->
+                    <!--</div>-->
+                    <!--<div  style="overflow: hidden;margin: 15px;">-->
+                        <!--<div class="l-relative">-->
+                            <!--<div layout="row" class="v2-color" layout-align="start center" style="margin-top: 0;margin-bottom:5px;">-->
+                                <!--<span flex style="font-size: 16px;font-weight: normal;padding-right: 8px;" class="md-span-wordwrap" name="assetName">{{::item.name}}</span>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<ul class="list-unstyled clearfix">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<li class="pull-left" style="padding-right: 10px;"><i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i><span class="vertical-align-middle font-size-1">{{::item.dateCreated | date : 'MMMM,d yyyy'}}</span></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+
+                            <!--<p style="padding:10px 0;padding-top:0;color:#555;margin:0;font-size: 12px;position: relative;"> {{::item.description}}</p>-->
+
+                            <!--<div style="padding-top:10px;" layout="row" layout-align="start center">-->
+                                <!--<ul class="list-unstyled" layout="row" style="margin: 0;">-->
+                                    <!--<li ng-repeat="channel in item.socialChannelView"><i class="mdi icon-size-1 {{::channel}}"></i></li>-->
+                                <!--</ul>-->
+                                <!--<div layout="row" flex layout-align="start center">-->
+                                    <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<i ng-show="item.iscontent || item.iscommunity" style="font-size: 14px;padding-bottom:6px;padding-right:5px;" class="mdi mdi-account"></i>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<span style="padding-bottom:6px;font-size:13px;" ng-show='::item.iscontent'>content manager</span>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<span style="padding-bottom:6px;font-size:13px;" ng-show='::item.iscommunity'>community manager</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--<span flex></span>-->
+                                    <!--<div style="padding-right: 8px;" layout="row" layout-align="start center">-->
+                                        <!--<i style="color: #f27065;padding-right: 5px;font-size:13px;" class="mdi mdi-heart icon-size-1"></i>-->
+                                        <!--<span class="font-size-1">{{::item.numberOfFollowers || 0}}</span>-->
+                                    <!--</div>-->
+                                    <!--<div  layout="row" layout-align="start center">-->
+                                        <!--<i style="padding-right: 5px;" class="mdi mdi-message-processing icon-size-1"></i>-->
+                                        <!--<span class="font-size-1">{{::item.numberOfComments || 0}}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="card-action-more" layout="row" layout-align="end center">
+                        <md-button aria-label="open select action" ng-click="openEntityMoreAction($event,item)" class="dal-btn">
+                            <i class="mdi mdi-dots-horizontal tb-icon icon-size-2"></i>
+                        </md-button>
+                    </div>
+
+                    <div class="image-wrapper" style="position: relative;overflow: hidden;">
+                        <div ng-if="item.isChannel" style="height: 165px;width: 100%;" bg="primary"></div>
+                        <div layout="row" layout-align="end start">
+                            <img on-error ng-if="!item.changeTH" width="{{item.tnSize.showWidth}}" height="{{item.tnSize.showHeight}}"  data-ng-src="{{::item.thumbnailUrl}}" style="max-width: 400px;">
+
+
+
+                            <div ng-if="item.changeTH" style="width: 100%;height: 110px;background-color:#30CDFF; "></div>
+                        </div>
+                        <md-button aria-label="{{::item.fileType}}" class="md-fab type-icon v2-bg-color md-mini" style="padding: 0;">
+                            <i ng-if="item.fileTypeIcon == 'dal-icon-mylocker_black'" class="mdi vertical-align-middle icon-size-2 dalello-icon-sub_locker_black white"></i>
+                            <i ng-if="item.fileTypeIcon != 'dal-icon-mylocker_black'" class="mdi vertical-align-middle icon-size-2 {{::item.fileTypeIcon}} white"></i>
+                        </md-button>
+                    </div>
+                    <div  style="overflow: hidden;margin: 15px;">
+                        <div>
+                            <div layout="row" class="v2-color" layout-align="start center" layout-wrap style="margin-top: 0;margin-bottom:5px;">
+                                <span flex style="font-size: 16px;font-weight: normal;padding-right: 8px;" class="md-span-wordwrap" >{{::item.name}}</span>
+                            </div>
+                            <ul class="list-unstyled clearfix" style="margin-bottom: 0;">
+                                <li class="pull-left" style="padding-right: 10px;">
+                                    <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i>
+                                    <span class="vertical-align-middle font-size-1" style="font-size: 10px;">{{::item.dateCreated | date : 'dd MMM yyyy'}}</span>
+                                </li>
+                            </ul>
+
+                            <p style="padding:0;color:#555;margin:0;font-size: 12px;"> {{::item.description}}</p>
+
+                            <div style="padding-top:10px;" layout="row" layout-align="start center">
+                                <ul class="list-unstyled" layout="row" style="margin: 0;">
+                                    <li ng-repeat="channel in item.socialChannelView"><i class="mdi icon-size-1 {{::channel}}"></i></li>
+                                </ul>
+                                <div layout="row" flex layout-align="start center">
+                                    <div layout="row" layout-align="start center">
+                                        <i ng-show="item.iscontent || item.iscommunity" style="font-size: 14px;padding-bottom:6px;padding-right:5px;" class="mdi mdi-account"></i>
+                                        <span style="padding-bottom:6px;font-size:11px;" ng-show='::item.iscontent'>Content manager</span>
+                                        <span style="padding-bottom:6px;font-size:11px;" ng-show='::item.iscommunity'>Community manager</span>
+                                    </div>
+                                    <span flex></span>
+
+                                </div>
+                            </div>
+                            <div layout-align="start center" layout="row">
+                                <div  layout="row" layout-align="start center">
+                                    <i style="padding-right: 5px;font-size:18px;" class="mdi dalello-icon-comments_black icon-size-1"></i>
+                                    <span style="font-size: 11px;font-weight: bold;">{{item.numberOfComments || 0}}</span>
+                                </div>
+                                <div style="padding-left: 12px;" layout="row" layout-align="start center">
+                                    <i style="margin-top:2px;font-size:20px;padding-right: 5px;" class="mdi mdi-heart icon-size-1"></i>
+                                    <span style="font-size: 11px;font-weight: bold;">{{::item.numberOfFollowers || 0}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

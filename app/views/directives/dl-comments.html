@@ -1,0 +1,107 @@
+<div class="dl-comments" style="padding-right: 15px;">
+
+
+    <div ng-show="loading">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <div ng-show="notShare" style="padding-top: 60px;" layout="row" layout-sm="column" layout-align="center center">
+        <span style="font-size: 30px;color: #ececec;text-align: center;">This {{entityType === 'lockr' ? 'lockr' : 'asset'}} hasn't been shared yet.</span>
+    </div>
+
+    <div class="comments-list" ng-show="!loading && comments.length">
+        <div ng-hide="mobileDevice" class="comment-today-label">
+            <span>DATE</span>
+        </div>
+        <div class="share-event clearfix" ng-class="{'today-event':($index === 0),'mobile-today-event':(mobileDevice && $index === 0)}" ng-repeat="event in comments | orderBy : 'commentDate' : true">
+            <div class="comment-event-date" ng-if="!mobileDevice && $index > 0">
+                <span>{{event.commentDate  | date : 'dd MMM yyyy'}}</span>
+            </div>
+
+            <div style="width: 100%;padding-left: 40px;position: relative;">
+                <div class="comment-social-icon">
+                    <i ng-repeat="icon in bys(event.by) track by $index" style="font-size: 15px;" class="mdi {{icon.iconClass}}"></i>
+                </div>
+                <div class="v2-color">
+                    <img style="width: 40px;height: 40px;border-radius: 50%;text-align: center;" ng-src="{{getUserPic(event.commentType.toLowerCase(),event)}}">
+                    {{event.byUserFullName}}
+                </div>
+                <div style="color: #777777;"><strong style="font-size: 14px;color: #9b9b9b;">{{event.title}}</strong></div>
+                <div style="color: #777777;"><span style="font-size: 14px;color: #9b9b9b;">{{event.customShareMsg || 'no description'}}</span></div>
+                <div style="padding-bottom: 10px;color: #777777;"><span style="font-size: 14px;color: #9b9b9b;">{{event.message || 'no share message '}}</span></div>
+                <comment-toolbar entity-id="{{entityId}}" entity-type="{{entityType}}" comment-item="event"></comment-toolbar>
+
+                <ul class="list-unstyled hidden" style="padding-top: 15px;" id="comment-list-{{event.id}}">
+
+                    <li>
+                        <reply-text-area comment-id="{{event.id}}" comment-item="event" entity-id="{{entityId}}" entity-type="{{entityType}}"></reply-text-area>
+                    </li>
+                    <li ng-repeat="item in event.comments  | orderBy : 'commentDate' : true" class="clearfix"  style="padding-top: 15px;">
+                        <div class="com-user-pic" style="float: left;margin-right: -80px;width: 80px;text-align: center;">
+                            <img style="width: 40px;height: 40px;border-radius: 50%;text-align: center;" ng-src="{{getUserPic(item.commentType.toLowerCase(),item)}}">
+                        </div>
+                        <div style="width: 100%;padding-left: 80px;float: right;">
+                            <div class="com-time">
+                                <i class="mdi mdi-clock icon-size-1"></i>
+                                <span style="color: #9b9b9b;font-size: 12px;">{{item.commentDate | date : 'dd MMM yyyy'}}</span>
+                                <i style="font-size: 15px;" class="mdi {{bys(item.by)[0].iconClass}}"></i>
+                            </div>
+                            <div class="com-desc">
+                                <p transform-smileys ng-bind="item.message">
+                                    <!--{{item.message}}-->
+                                </p>
+                            </div>
+                            <comment-toolbar entity-id="{{entityId}}" entity-type="{{entityType}}" comment-item="item"></comment-toolbar>
+                            <ul class="list-unstyled hidden"  style="padding-top: 15px;" id="comment-list-{{item.id}}">
+                                <li>
+                                    <reply-text-area comment-id="{{item.id}}" comment-item="item" entity-id="{{entityId}}" entity-type="{{entityType}}"></reply-text-area>
+                                </li>
+                                <li ng-repeat="obj in item.comments  | orderBy : 'commentDate' : true" class="clearfix" style="padding-top: 15px;">
+                                    <div class="com-user-pic" style="float: left;margin-right: -80px;width: 80px;text-align: center;">
+                                        <img style="width: 40px;height: 40px;border-radius: 50%;text-align: center;" ng-src="{{getUserPic(obj.commentType.toLowerCase(),obj)}}">
+                                    </div>
+                                    <div style="width: 100%;padding-left: 80px;float: right;">
+                                        <div class="com-time">
+                                            <i class="mdi mdi-clock icon-size-1"></i>
+                                            <span style="color: #9b9b9b;font-size: 12px;" class="icon-size-1">{{obj.commentDate | date : 'dd MMM yyyy'}}</span>
+                                            <i style="font-size: 15px;" class="mdi {{bys(obj.by)[0].iconClass}}"></i>
+                                        </div>
+                                        <div class="com-desc">
+                                            <p transform-smileys ng-bind="obj.message">
+                                                <!--{{obj.message}}-->
+                                            </p>
+                                        </div>
+                                        <comment-toolbar entity-id="{{entityId}}" reply-to-parent="{{item.id}}" entity-type="{{entityType}}" comment-item="obj"></comment-toolbar>
+
+                                    </div>
+                                </li>
+                                <li ng-show="!item.loadingMore && (item.numberOfComments > 10 && item.comments.length !== item.numberOfComments)">
+                                    <md-button ng-click="loadMoreComments(item)" style="margin-left: 75px;text-transform: none;color: #999;">
+                                        <span>Loading More</span>
+                                    </md-button>
+                                </li>
+                                <li ng-show="item.loadingMore">
+                                    <div style="margin-left: 75px;">
+                                        <md-progress-circular md-diameter="20"></md-progress-circular>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li ng-show="!event.loadingMore && event.numberOfComments > 10 && event.comments.length !== event.numberOfComments">
+                        <md-button ng-click="loadMoreComments(event)" style="margin-left: 75px;text-transform: none;color: #999;">
+                            <span>Loading More</span>
+                        </md-button>
+                    </li>
+                    <li ng-show="event.loadingMore">
+                        <div style="margin-left: 75px;">
+                            <md-progress-circular md-diameter="20"></md-progress-circular>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

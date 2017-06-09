@@ -1,0 +1,158 @@
+<div class="max-990 pc-account-region">
+    <div style="padding-top: 20px;">
+    <div layout-sm="column" layout-xs="column" layout-gt-sm="row" layout-align-sm="center center" ng-show="!isLoading">
+      <div style="width:200px;padding-left: 20px;" ng-class="{'align-self':mobileDevice}">
+        <div style="background:#fff;padding:8px;height:200px;border-radius:4px;cursor: pointer;" class="box-shadow">
+          <div id="profile-upload-avatar-area" style="background:#eaeaea;height:100%;text-align:center;border-radius:4px;position: relative;" layout="column" layout-align="center center">
+              <i class="mdi mdi-pencil" style="position: absolute;right: 6px;top:6px;font-size: 24px;"></i>
+              <div style="width: 120px;height:120px;overflow: hidden;">
+                  <img ng-src="{{userAvatarPreview}}" style="width: 120px;height:120px;border-radius: 50%;" alt="avatar">
+              </div>
+              <!--<md-button ng-click="addPicture()">Add picture</md-button>-->
+              <input id="profile-upload-avatar-input" accept="image/*" type="file" class="hidden">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex" flex style="padding:20px;">
+        <form name="profile_change_form" role="form" novalidate>
+          <md-content layout-padding class="autoScroll" style="padding:8px 0;background:transparent;">
+              <div layout-sm="column" layout-gt-sm="row">
+                  <md-input-container style="width: 100%;" flex md-no-float>
+                      <label style="margin-left: 0;">First name</label>
+                      <input type="text" name="firstName" ng-model="userDetailsData.firstName" required>
+
+                      <div ng-messages="profile_form.firstName.$error">
+                          <div ng-message="required">This is required !</div>
+                      </div>
+                  </md-input-container>
+
+                  <md-input-container  style="width: 100%;" flex md-no-float>
+                      <label style="margin-left: 0;">last name</label>
+                      <input type="text" name="lastName" ng-model="userDetailsData.lastName" required>
+                      <div ng-messages="profile_form.lastName.$error">
+                          <div ng-message="required">This is required !</div>
+                      </div>
+                  </md-input-container>
+
+              </div>
+              <div layout="row">
+                  <md-input-container style="width: 100%;" class="md-icon-float">
+                      <label style="margin-left: 0;">Roles</label>
+                      <input ng-model="userDetailsData.roles" type="text" disabled>
+                  </md-input-container>
+              </div>
+
+            <div layout-sm="column" layout-gt-sm="row">
+                <md-input-container style="width: 100%;" md-no-float>
+                    <label style="margin-left: 0;">Phone Number</label>
+                    <input type="text" name="phoneNumber" ng-model="userDetailsData.phoneNumber">
+                    <!--<div ng-messages="profile_form.phoneNumber.$error">-->
+                        <!--<div ng-message="required">This is required !</div>-->
+                    <!--</div>-->
+                </md-input-container>
+
+                <md-input-container style="width: 100%;" md-no-float>
+                    <label style="margin-left: 0;">Email</label>
+                    <input type="text" name="email" ng-model="userDetailsData.email" required>
+                    <div ng-messages="profile_form.email.$error">
+                        <div ng-message="required">This is required !</div>
+                    </div>
+                </md-input-container>
+            </div>
+          </md-content>
+            <div layout-align-xs="center center" layout="row" layout-align-gt-xs="start center">
+                <md-button  style="background-color: #006fd5;color:white;" ng-click="openChangePwdDialog()">Change Password</md-button>
+            </div>
+
+          <div layout="column">
+              <div layout-align-xs="center center" layout="row" layout-align-gt-xs="start center">
+                  <h4 style="color:#006fd5;font-size:18px;margin-bottom:30px;">Social channels attached to profile</h4>
+              </div>
+
+            <div layout="row" class="layout-row" ng-repeat="item in socialChannelsData">
+              <div style="padding-top: 15px;width:30px;">
+                <i class="mdi {{item[0].class}} vertical-align-middle" style="background:#006fd5;border-radius:50%;color:#fff;font-size:12px;width: 20px;height: 20px;text-align: center;line-height: 20px;"></i>
+              </div>
+                <div layout="row" layout-wrap>
+                    <div style="text-align:center;padding:0 10px;width:100px;display: inline-block;" ng-repeat="subitem in item">
+                        <div layout="row" layout-align="center center" style="width:60px;height:60px;position: relative;">
+                            <img ng-show="subitem.avatarPic" ng-click="removeFbPage(subitem)" class="profile-sc-pic" ng-class="{'remove unselect-channels':subitem.remove}" ng-src="{{subitem.avatarPic}}" >
+                            <span ng-hide="subitem.avatarPic"  ng-click="removeFbPage(subitem)" class="profile-sc-border" ng-class="{'remove  unselect-channels':subitem.remove}" layout="row" layout-align="center center">
+                                <i class="mdi mdi-checkbox-marked-circle-outline vertical-align-middle" style="color:#006fd5;font-size: 24px;"></i>
+                            </span>
+                        </div>
+                        <p style="display:block;height: 40px;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;width: 60px;" >{{subitem.name}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <p style=" color:#47a0db;font-size:12px;padding-top:20px;">Click on thumbnail to activate channels to share assets</p>
+            <p style=" color:#47a0db;font-size:14px;">Channels with <i class="mdi mdi-checkbox-marked-circle-outline vertical-align-middle" style="color:#006fd5;font-size: 14px;"></i>are active channels</p>
+
+
+            <div layout-xs="row" layout-sm="row" layout="column" layout-align-sm="space-between" layout-align-xs="space-between">
+                <div class="dropdown">
+                    <md-button style="margin:0;text-align:center;background:#006fd5;padding:0px 18px;border:0px;color:#fff;" id="add-social-channel" data-toggle="dropdown" aria-expanded="true"> Add new social channel </md-button>
+
+                    <ul class="dropdown-menu" ng-click="preventDefaultEvent($event)"  role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;outline: none;cursor: pointer;">
+
+                        <li ng-show="showFacebookPage">
+                            <div style="height: 30px;padding: 0 8px;" layout="row">
+                                <i class="mdi mdi-arrow-left" style="font-size: 24px;" ng-click="showFacebookPage = false"></i>
+                                <span flex></span>
+                                <span>Pages</span>
+                                <span flex></span>
+                            </div>
+                            <div ng-show="loadingPage && showFacebookPage">
+                                <div layout="row" layout-sm="column" layout-align="center center">
+                                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li role="presentation" ng-show="showFacebookPage" ng-repeat="item in needToAddedPages"><a role="menuitem" tabindex="-1"><div layout="row"><span class="vertical-align-middle" layout="row" layout-align="start center">{{item.name}}</span><span flex></span><i style="font-size: 24px;" class="mdi mdi-plus vertical-align-middle" ng-click="addFacebookPage(item)"><md-tooltip>Add page</md-tooltip></i></div></a></li>
+                        <li role="presentation" ng-show="showFacebookPage && !loadingPage && !needToAddedPages.length" style="min-height: 50px;"  layout="row" layout-align="center center"><span style="color: #999;font-size:13px;">Not found facebook page</span></li>
+
+                        <li role="presentation" ng-show="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook',true)"><md-button>Add Facebook Account</md-button></a></li>
+
+
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Google')"><i class="mdi icon-size-1 mdi-youtube-play" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Google &amp; YouTube credentials</a></li>
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook')"><i class="mdi icon-size-1 mdi-facebook" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Facebook credentials</a></li>
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Twitter')"><i class="mdi icon-size-1 mdi-twitter" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Twitter credentials</a></li>
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('DropBox')}}"><i class="fa fa-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>-->
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('LinkedIn')"><i class="mdi icon-size-1 mdi-linkedin" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update LinkedIn credentials</a></li>
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Pinterest')"><i class="mdi icon-size-1 mdi-pinterest" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Pinterest credentials</a></li>
+                        <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Instagram')"><i class="mdi icon-size-1 mdi-instagram" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Instagram credentials</a></li>
+
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('Evernote')}}"><i style="width:20px;"></i>&nbsp;Add/Update Evernote credentials</a></li>-->
+                    </ul>
+                </div>
+                <span style="height: 10px;" hide-xs hide-sm></span>
+                <md-button style="margin:0;color:#006fd5;max-width: 120px;" ng-click="updateUser()">Save</md-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+      <div layout="row" layout-align="center center" class="loading-center" ng-if="isUpdating">
+          <md-progress-circular></md-progress-circular>
+      </div>
+
+  </div>
+
+
+
+
+
+
+  <!--<div>-->
+    <!--<div layout="row" layout-sm="column" layout-align="center center" style="min-height:400px;">-->
+      <!--<md-progress-circular  md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>-->
+      <!--<md-button ng-click="reloadData()" ng-show="!isLoading && loadError">load error !  click to reload</md-button>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+</div>

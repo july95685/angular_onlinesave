@@ -1,0 +1,758 @@
+<div >
+<div ng-if="!mobileDevice" id="manage-account-view">
+    <div layout="row" class="l-toolbar">
+        <div layout="row" layout-align="start center">
+            <i class="mdi mdi-arrow-left v2-color" ng-click="closeThisManageBox()"></i>
+            <span class="divider-wspace-10"></span>
+            <span class="l-text-nowrap icon-size-20">{{::accountInfo.name}}</span>
+        </div>
+    </div>
+    <div layout="row" style="height: 40px;" ng-class="{'container':!mobileDevice}">
+        <div ng-class="{'active':currentTab === 'info'}" ng-click="switchInfoTab('info')" class="sublockr-info-tab" flex layout="row" layout-align="center center">
+            <i class="mdi mdi-alert-circle"></i>
+        </div>
+        <div ng-class="{'active':currentTab === 'collaborator'}" ng-click="switchInfoTab('collaborator')" class="sublockr-info-tab" flex layout="row" layout-align="center center">
+            <i class="mdi mdi-account-multiple-plus"></i>
+        </div>
+    </div>
+    <md-content class="content" ng-if="currentTab === 'info'">
+            <div class="md-padding" layout="column" ng-class="{'container':!mobileDevice}">
+                <md-input-container>
+                    <label>Account Name</label>
+                    <input name="title" ng-model="currentEntity.name" required>
+                    <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>clusterId</label>
+                    <input name="clusterid" ng-model="currentEntity.clusterId" required>
+                    <div ng-messages="create_account_form.clusterid.$error" ng-show="create_account_form.clusterid.$dirty">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Account License</label>
+                    <md-select ng-model="currentEntity.accountLicenseId" required>
+                        <md-option ng-repeat="state in allLicense" value="{{state.id}}">
+                            {{state.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-switch style="margin-left: 0;" ng-model="currentEntity.allowUserChannels" aria-label="Schedule share">
+                    Allow User Channels
+                </md-switch>
+                <!--<md-switch style="margin-left: 0;" ng-model="currentEntity.trial" aria-label="Schedule share">-->
+                    <!--Trial-->
+                <!--</md-switch>-->
+
+                <div layout="column" class="dal-account-channel-list">
+                    <div ng-if="accountEntity.isManager" layout="row" layout-align="start center">
+                        <span class="font-size-1">Channels : </span>
+                        <md-menu>
+                            <md-button aria-label="Open channels menu" class="dal-btn icon" ng-click="openChannelsMenu($mdOpenMenu, $event)">
+                                <i class="mdi mdi-plus icon-size-2"></i>
+                            </md-button>
+                            <md-menu-content width="4">
+
+                                <md-menu-item ng-repeat="channel in canAddedSocialChannels">
+                                    <md-button ng-click="addSocialChannelForAccount(channel.name)">
+                                        <span layout="row" layout-align="start center">
+                                            <i class="mdi icon-size-2 {{channel.iconClass}}"></i>
+                                            <span class="dal-h-spacing-normal"></span>
+                                            <span>Add/Update {{channel.name}} credentials</span>
+                                        </span>
+                                    </md-button>
+                                </md-menu-item>
+
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+
+                    <md-grid-list
+                            md-cols-xs="4" md-cols-sm="6" md-cols-md="8" md-cols-gt-md="12"
+                            md-row-height-gt-md="1:1" md-row-height="1:1"
+                            md-gutter="12px" md-gutter-gt-sm="8px" >
+                        <md-grid-tile ng-repeat="item in accountInfo.accountSocialChannels">
+                            <span class="item" layout-align="center center" layout="column">
+                                <i ng-hide=" '{{item.socialChannelType}}' == 'Twitter' || '{{item.socialChannelType}}' == 'Facebook' " class="{{item.iconClass}} mdi"></i>
+                                <img ng-show=" '{{item.socialChannelType}}' == 'Twitter' || '{{item.socialChannelType}}' == 'Facebook' " ng-src="{{item.avatarPic}}">
+                                <span>{{item.name.split('-')[1]}}</span>
+                            </span>
+                        </md-grid-tile>
+                    </md-grid-list>
+
+                </div>
+
+
+
+                <div layout="row" layout-align="start center">
+                    <span class="font-size-1">Created : {{::accountInfo.dateCreated | date : 'MMMM,d yyyy'}}</span>
+                </div>
+                <div layout="row" layout-align="start center" style="padding: 12px 0;">
+                        <span class="font-size-1">Owner :
+                            <span ng-repeat="user in accountInfo.managers">{{user.username}} <span ng-if="$index < accountInfo.length-1">,</span></span>
+                        </span>
+                </div>
+                <md-button ng-if="accountEntity.isManager" ng-click="updateAccount()" ng-disabled="create_account_form.$invalid">UPDATE</md-button>
+            </div>
+
+
+        <div ng-if="!currentEntity" class="center-loading-box" layout="row" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </md-content>
+    <md-content class="content" ng-if="currentTab === 'collaborator'" ng-show="!showmain">
+        <div class="md-padding" ng-class="{'container':!mobileDevice}">
+
+            <div ng-if="!collaborators"  layout="row" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <div ng-repeat="item in collaborators">
+                <div layout="row"  style="padding: 8px 0;" layout-align="start center">
+
+                    <div flex="50" layout="row" layout-align="start center">
+                        <img alt="{{ ::item.username }}" ng-src="{{ ::item.img }}" class="circle-img-s"/>
+                        <span class="dal-h-spacing-normal"></span>
+                        <div flex="60" layout="column" class="dal-overflow-hidden" layout-align="center start">
+                            <span  class="md-body-1 dal-no-margin l-text-nowrap dal-coll-userdatatext" color="primary">{{::item.firstName}} {{::item.lastName}}</span>
+                            <span class="dal-v-spacing-small"></span>
+                            <p  class="dal-no-margin l-text-nowrap font-size-12 dal-coll-userdatatext">{{item.active ? 'account manager' : ''}}</p>
+                        </div>
+                    </div>
+                    <md-button  class="dal-btn dal-management-btn dal-caption" ng-click="ShowAccountManager(item)">
+                        Update
+                    </md-button>
+                    <md-button class="dal-btn  dal-management-btn dal-caption"  ng-click="manageAccountWithOp('unassign',item.username)">
+                        Delete
+                    </md-button>
+                </div>
+            </div>
+
+            <md-divider class="dal-management-divider"></md-divider>
+            <div  ng-if="accountEntity.isManager" class="md-padding" layout="row">
+                <span flex></span>
+                <md-button class="dal-btn dal-btn-primary dal-padding" style="font-size: 12px;" ng-click="adduser()" >Add New User</md-button>
+            </div>
+        </div>
+    </md-content>
+     <md-content class="content" ng-if="currentTab === 'collaborator' && showmain">
+         <form novalidate name="add_user" ng-show="!showassignlockr">
+            <div class="md-padding" layout="column" ng-class="{'container':!mobileDevice}">
+                <md-input-container>
+                    <label>User name<span class="require-dot">*</span></label>
+                    <input name="addusername" ng-model="adduserlist.username" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Password<span class="require-dot">*</span></label>
+                    <input type="password" name="addpassword" ng-model="adduserlist.password" required>
+
+                </md-input-container>
+                <md-input-container>
+                    <label>Email<span class="require-dot">*</span></label>
+                    <input name="email" type="email" ng-model="adduserlist.email" required>
+
+                </md-input-container>
+                  <md-input-container>
+                    <label>ClusterId<span class="require-dot">*</span></label>
+                    <input name="clusterId" type="text" ng-model="adduserlist.clusterId" required>
+
+                </md-input-container>
+                  <md-input-container>
+                    <label>First Name<span class="require-dot">*</span></label>
+                    <input name="firstName" type="text" ng-model="adduserlist.firstName" required>
+
+                </md-input-container>
+                  <md-input-container>
+                    <label>Last Name<span class="require-dot">*</span></label>
+                    <input name="lastName" type="text" ng-model="adduserlist.lastName" required>
+
+                </md-input-container>
+
+                  <md-input-container layout="row">
+                    <label>User Role<span class="require-dot">*</span> </label>
+                    <md-select required ng-model="adduserlist.userrole" md-on-open="loaduserrole()" style="width: 100%;">
+                        <md-option ng-value="data.name" ng-repeat="data in userrole">{{data.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                  <md-input-container>
+                    <label>Phone Number</label>
+                    <input name="phoneNumber" type="tel" ng-model="adduserlist.phoneNumber" >
+
+                </md-input-container>
+
+                <div layout="row">
+                <span  flex></span>
+                <md-button  style="color:#006fd5" ng-click="adduserCancel()">CANCEL</md-button>
+                <span flex></span>
+                <md-button  style="color:#fff;background:#006fd5" ng-disabled="add_user.$invalid" ng-click="postuser()">ADD</md-button>
+                <span flex></span>
+                </div>
+            </div>
+        </form>
+         <form novalidate ng-show="showassignlockr" name="add_lockr">
+             <div style="padding: 15px 25px;" layout="column" ng-class="{'container':!mobileDevice}">
+                 <span  class="coll-assginlockr-text">Assgin Lockr</span>
+                 <div layout="row" style="margin-bottom: 20px;" ng-repeat="item in lockrlitst">
+                     <i style="line-height: 39px;" flex="15" class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black"></i>
+                     <span flex="65" style="line-height: 39px;">{{item.name}}</span>
+                     <md-button flex="20"  ng-click="DeleteAssignLockr(item)" class="dal-btn coll-addlockr coll-display-none" >
+                     DELETE
+                     </md-button>
+                 </div>
+                 <div   style="width:100%;" ng-controller="SearchLockrAutoCompleteCtrl as ctrl">
+                     <md-autocomplete style="width:100%;"
+                             class="dal-progress"
+                             ng-disabled="ctrl.isDisabled"
+                             md-no-cache="ctrl.noCache"
+                             md-selected-item="ctrl.selectedItem"
+                             md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                             md-search-text="ctrl.searchText"
+                             md-selected-item-change="ctrl.selectedItemChange(item)"
+                             md-items="item in ctrl.querySearch(ctrl.searchText)"
+                             md-item-text="item.name"
+                             md-min-length="0"
+                             placeholder="SEARCH FOR LOCKR"
+                             md-menu-class="autocomplete-custom-template">
+                         <md-item-template>
+                              <span class="item-title" layout="row" layout-align="start center">
+                                  <i class="mdi mdi-folder dl-icon"></i>
+                                  <span class="dal-h-spacing-normal"></span>
+                                  <span class="dal-nowrap"> {{item.name}} </span>
+                              </span>
+                         </md-item-template>
+                     </md-autocomplete>
+
+
+
+                     <!--<md-button flex="25" ng-click="DeleteAssignLockr()" class="dal-btn coll-addlockr coll-display-none" >-->
+                         <!--DELETE-->
+                     <!--</md-button>-->
+                 </div>
+                 <md-button ng-click="createOtherNewLockr()" class="dal-btn coll-addlockr" style="margin-left: 0;margin-top: 40px;">
+                     ADD NEW LOCKR
+                 </md-button>
+
+                 <div layout="row">
+                     <span  flex></span>
+                     <md-button  style="color:#006fd5;font-size:13px;" ng-click="adduserCancel()">CANCEL</md-button>
+
+                     <md-button  style="color:#fff;background:#006fd5;font-size:13px;margin-left:20px;" ng-disabled="!selectOtherLockr" ng-click="saveAsset()">ASSIGN LOCKR</md-button>
+
+                 </div>
+             </div>
+         </form>
+
+    </md-content>
+
+    <div class="loading-center" ng-if="isUpdating" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+</div>
+
+<div ng-if="mobileDevice && !showAddShareRule" id="manage-account-view" style="background-color:#f5f5f5; ">
+    <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+        <i class="mdi mdi-chevron-left" style="color:#fff;height:50px;font-size: 36px;" ng-click="closeThisManageBox()"></i>
+        <span style="color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">{{accountInfo.name}}</span>
+        <span flex></span>
+        <!--<i class="mdi dalello-icon-more_black icon-size-2" style="font-size:16px;color:#fff;" ></i>-->
+    </div>
+    <div style="background-color:#f5f5f5;padding-top: 15px" layout="column" layout-align="start center">
+        <div style="width: 92%;min-height:180px;padding: 5px 0;background-color: #000;" layout="row" layout-align="center center">
+            <img style="height: 170px;;" ng-src="{{accountthumbnailUrl}}" />
+            <i class="mdi mdi-pencil" ng-click="openEditThumbnail()" style="top: 70px;right: 6%;position: absolute;font-size: 24px;"></i>
+        </div>
+    <div style="background-color:#fff;width: 92%;height: 50px;margin-top: 10px;">
+        <div class="m-tabs m-tabs-normal" layout="row" style="padding-top: 16px;background-color: #fff;">
+             <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('info')" ng-class="{'active':currentTabItem === 'info'}"  layout-align="center center">
+                 <i class="mdi black-icon dalello-icon-info_black" style="color:#000;"  ng-class="{'active':currentTabItem === 'info'}"></i>
+             </div>
+             <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('collaborator')" ng-class="{'active':currentTabItem === 'collaborator'}"  layout-align="center center">
+                 <i class="mdi black-icon dalello-icon-add_col_black"  style="color:#000;" ng-class="{'active':currentTabItem === 'collaborator'}"></i>
+             </div>
+            <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('channels')" ng-class="{'active':currentTabItem === 'channels'}"   layout-align="center center">
+                <i class="mdi black-icon dalello-icon-social_channels_black" style="color:#000;" ng-class="{'active':currentTabItem === 'channels'}" ></i>
+            </div>
+            <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('share')" ng-class="{'active':currentTabItem === 'share'}"   layout-align="center center">
+                 <i class="mdi black-icon dalello-icon-sharingrules_black" style="color:#000;" ng-class="{'active':currentTabItem === 'share'}" ></i>
+            </div>
+        </div>
+        <md-content class="content" style="top:312px;background-color: #fff;left: 4%;right: 4%;" ng-if="currentTabItem === 'info'">
+            <div  class="md-padding" layout="column" ng-if="accountInfo" ng-class="{'container':!mobileDevice}">
+                <div ng-if="!EditInfoMessage">
+                    <div layout="column" style="width: 100%;margin-top: 5px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">
+                        <span style="color:rgba(0,0,0,0.38);font-size: 11px;">Account Name</span>
+                        <div layout="row" style="width: 100%;;" layout-align="start center">
+                            <span style="color: #006fd5;font-size: 18px;">{{accountInfo.name}}</span>
+                            <span flex></span>
+                            <i class="mdi mdi-pencil" style="font-size: 22px;" ng-click="infoEditLockr(accountInfo)"></i>
+                        </div>
+                    </div>
+                    <!--<div layout="column" style="width: 100%;margin-top: 20px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">-->
+                        <!--<span style="color:rgba(0,0,0,0.38);font-size: 11px;">Description</span>-->
+                        <!--<div layout="row" style="width: 100%;;" layout-align="start center">-->
+                            <!--<span style="font-size: 11px;color:#3c3c3c;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </span>-->
+                            <!--<span flex></span>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div layout="column" style="width: 100%;margin-top: 20px;border-bottom:1px solid rgba(0,0,0,0.08);" layout-align="center start">
+                        <span style="color:rgba(0,0,0,0.38);font-size: 11px;">License Type</span>
+                        <div layout="row" style="width: 100%;;" layout-align="start center">
+                            <span style="color: #006fd5;font-size: 15px;">{{accountInfo.accountType}}</span>
+                            <span flex></span>
+
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="font-size: 22px;font-weight:bold;padding-right: 5px;"></i>
+                        <span class="vertical-align-middle font-size-12">{{accountInfo.dateCreated | date : 'd MMM yyyy'}}</span>
+                    </div>
+                </div>
+                <div ng-if="EditInfoMessage">
+                    <md-input-container style="margin-bottom: 0;width: 100%;">
+                        <label>Account Name</label>
+                        <input name="title" ng-model="infoCurrentEntity.name">
+                    </md-input-container>
+                    <md-input-container style="margin-bottom: 0;width: 100%;">
+                        <label>ClusterId</label>
+                        <input name="title" ng-model="infoCurrentEntity.clusterId">
+                    </md-input-container>
+                    <!--<md-input-container>-->
+                        <!--<label>Account Name</label>-->
+                        <!--<input name="title" ng-model="infoCurrentEntity.name">-->
+                    <!--</md-input-container>-->
+                    <div style="padding: 0 15px" layout="row" layout-align="space-between center">
+                        <span ng-click="backFromEditInfo()" style="font-size: 16px;font-weight: bold;color: #006fd5;">CANCEL</span>
+                        <span ng-click="updateFromEditInfo()" style="font-size: 16px;font-weight: bold;color: #006fd5;">UPDATE</span>
+                    </div>
+                    <!--<md-input-container>-->
+                        <!--<label>Account Name</label>-->
+                        <!--<input name="title" ng-model="currentEntity.name" required>-->
+                        <!--<div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">-->
+                            <!--<div ng-message="required">This is required!</div>-->
+                        <!--</div>-->
+                    <!--</md-input-container>-->
+                </div>
+            </div>
+            <div ng-if="!accountInfo">
+                <div layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </md-content>
+        <md-content class="content" style="top:312px;background-color: #fff;left: 4%;right: 4%;"  ng-if="currentTabItem === 'collaborator'">
+            <div class="md-padding" ng-class="{'container':!mobileDevice}">
+
+                <div ng-if="!collaborators"  layout="row" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div ng-repeat="item in collaborators">
+                    <div layout="row"  style="padding: 8px 0;" layout-align="start center">
+
+                        <div  layout="row" layout-align="start center">
+                            <img alt="{{ ::item.username }}" ng-src="{{ ::item.img }}" class="circle-img-s"/>
+                            <span class="dal-h-spacing-normal"></span>
+                            <div  layout="column" class="dal-overflow-hidden" layout-align="center start">
+                                <span style="font-size: 14px;font-weight: bold;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color: #006fd5;" class="md-body-1 dal-no-margin l-text-nowrap dal-coll-userdatatext" color="primary">{{::item.firstName}} {{::item.lastName}}</span>
+                                <span style="font-weight: bold;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color: #006fd5;" class="dal-v-spacing-small"></span>
+                                <p  class="dal-no-margin l-text-nowrap font-size-12 dal-coll-userdatatext">{{item.active ? 'account manager' : ''}}</p>
+                            </div>
+                        </div>
+                        <span flex></span>
+                        <i style="font-size: 24px;padding-right: 13px;" ng-click="ShowAccountManager(item)" class="mdi mdi-pencil"></i>
+                        <i style="font-size: 26px;color: #000;"  ng-click="manageAccountWithOp('unassign',item.username)" class="mdi mdi-close"></i>
+
+
+                    </div>
+                </div>
+
+
+                <div  ng-if="accountEntity.isManager" class="md-padding" layout="row" layout-align="center center">
+                    <md-button class="dal-btn dal-btn-primary dal-padding" style="font-size: 12px;" ng-click="infoAddCollaborators()" >ADD COLLABORATOR</md-button>
+                </div>
+            </div>
+
+        </md-content>
+
+        <md-content class="content" style="top:312px;background-color: #fff;left: 4%;right: 4%;" ng-if="currentTabItem === 'channels'">
+
+            <div class="md-padding" layout="column" ng-class="{'container':!mobileDevice}">
+                <div layout-align="start center" layout="row">
+                <md-switch style="margin-left: 0;" ng-model="currentEntity.allowUserChannels" aria-label="Schedule share">
+                    Allow User Channels
+                </md-switch>
+                    <span flex></span>
+                    <div style="width:85px;background-color: #ffd439;margin: 15px 0;white-space: nowrap;" ng-click="showAddAccountChannels()"  layout="row" layout-align="center  center" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">
+                        <span  style="color: #006fd5;margin:6px 0;font-size: 10px;font-weight: bold;">ADD CHANNELS</span>
+                    </div>
+                    <!--<span ng-click="SaveallowUserChannels()" style="font-weight: bold;color: #006fd5;outline: none;">Save</span>-->
+                </div>
+                <div>
+                    <div class="mime-type-view" style="padding-top: 0;">
+                        <div style="height: 48px;width: 100%;overflow: scroll;">
+                            <div layout="row" style="width:{{ 58 * channelTypes.length + 'px'}};height: 48px;">
+                                <a ng-click="switchChannelType(type)" ng-class="{'dal-account-info-underline':type.active}"  layout="row" layout-align="center center" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                                    <i ng-if="!type.active" style="font-size:26px;color:#000;" class="mdi {{type.iconClass}}"></i>
+                                    <i ng-if="type.active" style="font-size:26px;color:#006fd5;" class="mdi {{type.iconClass}}"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 6px;">
+                            <div ng-click="chooseSocialChannels(channel)"  style="margin-bottom: 10px;display: inline-block;margin-left:15px;" ng-repeat="channel in accountInfo.accountSocialChannels | filter:{socialChannelType:channelTypesname}">
+                                <div layout="row">
+                                    <div style="z-index:2;width:30px;height:30px;border-radius: 50%;background-color: #30cdff;">
+                                        <img style="height:30px;border-radius: 50%;" ng-src="{{channel.avatarPic}}"/>
+                                    </div>
+                                    <div ng-show="channel.selected" style="margin-left:-15px;height:30px;background-color: #30cdff;color:#fff;">
+                                        <span style="padding: 0 23px;line-height: 30px;">{{channel.name.split('-')[1]}}</span>
+                                    </div>
+                                    <div ng-show="!channel.selected" style="margin-left:-15px;height:30px;background-color: #30cdff;color:#fff;">
+                                        <span style="padding: 0 23px;line-height: 30px;">{{channel.name.split('-')[1]}}</span>
+                                    </div>
+                                    <div ng-show="channel.selected" style="width:30px;margin-left:-15px;height:30px;background-color: #30cdff;z-index:2;border-radius: 50%;">
+                                        <div  style="width:20px;height:20px;border-radius: 50%;background-color: #fff;margin-top:5px;margin-left: 5px;" layout="row" layout-align="center center">
+                                            <i  class="mdi mdi-check" style="font-size: 18px;font-weight: bold;" ></i>
+                                        </div>
+                                    </div>
+                                    <div ng-show="!channel.selected" style="width:30px;margin-left:-15px;height:30px;background-color: #9b9b9b;z-index:2;border-radius: 50%;">
+                                        <div  style="border: 2px solid #fff;width:20px;height:20px;border-radius: 50%;background-color: #9b9b9b;margin-top:5px;margin-left: 5px;" layout="row" layout-align="center center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  layout="row" layout-align="start center">
+                        <!--<md-menu>-->
+                            <!--&lt;!&ndash;<md-button aria-label="Open channels menu" class="dal-btn icon" ng-click="openChannelsMenu($mdOpenMenu, $event)">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<span>ADD CHANNELS</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                            <!--<div style="min-width:85px;background-color: #ffd439;"  layout="row" layout-align="center center">-->
+                                <!--<span ng-click="openChannelsMenu($mdOpenMenu, $event)" style="color: #006fd5;margin:5px 0;font-size: 10px;font-weight: bold;">ADD CHANNELS</span>-->
+                            <!--</div>-->
+                            <!--<md-menu-content width="4">-->
+
+                                <!--<md-menu-item ng-repeat="channel in canAddedSocialChannels">-->
+                                    <!--<md-button ng-click="addSocialChannelForAccount(channel.name)">-->
+                                        <!--<span layout="row" layout-align="start center">-->
+                                            <!--<i class="mdi icon-size-2 {{channel.iconClass}}"></i>-->
+                                            <!--<span class="dal-h-spacing-normal"></span>-->
+                                            <!--<span>Add/Update {{channel.name}} credentials</span>-->
+                                        <!--</span>-->
+                                    <!--</md-button>-->
+                                <!--</md-menu-item>-->
+
+                            <!--</md-menu-content>-->
+                        <!--</md-menu>-->
+
+                        <div layout="column"  style="width: 100%">
+                            <!--<div style="width:135px;background-color: #ffd439;margin: 15px 0;white-space: nowrap;" ng-click="showAddAccountChannels()"  layout="row" layout-align="center  center" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">-->
+                                <!--<span  style="color: #006fd5;margin:6px 0;font-size: 10px;font-weight: bold;">ADD PERSONAL CHANNELS</span>-->
+                            <!--</div>-->
+                            <div style="width: 100%" ng-show="showList">
+                                <md-menu class="add-sublockr-menu">
+                                    <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                        <span style="padding: 0;color: rgba(0,0,0,0.26);font-weight: bold;">{{socialChooseType}}</span>
+                                        <span flex></span>
+                                        <i class="mdi mdi-menu-down"></i>
+                                    </md-button>
+                                    <md-menu-content width="6">
+                                        <md-menu-item ng-if="key !== 'no'" ng-repeat="(key,state) in channelTypes">
+                                            <md-button ng-click="selectType(state)" class="m-dash-btn-item">
+                                                <i class="mdi {{state.iconClass}}"></i>
+                                                <span>{{state.name}}</span>
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                                <md-input-container style="width: 100%;">
+                                    <label>ACCOUNT ADDRESS</label>
+                                    <input ng-model="addAccountChannel.channelName">
+                                </md-input-container>
+                                <div style="width: 100%;" layout="row" layout-align="end center">
+                                    <span  style="font-weight: bold;color:#006fd5;" ng-click="saveAddAccountChannels()">SAVE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </md-content>
+
+        <md-content class="content" style="top:312px;background-color: #fff;left: 4%;right: 4%;" ng-if="currentTabItem === 'share'">
+            <div class="md-padding" layout="column" ng-class="{'container':!mobileDevice}">
+
+                <div>
+                        <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="end start">
+                            <div style="font-size: 10px;padding-right: 10px;font-style:italic;color: #3c3c3c;">
+                                Please note that the Sharing Rule chosen here will be set as Default Sharing Rule for the Account
+                            </div>
+                            <div style="min-width:110px;background-color: #ffd439;" layout="row" layout-align="center center">
+                                <span ng-click="infoAddShareRule()" style="color: #006fd5;margin:3px 0;font-size: 9px;font-weight: bold;white-space: nowrap;">CREATE SHARE RULE</span>
+                            </div>
+                        </div>
+                        <md-radio-group style="width: 100%;" ng-model="selectedRule">
+                            <div ng-repeat="rule in shareRuleDetail" style="width: 100%;padding:0 10px;">
+                                <div class="row-head" ng-click="openShareRule(rule)" style="padding:10px 0;" layout-align="start center" layout="row">
+                                    <md-radio-button style="margin: 0;" class="dal-primary md-v2" value="{{rule.id}}"> {{rule.name}} </md-radio-button>
+                                    <span flex></span>
+                                    <!--<i  ng-show="rule.selected" ng-click="editInfoShareRule(rule)"  class="mdi mdi-pencil" style="font-size: 26px;color: #000;padding-right: 10px;"></i>-->
+                                    <i class="mdi" style="width: 25px;height: 25px;font-size: 26px;line-height: 25px;" ng-class="{'mdi-plus-circle dal-iconcolor-black':!rule.selected,'mdi-minus-circle':rule.selected}"></i>
+                                </div>
+                                <div  ng-show="rule.selected">
+                                    <md-input-container style="margin-bottom: 0;width:100%;" flex>
+                                        <label>NAME</label>
+                                        <input style="margin-top: -10px;border-bottom: 0;" name="name" ng-model="rule.name" >
+                                    </md-input-container>
+                                    <md-input-container style="margin-bottom: 0;width:100%;" flex>
+                                        <label>DESCRIPTION</label>
+                                        <input style="margin-top: -10px;border-bottom: 0;" name="description" ng-model="rule.description" >
+                                    </md-input-container>
+                                </div>
+                                <div ng-if="rule.selected">
+                                    <div layout="row" class="tab-head">
+                                        <a ng-click="rule.tabIndex = 0" ng-class="{'active':rule.tabIndex == 0}" href="javascript:void(0)" flex>Mime Type</a>
+                                        <a ng-click="rule.tabIndex = 1" ng-class="{'active':rule.tabIndex == 1}" href="javascript:void(0)" flex>Channels</a>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div layout="row" class="mime-type-view" layout-align="space-between" ng-show="rule.tabIndex == 0">
+                                            <i ng-repeat="item in mimeTypes" ng-class="{'active':mimeTypeIsActive(item,rule)}" class="mime-type-icon {{item.icon}}"></i>
+                                        </div>
+                                        <div class="mime-type-view" ng-show="rule.tabIndex == 1">
+                                            <div style="height: 48px;width: 100%;overflow: scroll;">
+                                                <div layout="row" style="width:{{ 58 * channelTypes.length + 'px'}};height: 48px;">
+                                                    <a ng-class="{'active':rule.channelActive == type.name}" ng-click="shareSwitchChannelType(rule,type)" layout="row" layout-align="center center" class="channel-item" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                                                        <i class="mdi {{type.iconClass}}"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top: 6px;">
+                                                <span layout-wrap layout="row" layout-align="start center" ng-repeat="channel in rule.postOnSocialChannelDetail | filter:{socialChannelType:rule.channelActive}" class="social-item">
+                                                    <img ng-show="channel.imgLink" ng-src="{{channel.imgLink}}">
+                                                    <i ng-show="!channel.imgLink" class="mdi {{channel.iconClass}}"></i>
+                                                    <span>{{channel.name.split('-')[1]}}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="color: #4a4a4a;font-weight: bold;font-size: 16px;margin: 10px 0;" layout="row" layout-align="start center" >
+                                        <span>License Type</span>
+                                    </div>
+                                    <div layout="column" style="font-size: 11px;color: #9b9b9b;" layout-align="start center">
+                                        <div style="margin-bottom: 10px;" class="cc-image" layout="row" layout-align="center center">
+                                            <img ng-src="{{rule.ccContent.image}}">
+                                        </div>
+                                        <p ng-show="!showcctext" class="cc-desc">
+                                            {{rule.ccContent.desc}}
+                                        </p>
+                                        <p class="cc-text" ng-show="showcctext">
+                                            {{rule.ccContent.text}}
+                                        </p>
+                                        <div layout="row" style="width: 100%;" layout-align="start center">
+                                        <span  ng-click="showdesc()" style="outline:none;color:#006fd5;font-size: 13px;">View License Deed</span>
+                                        <div style="margin: 0 15px;border-right: 1px solid #979797;height: 13px;"></div>
+                                        <span ng-click="showtext()" style="outline:none;color:#006fd5;font-size: 13px;">View Legal Code</span>
+                                        </div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between center">
+                                        <span ng-click="setAsDefaultRule(rule)"  style="outline:none;">Set as Default</span>
+                                        <span ng-click="deleteRule(rule)" style="outline:none;">Delete</span>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </md-radio-group>
+                        <div ng-if="loadshare">
+                            <div layout="row" layout-sm="column" layout-align="center center">
+                                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </md-content>
+
+    </div>
+    </div>
+    <div ng-if="showselectthumb">
+        <lockr-select-thumbnail account-entity = "accountEntity"></lockr-select-thumbnail>
+        <!--<div  ng-click="closeselectthumb()" style="background-color:rgba(0,0,0,0.5);top: 0;bottom: 0;left: 0;right:0;z-index: 3;position: absolute;">-->
+
+        <!--</div>-->
+        <!--<div  style="position: fixed;width: 100%;height: 90px;bottom: 0;left: 0;z-index: 4;background-color: #fff;" layout="row" layout-align="space-around center">-->
+            <!--<div id="crop-lockr-thumbnail-area"  layout="column" layout-align="center center" >-->
+                <!--<i class="mdi dalello-icon-crop_black" style="font-size: 30px;color:#000;vertical-align: middle;"></i>-->
+                <!--<span style="color: #006fd5;font-size: 12px;font-weight: bold;">CROP</span>-->
+                <!--<input id="crop-lockr-thumbnail-input" accept="image/*" type="file" class="hidden">-->
+            <!--</div>-->
+            <!--<div layout="column" layout-align="center center" ng-click="selectThumbLockr()">-->
+                <!--<i class="mdi dalello-icon-change_black" style="font-size: 30px;color:#000;vertical-align: middle;"></i>-->
+                <!--<span style="color: #006fd5;font-size: 12px;font-weight: bold;">REPLACE</span>-->
+            <!--</div>-->
+            <!--<div layout="column" layout-align="center center">-->
+                <!--<i class="mdi dalello-icon-decline_black" ng-click="deleteThumbLockr()" style="font-size: 30px;color:#000;vertical-align: middle;"></i>-->
+                <!--<span style="color: #006fd5;font-size: 12px;font-weight: bold;">REMOVE</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<div ng-if="mobileDevice && showAddShareRule" id="manage-account-view" style="background-color:#f5f5f5; ">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Add Share Rule</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backForm()"></i>
+        </div>
+        <md-content class="content" style="top:50px;background-color: #fff;">
+            <sharing-rule-item lockr-id="{{accountEntity.aDet.id}}"></sharing-rule-item>
+        </md-content>
+</div>
+<div ng-if="mobileDevice && showAddCollaborators" id="manage-account-view" style="background-color:#f5f5f5; ">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Add Collaborator</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backForm()"></i>
+        </div>
+        <md-content class="content" style="top:50px;background-color: #fff;">
+            <form novalidate name="add_user" ng-show="!showassignlockr">
+                <div style="margin: 10px;" ng-if="isStep == 0">
+                    <md-input-container style="width: 100%;">
+                        <label>User name<span class="require-dot">*</span></label>
+                        <input name="addusername" ng-model="adduserlist.username" required>
+                    </md-input-container>
+
+                    <md-input-container style="width: 100%;">
+                        <label>Email<span class="require-dot">*</span></label>
+                        <input name="email" ng-model="adduserlist.email" required>
+                    </md-input-container>
+
+                    <md-input-container layout="row">
+                        <label>User Role<span class="require-dot">*</span> </label>
+                        <md-select required ng-model="adduserlist.userrole" md-on-open="loaduserrole()" style="width: 100%;">
+                            <md-option ng-value="data.name" ng-repeat="data in userrole">{{data.name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <div layout="row">
+                        <span  flex></span>
+                        <md-button  style="color:#006fd5" ng-click="backForm()">CANCEL</md-button>
+                        <span flex></span>
+                        <md-button  style="color:#fff;background:#006fd5" ng-click="checkUserName()">ADD</md-button>
+                        <span flex></span>
+                    </div>
+
+                </div>
+                <div class="md-padding" layout="column" ng-if="isStep == 1" ng-class="{'container':!mobileDevice}">
+                        <md-input-container>
+                            <label>User name<span class="require-dot">*</span></label>
+                            <input name="addusername" ng-model="adduserlist.username" required>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Password<span class="require-dot">*</span></label>
+                            <input type="password" name="addpassword" ng-model="adduserlist.password" required>
+
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Email<span class="require-dot">*</span></label>
+                            <input name="email" type="email" ng-model="adduserlist.email" required>
+
+                        </md-input-container>
+                        <md-input-container>
+                            <label>ClusterId<span class="require-dot">*</span></label>
+                            <input name="clusterId" type="text" ng-model="adduserlist.clusterId" required>
+
+                        </md-input-container>
+                        <md-input-container>
+                            <label>First Name<span class="require-dot">*</span></label>
+                            <input name="firstName" type="text" ng-model="adduserlist.firstName" required>
+
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Last Name<span class="require-dot">*</span></label>
+                            <input name="lastName" type="text" ng-model="adduserlist.lastName" required>
+
+                        </md-input-container>
+
+                        <md-input-container layout="row">
+                            <label>User Role<span class="require-dot">*</span> </label>
+                            <md-select required ng-model="adduserlist.userrole" md-on-open="loaduserrole()" style="width: 100%;">
+                                <md-option ng-value="data.name" ng-repeat="data in userrole">{{data.name}}</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Phone Number</label>
+                            <input name="phoneNumber" type="tel" ng-model="adduserlist.phoneNumber" >
+
+                        </md-input-container>
+                    <div layout="row">
+                        <span  flex></span>
+                        <md-button  style="color:#006fd5" ng-click="toCheckUser()">CANCEL</md-button>
+                        <span flex></span>
+                        <md-button  style="color:#fff;background:#006fd5"  ng-click="postuser()">ADD</md-button>
+                        <span flex></span>
+                    </div>
+                </div>
+            </form>
+            <form novalidate ng-show="showassignlockr" name="add_lockr">
+                <div style="padding: 15px 25px;" layout="column" ng-class="{'container':!mobileDevice}">
+                    <span  class="coll-assginlockr-text">Assgin Lockr</span>
+                    <div layout="row" style="margin-bottom: 20px;" ng-repeat="item in lockrlitst">
+                        <i style="line-height: 39px;" flex="15" class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black"></i>
+                        <span flex="65" style="line-height: 39px;">{{item.name}}</span>
+                        <md-button flex="20"  ng-click="DeleteAssignLockr(item)" class="dal-btn coll-addlockr coll-display-none" >
+                            DELETE
+                        </md-button>
+                    </div>
+                    <div   style="width:100%;" ng-controller="SearchLockrAutoCompleteCtrl as ctrl">
+                        <md-autocomplete style="width:100%;"
+                                         class="dal-progress"
+                                         ng-disabled="ctrl.isDisabled"
+                                         md-no-cache="ctrl.noCache"
+                                         md-selected-item="ctrl.selectedItem"
+                                         md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                         md-search-text="ctrl.searchText"
+                                         md-selected-item-change="ctrl.selectedItemChange(item)"
+                                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                         md-item-text="item.name"
+                                         md-min-length="0"
+                                         placeholder="SEARCH FOR LOCKR"
+                                         md-menu-class="autocomplete-custom-template">
+                            <md-item-template>
+                              <span class="item-title" layout="row" layout-align="start center">
+                                  <i class="mdi mdi-folder dl-icon"></i>
+                                  <span class="dal-h-spacing-normal"></span>
+                                  <span class="dal-nowrap"> {{item.name}} </span>
+                              </span>
+                            </md-item-template>
+                        </md-autocomplete>
+
+
+
+                        <!--<md-button flex="25" ng-click="DeleteAssignLockr()" class="dal-btn coll-addlockr coll-display-none" >-->
+                        <!--DELETE-->
+                        <!--</md-button>-->
+                    </div>
+                    <md-button ng-click="createOtherNewLockr()" class="dal-btn coll-addlockr" style="margin-left: 0;margin-top: 40px;">
+                        ADD NEW LOCKR
+                    </md-button>
+
+                    <div layout="row">
+                        <span  flex></span>
+                        <md-button  style="color:#006fd5;font-size:13px;" ng-click="adduserCancel()">CANCEL</md-button>
+
+                        <md-button  style="color:#fff;background:#006fd5;font-size:13px;margin-left:20px;" ng-disabled="!selectOtherLockr" ng-click="saveAsset()">ASSIGN LOCKR</md-button>
+
+                    </div>
+                </div>
+            </form>
+        </md-content>
+    </div>
+</div>

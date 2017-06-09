@@ -1,0 +1,23 @@
+<div>
+    <div class="md-toolbar-tools" style="background-color: #006fd5;">
+        <h2 style="font-size: 20px;color: #fff;">Activity flow</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="answer('not applicable')">
+            <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #fff;"></i>
+        </md-button>
+    </div>
+    <div infinite-scroll-container="activityContainer" infinite-scroll="infiniteEvents.loadMoreEvents()" infinite-scroll-immediate-check="false" infinite-scroll-distance='2'>
+        <div ng-show="!isLoading" layout="row" layout-align="start end">
+            <div style="width: 30px;border-right: 1px solid #d8d8d8;height: 30px;"></div>
+            <div layout="row" flex layout-align="center center" style="margin:13px;font-size: 16px;color: #4a90e2;">
+                <span>{{events[showIndex].date  | date : 'EEEE dd MMMM,yyyy'}}</span>
+            </div>
+        </div>
+        <activity-flow-outer index-callback="indexCallback(data)" activity-source="events"></activity-flow-outer>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isLoading">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</div>

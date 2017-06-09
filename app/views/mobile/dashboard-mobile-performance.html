@@ -1,0 +1,234 @@
+<div layout="column">
+
+
+
+
+    <!--<div layout="column" class="card-shadow md-padding l-relative" style="background-color: white;margin: 3px;margin-top: 20px;">-->
+
+        <!--<div class="mask-center-loading" ng-if="!topLockrData" layout="row" layout-sm="column" layout-align="center center">-->
+            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+        <!--</div>-->
+
+
+        <!--<div layout="row" style="margin-bottom: 8px;" layout-align="start center">-->
+            <!--<span class="v2-color">Top lockr</span>-->
+            <!--<span style="width: 8px;"></span>-->
+            <!--<strong class="v2-color">{{topLockrData.lockrName}}</strong>-->
+        <!--</div>-->
+
+        <!--<img ng-src="{{topLockrData.imageSrc}}" alt="{{topLockrData.lockrName}}" title="{{topLockrData.lockrName}}">-->
+        <!--<div layout="column" style="margin-top: 8px;">-->
+            <!--<span>Stats across channels</span>-->
+            <!--<div layout="row" style="padding: 12px 0;">-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-eye icon-size-3"></i>-->
+                    <!--<span>{{topLockrData.totalNumberOfViews || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-comment icon-size-3"></i>-->
+                    <!--<span>{{topLockrData.totalNumberOfComments || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-share-variant icon-size-3"></i>-->
+                    <!--<span>{{topLockrData.numberOfShares || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-thumb-up icon-size-3"></i>-->
+                    <!--<span>{{topLockrData.totalNumberOfLikes || 0}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div layout="column" style="margin-top: 8px;">-->
+            <!--<span>Social channel penetration </span>-->
+            <!--<div layout="row" style="margin: 12px 0;">-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-comment-multiple-outline icon-size-3"></i>-->
+                    <!--<span>{{topLockrSocialChannelPenetration ? (topLockrSocialChannelPenetration.comments !== 0 ? (topLockrSocialChannelPenetration.comments) : 0  ): 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-heart icon-size-3"></i>-->
+                    <!--<span>{{topLockrSocialChannelPenetration ? (topLockrSocialChannelPenetration.likes !== 0 ? (topLockrSocialChannelPenetration.likes) : 0  ): 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-bullhorn icon-size-3"></i>-->
+                    <!--<span>{{topLockrSocialChannelPenetration ? (topLockrSocialChannelPenetration.shares !== 0 ? (topLockrSocialChannelPenetration.shares) : 0  ): 0}}</span>-->
+                <!--</div>-->
+
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-emoticon-neutral icon-size-3" ng-class="{'mdi-emoticon-happy':topLockrSentiment > 2.5,'mdi-emoticon-sad':topLockrSentiment < 1.5,'mdi-emoticon-neutral': (1.5 <= topLockrSentiment && topLockrSentiment <= 2.5) || !topLockrSentiment}"></i>-->
+                    <!--<span>{{topLockrSentiment || 0}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div style="margin-top: 30px;" class="l-relative">-->
+        <!--<div class="mask-center-loading" ng-if="!lockrsData" layout="row" layout-sm="column" layout-align="center center">-->
+            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+        <!--</div>-->
+
+        <!--<div>-->
+            <!--<span class="v2-color">Other Lockrs</span>-->
+        <!--</div>-->
+        <!--<div class="card-shadow mobile-table-list" style="margin: 3px;margin-top: 10px;">-->
+            <!--<div layout="row" class="mobile-thead">-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Title</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Views</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Shares</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Comments</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Likes</strong>-->
+            <!--</div>-->
+            <!--<div class="mobile-tbody" layout="row" ng-repeat="item in lockrsData" ng-class="{'hidden':$index >= lockrSeeNumber }">-->
+                <!--<span layout-align="start center" flex>-->
+                    <!--{{item.lockrName}}-->
+                <!--</span>-->
+                <!--<span layout-align="start center" flex>-->
+                    <!--{{item.totalNumberOfViews || 0}}-->
+                <!--</span>-->
+                <!--<span layout-align="start center" flex>-->
+                     <!--{{item.numberOfShares || 0}}-->
+                <!--</span>-->
+                <!--<span layout-align="start center" flex>-->
+                     <!--{{item.totalNumberOfComments || 0}}-->
+                <!--</span>-->
+                <!--<span layout-align="start center" flex>-->
+                    <!--{{item.totalNumberOfLikes || 0}}-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div layout="row">-->
+            <!--<span flex></span>-->
+            <!--<a style="color:#14a2dd;cursor: pointer;text-decoration: underline;outline: none;font-size: 18px;padding: 15px;" ng-click="addSeeLockrNumber()" ng-class="{'hidden':hiddenLockrsSeeMore}"> See more lockrs</a>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+
+    <!--<div layout="column" class="card-shadow md-padding l-relative" style="background-color: white;margin: 3px;margin-top: 30px;">-->
+
+        <!--<div class="mask-center-loading" ng-if="!topAssetData" layout="row" layout-sm="column" layout-align="center center">-->
+            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+        <!--</div>-->
+
+        <!--<div layout="row" style="margin-bottom: 8px;" layout-align="start center">-->
+            <!--<span class="v2-color">Top asset</span>-->
+            <!--<span style="width: 8px;"></span>-->
+            <!--<strong class="v2-color">  {{topAssetData.assetName}}</strong>-->
+        <!--</div>-->
+
+        <!--<img ng-src="{{topAssetData.imageSrc}}" alt="{{topAssetData.assetName}}" title="{{topAssetData.assetName}}">-->
+        <!--<div layout="column" style="margin-top: 8px;">-->
+            <!--<span>Stats across channels</span>-->
+            <!--<div layout="row" style="padding: 12px 0;">-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-eye icon-size-3"></i>-->
+                    <!--<span>{{topAssetData.totalNumberOfViews || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-comment icon-size-3"></i>-->
+                    <!--<span>{{topAssetData.totalNumberOfComments || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-share-variant icon-size-3"></i>-->
+                    <!--<span>{{topAssetData.numberOfShares || 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-thumb-up icon-size-3"></i>-->
+                    <!--<span>{{topAssetData.totalNumberOfLikes || 0}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div layout="column" style="margin-top: 8px;">-->
+            <!--<span>Social channel penetration </span>-->
+            <!--<div layout="row" style="margin: 12px 0;">-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-comment-multiple-outline icon-size-3"></i>-->
+                    <!--<span>{{topAssetSocialChannelPenetration ? (topAssetSocialChannelPenetration.comments !== 0 ? (topAssetSocialChannelPenetration.comments) : 0  ): 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-heart icon-size-3"></i>-->
+                    <!--<span>{{topAssetSocialChannelPenetration ? (topAssetSocialChannelPenetration.likes !== 0 ? (topAssetSocialChannelPenetration.likes) : 0  ): 0}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi mdi-bullhorn icon-size-3"></i>-->
+                    <!--<span>{{topAssetSocialChannelPenetration ? (topAssetSocialChannelPenetration.shares !== 0 ? (topAssetSocialChannelPenetration.shares) : 0  ): 0}}</span>-->
+                <!--</div>-->
+
+                <!--<div layout="column" flex layout-align="center center">-->
+                    <!--<i class="mdi icon-size-3"  ng-class="{'mdi-emoticon-happy':topAssetSentiment > 2.5,'mdi-emoticon-sad':topAssetSentiment < 1.5,'mdi-emoticon-neutral': (1.5 <= topAssetSentiment && topAssetSentiment <= 2.5) || !topAssetSentiment}"></i>-->
+                    <!--<span>{{topAssetSentiment || 0}}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div  style="margin-top: 30px;margin-bottom: 60px;" class="l-relative">-->
+
+        <!--<div class="mask-center-loading" ng-if="!assetsData" layout="row" layout-sm="column" layout-align="center center">-->
+            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+        <!--</div>-->
+
+        <!--<div>-->
+            <!--<span class="v2-color">Other Assets</span>-->
+        <!--</div>-->
+
+        <!--<div class="card-shadow mobile-table-list" style="margin: 3px;margin-top: 10px;">-->
+            <!--<div layout="row" class="mobile-thead">-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Title</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Views</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Shares</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Comments</strong>-->
+                <!--<strong flex class="text-overflow-hidden v2-color">Likes</strong>-->
+            <!--</div>-->
+            <!--<div class="mobile-tbody" layout="row" ng-repeat="item in assetsData" ng-class="{'hidden':$index >= assetSeeNumber }">-->
+                <!--<span layout="row" layout-align="start center" flex>-->
+                    <!--{{item.assetName}}-->
+                <!--</span>-->
+                <!--<span layout="row" layout-align="start center" flex>-->
+                    <!--{{item.totalNumberOfViews || 0}}-->
+                <!--</span>-->
+                <!--<span layout="row" layout-align="start center" flex>-->
+                     <!--{{item.numberOfShares || 0}}-->
+                <!--</span>-->
+                <!--<span layout="row" layout-align="start center" flex>-->
+                     <!--{{item.totalNumberOfComments || 0}}-->
+                <!--</span>-->
+                <!--<span layout="row" layout-align="start center" flex>-->
+                    <!--{{item.totalNumberOfLikes || 0}}-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash;<div class="card-shadow" style="margin: 3px;margin-top: 10px;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<table class="other-lockr-list">&ndash;&gt;-->
+                <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+                <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Title</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Views</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Shares</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Comments</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<th>Likes</th>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+                <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+                <!--&lt;!&ndash;<tr ng-repeat="item in assetsData" ng-class="{'hidden':$index >= assetSeeNumber }">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{item.assetName}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td> {{item.totalNumberOfViews || 0}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td> {{item.numberOfShares || 0}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td> {{item.totalNumberOfComments || 0}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<td> {{item.totalNumberOfLikes || 0}}</td>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+            <!--&lt;!&ndash;</table>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div layout="row">-->
+            <!--<span flex></span>-->
+            <!--<a style="color:#14a2dd;cursor: pointer;text-decoration: underline;outline: none;font-size: 18px;padding: 15px;" ng-class="{'hidden':hiddenAssetsSeeMore}" ng-click="addSeeAssetNumber()"> See more assets </a>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

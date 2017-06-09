@@ -1,0 +1,51 @@
+<div class="mobile-post-item" post="post" sticky-scroll id="post-{{::post.title}}">
+    <div>
+        <div layout="column" >
+            <span class="v2-color" style="font-size:16px;padding-bottom: 3px;">{{post.byUserFullName}}</span>
+            <div>
+                <i class="mdi mdi-clock icon-size-1"></i>
+                <span style="font-weight:bold;font-size: 12px;">{{post.commentDate | date : 'dd MMM yyyy'}}</span>
+            </div>
+        </div>
+        <!--<div style="padding-top:8px;">-->
+        <!--<strong class="v2-color">{{post.title}}</strong>-->
+        <!--</div>-->
+        <p>{{post.message}}</p>
+        <div layout="row" layout-align="start center" style="padding: 10px;">
+            <div layout="row" layout-align="start center">
+                <i class="mdi mdi-heart icon-size-20" style="padding:0 5px;"></i>
+            </div>
+            <span flex>5</span>
+            <md-button ng-click="addComment()" style="margin: 0;" layout="row" layout-align="start center">
+                <span style="width: 5px;"></span>
+                <span style="background-color: #006fd5;color:#fff;height: 24px;line-height: 24px;font-size: 12px;padding:0 10px;">ADD COMMENT</span>
+            </md-button>
+        </div>
+        <md-divider></md-divider>
+    </div>
+
+    <div ng-if="commenting" style="padding: 15px 0;">
+        <div layout="column">
+            <h5 class="v2-color">ADD NEW COMMENT</h5>
+            <div flex>
+                <md-input-container class="md-block" style="margin-bottom: 0;">
+                    <input ng-disabled="isReplying" ng-model="replyData.text" placeholder="COMMENT POST">
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end center">
+                <md-button ng-click="reply()" style="margin:0;background-color: #006fd5;color: white;" ng-disabled="isReplying || replyText ===''">COMMENT</md-button>
+            </div>
+        </div>
+    </div>
+
+
+    <div layout="column">
+        <div ng-if="comment.expand && $index <= displayCount" ng-repeat="comment in post.comments">
+            <mobile-comment-item entity-type="entityType" entity-id="entityId" comment="comment"></mobile-comment-item>
+        </div>
+    </div>
+    <div layout="row" layout-wrap style="padding-top: 8px;">
+        <img ng-if="!comment.expand && $index <= displayCount" ng-click="expandComment(comment)" style="width: 40px;height: 40px;border-radius: 50%;text-align: center;margin-right:8px;margin-bottom: 8px;cursor: pointer;"  ng-src="{{getUserPic(comment.commentType.toLowerCase(),comment)}}"  ng-repeat="comment in post.comments" alt="">
+    </div>
+    <!--<a ng-click="seeMore()" ng-hide="displayCount >= post.comments.length">see more</a>-->
+</div>

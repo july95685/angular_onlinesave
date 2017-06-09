@@ -1,0 +1,64 @@
+<md-dialog aria-label="Add channel" class="add-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Add new channel</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+     <form name="create_channals_form" role="form" novalidate>
+            <md-dialog-content class="md-padding">
+                    <div layout="row">
+                        <div flex="55">
+                            <md-input-container flex ng-class="{'md-input-invalid':(create_channals_form.title.$invalid && create_channals_form.title.$dirty) || (create_channals_form.title.$error.required && submitted)}">
+                                <label>Channel Name</label>
+                                <input name="title" ng-model="channalsEntity.name" required>
+
+                                <div ng-messages="create_channals_form.title.$error" ng-show="create_channals_form.title.$dirty || submitted">
+                                    <div ng-message="required" ng-show="create_channals_form.title.$error.required">This is required!</div>
+                                </div>
+
+                            </md-input-container>
+                        </div>
+                        <div flex></div>
+                    </div>
+                    <div layout="row">
+                        <div flex="55">
+                            <label style="color: #777;font-size: 12px;padding-left: 3px;">channel Description</label>
+                            <div flex style="padding-left: 1px;">
+                                <textarea aria-label="description" style="border:1px solid rgba(0,0,0,0.12);;width:100%;outline:none;height:120px;resize: none;overflow: scroll;" ng-model="channalsEntity.description"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="margin-top:10px">
+                        <label style="color: #777;font-size: 12px;padding-right: 10px;">Select your channel type</label>
+                            <md-input-container>
+                                <md-select ng-model="createType" style="margin-top: -10px;">
+                                    <md-option value="All">All</md-option>
+                                    <md-option value="Image">Image</md-option>
+                                    <md-option value="Video">Video</md-option>
+                                    <md-option value="PDF">PDF</md-option>
+                                </md-select>
+                            </md-input-container>
+                    </div>
+
+            </md-dialog-content>
+             <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+                        <div class="v2-color form-close" ng-click="answer('not useful')">
+                            CANCEL
+                        </div>
+                        <md-button class="md-raised md-primary" ng-click="createChannals()" style="margin-right:20px;padding: 0 20px;">
+                            ADD
+                        </md-button>
+             </div>
+
+        </form>
+        <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+       </div>
+</md-dialog>

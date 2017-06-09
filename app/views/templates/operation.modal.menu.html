@@ -1,0 +1,44 @@
+<div style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: rgba(0,0,0,0.3);z-index: 9999999;overflow: hidden;">
+    <div class="mobile-header">
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" style="background-color: white;">
+                <md-button style="margin-left: 0;padding-left: 0;width: 30px;" class="md-icon-button" ng-click="closeThisMenu()" aria-label="Menu">
+                    <md-icon><i class="mdi mdi-close tb-icon"></i></md-icon>
+                </md-button>
+                <span style="color: #3a3a3a;">
+                    {{entityData === 'lockr' ? 'Manage Lockr':'Manage Asset'}}
+                </span>
+            </div>
+        </md-toolbar>
+    </div>
+    <div style="background-color: white;margin-top: 56px;">
+        <md-list ng-show="entityData === 'lockr'" ng-cloak>
+            <md-list-item ng-click="openLockrDetails()">
+                <i class="primary dal-icon-locker_info_black icon-size-2"></i>
+                <p style="padding-left: 10px;"> Lockr infomation </p>
+            </md-list-item>
+            <md-list-item ng-if="::noContentManager" ng-click="managePermissionsAndUser()">
+                <i class="primary dal-icon-manage_user_black icon-size-2"></i>
+                <p style="padding-left: 10px;"> Manage permissions and user </p>
+            </md-list-item>
+            <md-list-item ng-if="locked" ng-click="inviteUserToPrivateLockr()">
+                <i class="primary dal-icon-add_col_black icon-size-2"></i>
+                <p style="padding-left: 10px;"> Invite user </p>
+            </md-list-item>
+            <md-list-item ng-click="managePublishPoint()">
+                <i class="primary dal-icon-preview_black icon-size-2"></i>
+                <p style="padding-left: 10px;"> Manage Publishing point </p>
+            </md-list-item>
+        </md-list>
+        <md-list ng-show="entityData === 'asset'" ng-cloak>
+            <md-list-item ng-click="editAsset()">
+                <i class="primary dal-icon-edit_black icon-size-2"></i>
+                <p style="padding-left: 10px;"> Edit Asset </p>
+            </md-list-item>
+            <md-list-item ng-click="publishAsset()">
+                <i class="primary dal-icon-preview_black icon-size-2"></i>
+                <p style="padding-left: 10px;">Publish asset by date</p>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>

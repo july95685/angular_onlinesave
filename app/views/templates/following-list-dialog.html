@@ -1,0 +1,30 @@
+<md-dialog aria-label="Following list" class="min-width-600" style="height:auto">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Following</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding" style="margin-bottom: 0;">
+        <md-grid-list md-cols="6" md-cols-sm="6" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter="12px" md-gutter-gt-sm="8px">
+            <md-grid-tile ng-repeat="item in followings" md-rowspan="2" md-colspan="2" md-colspan-sm="2" style="overflow: hidden;cursor: pointer;">
+                <img ng-src="{{item.thumbnail}}" style="width: 100%;height: auto;position: absolute;top: 0;left:0;">
+
+                <md-grid-tile-footer>
+                    <h3 style="margin: 3px;text-align: center;">{{item.name}}</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+
+
+        <div layout="row" layout-sm="column" layout-align="center center" >
+            <md-progress-circular ng-show="isLoading" md-mode="indeterminate"></md-progress-circular>
+            <md-button ng-click="reloadData()" ng-show="!isLoading && loadError">load error !  click to reload</md-button>
+        </div>
+
+    </md-dialog-content>
+
+</md-dialog>

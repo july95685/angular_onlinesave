@@ -1,0 +1,134 @@
+<div class="stats-across">
+    <div class="stats-big-card">
+        <md-grid-list
+                class="box-shadow"
+                md-cols="4"
+                md-row-height="1:1">
+            <md-grid-tile style="background-color: white;"  ng-repeat="stat in dashStats">
+                <div class="stat-card" layout="column" layout-align="center center">
+                    <span class="number">{{stat.percent ? ( stat.text *100 ).toFixed(0) + '%' : stat.text}}</span>
+                    <i class="mdi {{stat.icon}}"></i>
+                    <span class="desc">{{stat.desc}}</span>
+                    <span class="desc">across channels</span>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+
+        <!--<div class="text-center loading-mask" ng-show="isLoading" style="background-color: rgba(255,255,255,0.5);">-->
+            <!--<div layout="row" layout-sm="column" layout-align="center center">-->
+                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div style="margin-top: 20px;padding:5px;">-->
+            <!--<md-grid-list class="card-shadow"-->
+                          <!--md-cols="3"-->
+                          <!--md-row-height="2:1.5"-->
+                          <!--md-gutter="0">-->
+                <!--<md-grid-tile class="divide-line-tile" style="background-color: white;">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{totalViews || 0}}</h1>-->
+                        <!--<i class="mdi mdi-eye icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Total Views across Channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+
+                <!--<md-grid-tile class="divide-line-tile" style="background-color: white;">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{averageComments ? (averageComments !== 0 ? (averageComments) : 0  ): 0}}</h1>-->
+                        <!--<i class="mdi mdi-comment-multiple-outline icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Conversation rate across channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+
+                <!--<md-grid-tile style="background-color: white;">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{averageLikes ? (averageLikes !== 0 ? (averageLikes) : 0  ): 0}}</h1>-->
+                        <!--<i class="mdi mdi-heart icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Applause rate across channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+            <!--</md-grid-list>-->
+        <!--</div>-->
+
+        <!--<div style="margin:20px 0;padding: 5px;">-->
+            <!--<md-grid-list class="card-shadow"-->
+                          <!--md-cols="4"-->
+                          <!--md-row-height="1:1.1">-->
+                <!--<md-grid-tile style="background-color: white;" class="divide-line-tile">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{averageReShares ? (averageReShares !== 0 ? (averageReShares) : 0  ): 0}}</h1>-->
+                        <!--<i class="mdi mdi-bullhorn icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Amplification rate across channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile style="background-color: white;" class="divide-line-tile">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{totalReShares || 0}}</h1>-->
+                        <!--<i class="mdi mdi-share-variant icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Total Shares across Channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile style="background-color: white;" class="divide-line-tile">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{totalLikes || 0}}</h1>-->
+                        <!--<i class="mdi mdi-thumb-up icon-size-3" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--Total Likes across Channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile style="background-color: white;">-->
+                    <!--<div style="text-align: center;">-->
+                        <!--<h1>{{totalSentiment || 0}}</h1>-->
+                        <!--<i class="mdi icon-size-3" ng-class="{'mdi-emoticon-happy':totalSentiment > 2.5,'mdi-emoticon-sad':(totalSentiment < 1.5),'mdi-emoticon-neutral': (1.5 <= totalSentiment && totalSentiment <= 2.5) || !totalSentiment }" style="margin-top: 10px;"></i>-->
+                        <!--<p class="v2-color" style="width: 120px;text-align: center;padding:0;margin:0 auto;margin-top: 10px;">-->
+                            <!--&lt;!&ndash;Positive rating across Channels&ndash;&gt;-->
+                            <!--Sentiment rating across Channels-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+
+            <!--</md-grid-list>-->
+        <!--</div>-->
+
+    </div>
+
+
+
+
+
+    <div style="margin:20px 0;padding: 5px;margin-bottom: 100px;">
+        <div layout-sm="column" layout-xs="column" layout="row">
+            <div flex class="card-shadow">
+                <daily-stats series-data="seriesData" show-title="true"></daily-stats>
+            </div>
+            <span style="width:10px;height: 10px;"></span>
+            <div flex style="background-color: white;" class="card-shadow">
+                    <div layout-fill class="md-padding">
+                        <div>
+                            <span class="icon-size-2 v2-color">Channels across the world</span>
+                        </div>
+                        <div id="social-world-map" style="height: 299px;"></div>
+                    </div>
+
+                    <!--<div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingMap">-->
+                        <!--<div layout="row" layout-sm="column" layout-align="center center">-->
+                            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                        <!--</div>-->
+                    <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+</div>

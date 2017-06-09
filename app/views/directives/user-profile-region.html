@@ -1,0 +1,46 @@
+<div id="profile-region" layout="row" layout-align="start center">
+    <div>
+        <div class="profile" layout="row" layout-align="start center">
+            <div class="profile-pic">
+                <img ng-click="changeAvatar()" alt="" style="width: 50px;height: 50px;position: relative;background-color: white;border: 5px solid white;box-sizing: content-box;" ng-src="{{userOriginAvatar}}">
+            </div>
+            <div class="profile-info" style="padding-left: 15px;width: 200px;">
+                <div style="height: 43px;">
+                    <div class="btn-group">
+                        <button id="profile-name" type="button" class="btn" style="background-color: transparent; outline: none;width:155px;text-align:left;padding:0;"><span ng-class="{'white':showMenu}" class="" style="font-size: 18px;width: 155px; position: relative;z-index: 4;display: inline-block;text-overflow: ellipsis;overflow: hidden;text-overflow-ellipsis: white;white-space:nowrap;-o-text-overflow:ellipsis;"> {{userName}}</span></button>
+                        <button type="button" class="btn btn-grey dropdown-toggle v2-color" style="position: relative;z-index: 4;background-color: transparent; -webkit-box-shadow: inset 0 0 0 #ffffff;float: right;
+                -moz-box-shadow: inset 0 0 0 #ffffff;
+                box-shadow: inset 0 0 0 #ffffff;" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                            <span class="caret" ng-class="{'white':showMenu}"></span>
+                        </button>
+                        <ul class="dropdown-menu" style="z-index: 1021;width: 100%;">
+                            <li><a ng-click="openProfileDialog($event)" style="cursor: pointer;">Profile</a></li>
+                            <li><a ng-click="openSharingRuleDialog($event)" ng-if="notContentManager" style="cursor: pointer;">Sharing Rules</a> </li>
+                            <li><a ng-click="openFollowingDialog($event)" style="cursor: pointer;">Following</a> </li>
+                            <li class="divider"></li>
+                            <li><a style="cursor: pointer;" ng-click="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown">
+                        <div class="dropdown-toggle" style="cursor: pointer;" id="see-storage-details" data-toggle="dropdown" aria-expanded="true">
+                            <div class="profile-space progress" style="height: 6px;border-radius: 0px;margin-top:3px;width: 155px;position: relative;z-index: 4;">
+                                <div class="progress-bar profile-progress-color" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{(storageData.totalBytes / storageData.maxBytes).toFixed(2)*100 || 0}}%;"></div>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="see-storage-details" style="width:240px;right:30px;left:auto;position: absolute;z-index:1022;">
+                            <dashboard-right-region></dashboard-right-region>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden-xs md-padding">
+        <i class="mdi mdi-bell-outline notification-bell"  ng-class="{'white':showMenu}" style="vertical-align: middle;" ng-click="openNotification()"></i>
+        <span style="vertical-align: middle;width: 20px;height: 20px;font-size:10px;background-color: #d0021b;border-radius: 50%;display: inline-block;line-height: 20px; color: white;
+    text-align: center;" ng-show="totalNotification > 0">{{totalNotification ? totalNotification : '0'}}</span>
+    </div>
+    <all-clusters clusters="clusters"></all-clusters>
+</div>

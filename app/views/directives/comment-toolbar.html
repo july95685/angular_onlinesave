@@ -1,0 +1,29 @@
+<div>
+    <div ng-if="commentType !== 'facebook' && commentType !== 'twitter'">
+        <div class="com-toolbar">
+            <ul class="list-unstyled clearfix" style="padding: 0;margin:0;">
+                <li class="pull-left" ng-style="commentItem.isLiked ? likeStyle : ''"><i ng-style="commentItem.isLiked ? likeStyle : ''" class="mdi icon-size-1 mdi-thumb-up"></i> <a ng-click="likeThisComment()" ng-style="commentItem.isLiked ? likeStyle : ''">{{commentItem.isLiked ? 'Unlike' : 'Like'}} </a><a ng-click="seeWhoLikes()" ng-style="commentItem.isLiked ? likeStyle : ''">({{commentItem.likeObjects.length || 0}})</a></li>
+                <li class="pull-left comments-toolbar-btn-{{commentItem.id}}" ng-click="expandChildComments()"><i class="mdi mdi-message icon-size-1"></i> <span>Reply <span ng-hide="replyToParent">({{commentItem.numberOfComments || 0}})</span></span></li>
+                <li class="pull-left" ng-click="shareThisComment()"><i class="mdi mdi-share icon-size-1"></i> <span>Share</span></li>
+            </ul>
+        </div>
+    </div>
+    <div ng-if="commentType === 'facebook'">
+        <div class="com-toolbar">
+            <ul class="list-unstyled clearfix" style="padding: 0;margin:0;">
+                <li class="pull-left" ng-style="commentItem.isLiked ? likeStyle : ''"><i ng-style="commentItem.isLiked ? likeStyle : ''" class="mdi icon-size-1 mdi-thumb-up"></i> <a ng-click="likeThisComment()" ng-style="commentItem.isLiked ? likeStyle : ''">{{commentItem.isLiked ? 'Unlike' : 'Like'}} </a><a ng-click="seeWhoLikes()" ng-style="commentItem.isLiked ? likeStyle : ''">({{commentItem.likeObjects.length || 0}})</a></li>
+                <li class="pull-left comments-toolbar-btn-{{commentItem.id}}" ng-click="expandChildComments()"><i class="mdi mdi-message icon-size-1"></i> <span>Reply <span ng-hide="replyToParent">({{commentItem.numberOfComments || 0}})</span></span></li>
+                <li class="pull-left" ng-click="shareThisComment()"><i class="mdi mdi-share icon-size-1"></i> <span>Share</span></li>
+            </ul>
+        </div>
+    </div>
+    <div ng-if="commentType === 'twitter'">
+        <div class="com-toolbar">
+            <ul class="list-unstyled clearfix" style="padding: 0;margin:0;">
+                <li class="pull-left comments-toolbar-btn-{{commentItem.id}}" ng-click="expandChildComments()"><i class="mdi mdi-reply icon-size-1"></i> <span>Reply <span ng-hide="replyToParent">({{commentItem.numberOfComments || 0}})</span></span></li>
+                <li class="pull-left"><i class="mdi mdi-twitter-retweet icon-size-1"></i> <span>Retweet</span></li>
+                <li class="pull-left" ng-style="commentItem.isLiked ? likeStyle : ''"><i ng-style="commentItem.isLiked ? likeStyle : ''" class="mdi icon-size-1 mdi-thumb-up" ></i><a ng-click="likeThisComment()" ng-style="commentItem.isLiked ? likeStyle : ''">{{commentItem.isLiked ? 'Unlike' : 'Like'}} </a><a ng-click="seeWhoLikes()" ng-style="commentItem.isLiked ? likeStyle : ''">({{commentItem.likeObjects.length || 0}})</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

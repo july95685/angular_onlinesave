@@ -1,0 +1,70 @@
+<div id="newRuleModalBody">
+    <form role="form" class="form-horizontal form-groups-bordered" name="addRule" ng-submit="addSharingRule(sharingRule)">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Name</label>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control" ng-model="sharingRule.sharingRule.name" placeholder="Name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">MimeType</label>
+
+            <div class="col-sm-5">
+                <select data-ng-model="sharingRule.sharingRule.mimeType" class="form-control">
+                    <option selected="selected">*/*</option>
+                    <option>image/*</option>
+                    <option>application/pdf</option>
+                    <option>video/*</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">License</label>
+
+            <div class="col-sm-5">
+                <select data-ng-model="sharingRule.sharingRule.license"  class="form-control">
+                    <!--<option selected="selected">PublicDomain</option>-->
+                    <!--<option>Copyright</option>-->
+                    <option selected="selected">CC_BY</option>
+                    <option>CC_BY_ND</option>
+                    <option>CC_BY_SA</option>
+                    <option>CC_BY_NC</option>
+                    <option>CC_BY_NC_SA</option>
+                    <option>CC_BY_NC_ND</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Post on channels</label>
+
+            <div class="col-sm-8">
+                <div ng-repeat="item in socialChannelsData">
+                    <div class="checkbox">
+                        <input type="checkbox" ng-checked="sharingRule.sharingRule.postOnSocialChannel.indexOf(item.id) !== -1" ng-click="socialSelectedForRule(item.id)">
+                        <!--<span class="fa facebook"></span>-->
+                        <i style="margin-left:20px; font-size: 15px;" class="mdi {{item.iconClass}}"></i>
+                        <label>{{item.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-5">
+                <button type="submit" style="width:100%;" class="btn btn-success" data-toggle="modal">Create</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isAdding">
+        <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+</div>
+
+

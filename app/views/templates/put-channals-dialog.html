@@ -1,0 +1,47 @@
+<md-dialog aria-label="Choose channel" class="add-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Choose channel</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="hide()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="!channals">
+            <div layout="row" layout-sm="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+    </div>
+    <div>
+    <div ng-repeat="dat in channals">
+        <div ng-click="choosechannel(dat)" layout="row" style="padding-top:10px;">
+            <i style="color:#006fd5;height:40px;line-height: 40px;padding-left:10px;" class="mdi icon-size-2 vertical-align-middle mdi-folder" ></i>
+            <div layout="row" flex>
+            <p class="tag-p sub-p"  style="height:40px;line-height: 40px;padding-left:10px;"> {{ dat.name }} </p>
+             <span flex></span>
+            <i ng-class="{'mdi-check-circle-outline':!dat.active,'mdi-check-circle v2-color':dat.active}" style="color:#e1e1e1;height:40px;line-height: 40px;padding-right:20px;" class="mdi icon-size-2 vertical-align-middle" ></i>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+        <div class="v2-color form-close" ng-click="hide()">
+            CANCEL
+        </div>
+        <md-button class="md-raised md-primary" ng-click="joinChannals()" style="margin-right:20px;padding: 0 20px;">
+           OK
+        </md-button>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+
+</md-dialog>

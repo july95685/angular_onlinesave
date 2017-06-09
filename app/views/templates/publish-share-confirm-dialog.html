@@ -1,0 +1,16 @@
+<md-bottom-sheet class="confirm-share md-has-header">
+    <div style="margin-top: 16px;" class="md-subhead primary">
+        New asset uploaded
+    </div>
+    <md-content class="md-padding" layout="row" layout-align="center center">
+        <span class="text-center md-body-1">
+            Do you wish to publish and share <strong class="primary">{{assetTitle}}</strong> now ?
+        </span>
+    </md-content>
+    <div layout="row">
+        <md-button ng-click="hide(0)" class="dal-btn">NOT NOW</md-button>
+        <span flex></span>
+        <md-button ng-click="hide(1)" class="dal-btn dal-btn-primary">SHARE NOW</md-button>
+    </div>
+
+</md-bottom-sheet>

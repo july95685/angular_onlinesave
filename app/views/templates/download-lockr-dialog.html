@@ -1,0 +1,33 @@
+<md-dialog aria-label="Download Lockr" class="download-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Download lockr</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="download_lockr_form" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+                <p class="v2-color">You are about to download lockr and containing assets</p>
+                <div>
+                    <strong>{{currentLockrData.name}}</strong><span class="d-date" style="margin-left:30px;">created on {{currentLockrData.createDate | date:'MM.dd.yyyy - H:mm'}}</span>
+                    <a id="lockr-download-a" ng-href="{{downloadLockrUrl}}" class="hidden"></a>
+                </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary download-btn" ng-click="downloadLockr()" style="margin-right:20px;padding: 0 20px;">
+                DOWNLOAD
+            </md-button>
+        </div>
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

@@ -1,0 +1,274 @@
+<div md-swipe-right="swipeOpenSlideMenu()" ng-class="{'mobile-account-region':mobileDevice,'pc-account-region':!mobileDevice}">
+
+    <lockr-details-fixed-menu path-level="0" current-lockr-details="currentLockrDetails"  accounts-data="accountsData" current-lockr-id="currentLockrId"></lockr-details-fixed-menu>
+    <fixed-menu-mask region-size="regionSize" is-show="maskIsShow"></fixed-menu-mask>
+    <div ng-if="!mobileDevice" style="width: 100%;height: 45px;" bg="primary" class="nav-bar"></div>
+
+    <div class="text-center" ng-if="!mobileDevice && loadingAllAccount" style="margin: 80px 0;">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+
+    <!--没有Account 两种情况:1.有权创建 isIntegrator=true 2.无权创建isIntegrator = false-->
+    <div class="md-padding" ng-if="!loadingAllAccount && !accountsData.length">
+        <div ng-switch="isIntegrator">
+            <div ng-switch-when="true" layout="column" layout-align="center center">
+                <h4 class="primary text-center">No account, Please add a new account.</h4>
+                <md-button class="dal-btn dal-btn-primary" ng-click="addAccount($event)">ADD</md-button>
+            </div>
+            <div ng-switch-when="false">
+                <h4 class="primary text-center">No account, please contact your integrator or account manager.</h4>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--PC端显示-->
+    <div layout="row" ng-if="!mobileDevice && accountsData.length" style="position: relative;">
+
+        <div class="lockr-info" style="padding: 15px 0;background-color: white;">
+            <accounts-list all-accounts="accountsData"  set-account="setAccount()" select-account="switchAccount(index)"></accounts-list>
+            <div layout="row" layout-align="center center" class="md-padding" ng-if="isIntegrator">
+                <i class="mdi mdi-plus" style="font-size: 60px;" ng-click="addAccount($event)">
+                    <md-tooltip>
+                        Add account
+                    </md-tooltip>
+                </i>
+            </div>
+        </div>
+
+        <div flex>
+            <div class="asset-info" style="padding-left: 15px;overflow: hidden;padding-right: 20px;padding-top: 15px;padding-bottom: 70px;
+                ">
+                <div class="text-center" ng-show="!loadingAllAccount && loadingAccount" style="margin-top: 100px;">
+                    <div layout="row" layout-sm="column" layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+                <div layout="row" layout-align="start center" ng-hide="loadingAccount || !accountsData.length">
+                    <div layout="row" style="padding-right: 16px;">
+                        <div ng-if="item.num" ng-repeat="item in currentLockrDetails.assetExtraInfo">
+                            <i ng-if="item.icon" class="mdi vertical-align-middle {{item.icon}} v2-color" style="font-size: 28px;"></i>
+                            <span class="vertical-align-middle font-color-1" style="font-size: 20px;">{{item.num || 0}} {{item.text}}</span>
+                        </div>
+                    </div>
+                    <div flex>
+                        <div style="max-width:500px;">
+                            <!--<filter-toolbar show-text="showText" result-callback="resultCallback(data)"></filter-toolbar>-->
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div masonry reload-on-show load-images="false" auto-center-monsary>
+                    <div class="masonry-brick"  ng-repeat="item in assetsData | orderBy : 'dateCreated' : true | filter : filterValue "  style="margin:10px;" >
+                        <div class="a-card card-shadow" id="asset-{{item.id}}" ng-click="seeAssetOrLockr({id:item.id, type:item.fileType})" style="outline: none;overflow: hidden;">
+
+                            <div class="card-hover" style="position: absolute;top:0;bottom:0;left:0;width:100%;height: 100%;background-color: rgba(0,0,0,0.3);z-index: 1;">
+
+                                <div style="position: absolute;top:10px;right:10px;" ng-show="item.fileType !== 'subLockr'">
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="selected-icon mdi operate-icon icon-size-2 mdi-checkbox-multiple-blank-outline vertical-align-middle" ng-click="selectItem($event,{id:item.id, name:item.name, trackingId:item.defaultLink.trackingId, fileType:item.fileType})"></i>
+                                        <md-tooltip>select asset</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi mdi-pencil operate-icon icon-size-2 vertical-align-middle" title="Edit asset" ng-click="openEditAssetDialog($event,item)">
+                                        </i>
+                                        <md-tooltip>edit asset</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="operate-icon icon-size-2 vertical-align-middle" ng-class="{'dal-icon-unpublish_black':item.state !== 'Published','dal-icon-preview_black':item.state === 'Published'}" title="publish or unpublish asset" ng-click="publishAsset($event,item)">
+                                        </i>
+                                        <md-tooltip>{{item.state === 'Published' ? 'unpublish' : 'publish'}} asset</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi operate-icon icon-size-2 vertical-align-middle" ng-class="{'mdi-checkbox-marked-circle-outline v2-disabled':item.id === currentLockrDetails.thumbnailAssetId,'mdi-checkbox-blank-circle-outline':item.id !== currentLockrDetails.thumbnailAssetId}" title="Set as Lockr thumbnail" ng-click="setThumbnail($event,item.id)"></i>
+                                        <md-tooltip>set as Lockr thumbnail</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi mdi-delete operate-icon icon-size-2 vertical-align-middle" title="Delete asset" ng-click="openDeleteAssetDialog($event,{id:item.id,name:item.name})">
+                                        </i>
+                                        <md-tooltip>delete asset</md-tooltip>
+                                    </div>
+                                </div>
+
+                                <div style="position: absolute;top:10px;right:10px;" ng-show="item.fileType === 'subLockr'">
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi mdi-pencil operate-icon icon-size-2 vertical-align-middle" title="Edit lockr" ng-click="openEditLockrDialog($event,item)">
+                                        </i>
+                                        <md-tooltip>edit lockr</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi operate-icon icon-size-2 vertical-align-middle" ng-class="{'mdi-lock-open':item.locked,'mdi-lock':!item.locked}" ng-style=" item.locked ? {'color':'#006fd5'} : {'opacity':'0.5'}" title="lock or unlock lockr" ng-click="lockLockr($event,item)">
+                                        </i>
+                                        <md-tooltip ng-show="item.locked">unlock lockr</md-tooltip>
+                                        <md-tooltip ng-hide="item.locked">lock lockr</md-tooltip>
+                                    </div>
+
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="dal-icon-download_black operate-icon icon-size-2 vertical-align-middle" title="Download lockr" ng-click="openDownloadLockrDialog($event,{id:item.id,name:item.name,createDate:item.dateCreated})">
+                                        </i>
+                                        <md-tooltip>download lockr</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi mdi-heart operate-icon icon-size-2 vertical-align-middle" title="Follow lockr" ng-click="followLockr($event,{id:item.id,name:item.name})" style="top:2px;">
+                                        </i>
+                                        <md-tooltip>follow lockr</md-tooltip>
+                                    </div>
+                                    <div style="display: inline-block;position:relative;">
+                                        <i class="mdi mdi-delete operate-icon icon-size-2 vertical-align-middle" title="Delete lockr" ng-click="openDeleteLockrDialog($event,item)">
+                                        </i>
+                                        <md-tooltip>delete lockr</md-tooltip>
+                                    </div>
+                                </div>
+                                <md-button class="absolute-center" style="position: absolute;border:1px solid white;color:white;"> See content ... </md-button>
+                            </div>
+
+
+                            <div class="image" ng-class="{'fixedImageParentHeight':item.noTnDimensions}" style="width:100%;overflow: hidden;position: relative;">
+                                <div ng-if="item.isChannel" style="height: 165px;width: 100%;" bg="primary"></div>
+                                <img on-error ng-if="!item.isChannel"  style="width:100%;" ng-class="{'imageHeightAuto':item.noTnDimensions}" height="{{item.tnSize.showHeight}}" ng-src="{{item.thumbnailUrl}}" src="">
+                                <md-button aria-label="{{::item.fileType}}" class="md-fab type-icon v2-bg-color md-mini">
+                                    <i class="mdi vertical-align-middle icon-size-2 {{::item.fileTypeIcon}} white"></i>
+                                </md-button>
+                            </div>
+                            <div style="padding:15px 10px;">
+                                <h5 class="v2-color" style="font-size: 16px;font-weight: normal;margin-top: 0;margin-bottom:5px;font-size:'Helvetica Neue' ">{{::item.name}}</h5>
+                                <ul class="list-unstyled clearfix">
+                                    <li class="pull-left" style="padding-right: 10px;"><i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i><span class="vertical-align-middle font-size-1">{{item.dateCreated | date : 'MMMM,d yyyy'}}</span></li>
+                                </ul>
+
+                                <p style="padding:10px 0;padding-top:0;color:#555;margin:0;font-size: 12px;position: relative;"> {{item.description}} </p>
+
+                                <div style="padding-top:10px;" layout="row">
+                                    <ul class="list-unstyled" layout="row" style="padding-right:5px;">
+                                        <li ng-repeat="channel in item.socialChannelView"><i class="mdi icon-size-1 {{channel}}"></i></li>
+                                    </ul>
+
+                                    <div layout="row" flex layout-align="start center">
+                                        <div layout="row" layout-align="start center">
+                                            <i ng-show="item.iscontent || item.iscommunity" style="font-size: 13px;padding-right:5px;margin-left:-10px;" class="mdi mdi-account"></i>
+                                            <span style="margin-right:20px;font-size:11px;" ng-show='::item.iscontent'>Content manager</span>
+                                            <span style="margin-right:20px;font-size:11px;" ng-show='::item.iscommunity'>Community manager</span>
+                                        </div>
+                                        <span flex></span>
+                                        <div style="padding-right:7px;" layout="row" layout-align="start center">
+                                            <i style="color: #f27065;padding-right: 5px;font-size:13px;" class="mdi mdi-heart icon-size-1"></i>
+                                            <span class="font-size-1">{{::item.numberOfFollowers || 0}}</span>
+                                        </div>
+                                        <div layout="row" layout-align="start center">
+                                            <i style="padding-right: 5px;" class="mdi mdi-message-processing icon-size-1"></i>
+                                            <span class="font-size-1">{{::item.numberOfComments || 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin: 80px 0;" ng-hide="loadingAccount || !accountsData.length">
+                    <!--<div class="text-center">-->
+
+                    <div class="text-center" style="padding:30px 0;">
+                        <button style="background-color: transparent;outline: none; border: 1px solid #006fd5;width:300px;height:40px;font-size: 20px;color: #006fd5;" ng-click="addLockr()">Add lockr</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--移动端显示-->
+    <div ng-if="mobileDevice">
+
+
+        <div class="text-center" ng-show="loadingAccount" style="margin-top: 100px;">
+            <div layout="row" layout-sm="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+
+        <div style="margin: 12px;" ng-if="!loadingAccount && accountsData.length" ng-hide="">
+            <filter-toolbar show-text="showText" result-callback="resultCallback(data)"></filter-toolbar>
+        </div>
+
+
+
+        <div masonry reload-on-show load-images="false" ng-style="{padding:mobileGap + 'px'}">
+            <div ng-style="{padding:mobileGap + 'px',width:mobileCardWidth + 'px'}" style="box-sizing: content-box;" ng-repeat="item in assetsData | orderBy : 'dateCreated' : true | filter : filterValue" class="masonry-brick m">
+                <div class="card-shadow" ng-click="seeAssetOrLockr({id:item.id, type:item.fileType})"  style="background-color: white;" layout="column">
+                    <div class="card-action-more" layout="row" layout-align="end center">
+                        <md-button aria-label="open select action" ng-click="openEntityMoreAction($event,item)" class="dal-btn">
+                            <i class="mdi mdi-dots-horizontal tb-icon icon-size-2"></i>
+                        </md-button>
+                    </div>
+
+                    <div class="image-wrapper" style="position: relative;overflow: hidden;">
+                        <div ng-if="item.isChannel" style="height: 165px;width: 100%;" bg="primary"></div>
+                        <div layout="row" layout-align="end start">
+                            <img on-error width="{{item.tnSize.showWidth}}" height="{{item.tnSize.showHeight}}"  data-ng-src="{{::item.thumbnailUrl}}" style="max-width: 400px;">
+                        </div>
+                        <md-button aria-label="{{::item.fileType}}" class="md-fab type-icon v2-bg-color md-mini">
+                            <i class="mdi vertical-align-middle icon-size-2 {{::item.fileTypeIcon}} white"></i>
+                        </md-button>
+                    </div>
+                    <div  style="overflow: hidden;margin: 15px;">
+                        <div>
+                            <div layout="row" class="v2-color" layout-align="start center" layout-wrap style="margin-top: 0;margin-bottom:5px;">
+                                <span flex style="font-size: 16px;font-weight: normal;padding-right: 8px;" class="md-span-wordwrap" >{{::item.name}}</span>
+                            </div>
+                            <ul class="list-unstyled clearfix" style="margin-bottom: 0;">
+                                <li class="pull-left" style="padding-right: 10px;">
+                                    <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i>
+                                    <span class="vertical-align-middle font-size-1" style="font-size: 10px;">{{::item.dateCreated | date : 'dd MMM yyyy'}}</span>
+                                </li>
+                            </ul>
+
+                            <p style="padding:0;color:#555;margin:0;font-size: 12px;"> {{::item.description}}</p>
+
+                            <div style="padding-top:10px;" layout="row" layout-align="start center">
+                                <ul class="list-unstyled" layout="row" style="margin: 0;">
+                                    <li ng-repeat="channel in item.socialChannelView"><i class="mdi icon-size-1 {{::channel}}"></i></li>
+                                </ul>
+                                <div layout="row" flex layout-align="start center">
+                                    <div layout="row" layout-align="start center">
+                                        <i ng-show="item.iscontent || item.iscommunity" style="font-size: 14px;padding-bottom:6px;padding-right:5px;" class="mdi mdi-account"></i>
+                                        <span style="padding-bottom:6px;font-size:13px;" ng-show='::item.iscontent'>Content manager</span>
+                                        <span style="padding-bottom:6px;font-size:13px;" ng-show='::item.iscommunity'>Community manager</span>
+                                    </div>
+                                    <span flex></span>
+                                </div>
+                            </div>
+                            <div layout-align="start center" layout="row">
+                                <div  layout="row" layout-align="start center">
+                                    <i style="padding-right: 5px;font-size:18px;" class="mdi dalello-icon-comments_black icon-size-1"></i>
+                                    <span style="font-size: 11px;font-weight: bold;">{{item.numberOfComments || 0}}</span>
+                                </div>
+                                <div style="padding-left: 12px;" layout="row" layout-align="start center">
+                                    <i style="margin-top:2px;font-size:20px;padding-right: 5px;" class="mdi mdi-heart icon-size-1"></i>
+                                    <span style="font-size: 11px;font-weight: bold;">{{::item.numberOfFollowers || 0}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+   </div>
+
+    <div ng-if="toEditThumbnail">
+        <lockr-select-thumbnail lockr-infodata="toEditLockrInfo"></lockr-select-thumbnail>
+    </div>
+
+</div>

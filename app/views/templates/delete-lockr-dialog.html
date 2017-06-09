@@ -1,0 +1,42 @@
+<md-dialog aria-label="Delete Lockr"  class="delete-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Delete lockr</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <form name="delete_lockr_form" role="form" novalidate>
+            <p>Are you sure you want to delete the lockr <strong class="ng-binding">{{currentDeleteLockr.name}}</strong>&nbsp;?</p>
+            <md-checkbox md-no-ink ng-model="deleteData.deleteAssets" aria-label="Checkbox No Ink" class="md-v2 md-align-top-left" style="margin-left: 0;">
+                Delete assets<br/>
+            <span class="ipsum" style="font-size: 12px;color: #737373;">
+                Selecting this will also delete all assets in this lockr.
+            </span>
+            </md-checkbox>
+
+            <md-checkbox ng-disabled="!deleteData.deleteAssets" ng-model="deleteData.socialChannels" aria-label="Disabled checked checkbox" class="md-v2 md-align-top-left" style="margin-left: 0;">
+                  Delete social channel comments<br/>
+                  <span class="ipsum" style="font-size: 12px;color: #737373;">
+                    This will additionally delete all comments associated with the assets.
+                  </span>
+            </md-checkbox>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+        <div class="v2-color form-close" ng-click="answer('not useful')">
+            CANCEL
+        </div>
+        <md-button class="md-raised md-primary" ng-click="deleteLockr()" style="margin-right:20px;padding: 0 20px;">
+            DELETE
+        </md-button>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

@@ -1,0 +1,18 @@
+<md-bottom-sheet class="more-action-sheet" layout="column">
+    <div class="head" layout="row" layout-align="space-between" ng-cloak>
+        <span>{{currentItem.name}}</span>
+        <i ng-click="selectAction('info')" ng-if="isSubRoute && !(currentItem.fileType != 'subLockr')" class="dalello-icon-info_black"></i>
+    </div>
+    <div ng-cloak>
+        <md-list flex layout="column" layout-align="center center">
+            <md-list-item ng-repeat="(key,item) in items">
+                <md-button ng-click="selectAction(key)" aria-label="select action" class="dal-btn">
+                    <span class="i-wrapper">
+                      <i class="mdi {{(key == 'publish' || key == 'lock') ? (currentItem.state == 'Published' || currentItem.locked == true) ? item.nonactive.icon : item.active.icon : item.icon}}"></i>
+                    </span>
+                    <span>{{(key == 'publish' || key == 'lock') ? (currentItem.state == 'Published' || currentItem.locked == true) ? item.nonactive.name : item.active.name : item.name}}</span>
+                </md-button>
+            </md-list-item>
+        </md-list>
+    </div>
+</md-bottom-sheet>

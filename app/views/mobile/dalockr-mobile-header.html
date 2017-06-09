@@ -1,0 +1,260 @@
+<div class="mobile-header">
+    <md-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools">
+            <md-button  class="md-icon-button" ng-click="openMobileSliderMenu()" aria-label="Menu">
+                <md-icon><i class="mdi mdi-menu tb-icon"></i></md-icon>
+            </md-button>
+            <!--<md-button ng-show="sublockrView || assetView" style="margin-left: 0;padding-left: 0;width: 30px;" class="md-icon-button" ng-click="backToLockr(paths[paths.length - 2].id)" aria-label="Menu">-->
+                <!--<md-icon><i class="mdi mdi-arrow-left tb-icon"></i></md-icon>-->
+            <!--</md-button>-->
+            <img ng-click="backMainPage()" src="images/avatar.png" height="35"  alt="daLockr">
+            <!--<span style="overflow: hidden;text-overflow: ellipsis;color: #3a3a3a;white-space: nowrap;font-size: 20px;">{{paths[paths.length - 1].name}}</span>-->
+            <span flex></span>
+            <md-button ng-hide="sublockrView || assetView" ng-click="toSearch()" class="md-icon-button" aria-label="Search">
+                <md-icon><i class="mdi mdi-magnify tb-icon"></i></md-icon>
+            </md-button>
+            <md-button ng-show="sublockrView || assetView" ng-click="previewLockrOrAsset()" class="md-icon-button" aria-label="Preview">
+                <md-icon><i class="mdi mdi-eye tb-icon"></i></md-icon>
+            </md-button>
+            <md-button ng-click="openNotification()" class="md-icon-button over-show" aria-label="Notification">
+                <md-icon><i class="mdi mdi-bell tb-icon"></i></md-icon>
+                <span ng-show="totalNotification > 0" class="notification-number">
+                </span>
+            </md-button>
+
+            <!--<md-button ng-click="openMenuModal()" class="md-icon-button" ng-if="sublockrView || assetView" aria-label="More">-->
+
+            <!--<md-button ng-click="openMenuModal()" class="md-icon-button" ng-if="sublockrView" aria-label="More">-->
+                <!--<md-icon><i class="mdi mdi-dots-vertical tb-icon"></i></md-icon>-->
+            <!--</md-button>-->
+        </div>
+    </md-toolbar>
+
+
+    <!-- Slide Menu -->
+    <div class="mobile-slider-menu" md-swipe-left="openMobileSliderMenu()"  ng-class="{'show':mobileSlideMenuShow}">
+        <div class="backdrop" ng-click="openMobileSliderMenu()"></div>
+        <div class="slider-content" style="width: 85% !important;background-color: #fff;">
+            <dalockr-user-profile-region></dalockr-user-profile-region>
+            <nav>
+                <!--old version-->
+                <!--<md-list style="width: 100%;color: white;">-->
+                    <!--<md-list-item ng-class="{'active':navActive.mylockrs}"-->
+                            <!--ng-click="enterMyLockrs()">-->
+                        <!--<i class="mobile-menu-icon dal-icon-mylocker_black"></i>-->
+                        <!--<p>My Lockrs</p>-->
+                    <!--</md-list-item>-->
+                    <!--<md-divider></md-divider>-->
+                    <!--<md-list-item ng-if="notContentManager" ng-click="enterDashboard()"-->
+                                  <!--ng-class="{'active':navActive.dashboard}">-->
+                        <!--<i class="mobile-menu-icon dal-icon-dashboard_black"></i>-->
+                        <!--<p>Go to dashboard</p>-->
+                    <!--</md-list-item>-->
+                    <!--<md-divider ng-if="notContentManager"></md-divider>-->
+                    <!--<md-list-item ng-click="openActivityDialog()">-->
+                        <!--<i class="mobile-menu-icon dal-icon-time_date_black"></i>-->
+                        <!--<p>Activity flow</p>-->
+                    <!--</md-list-item>-->
+                    <!--<md-divider></md-divider>-->
+                    <!--<md-list-item ng-click="openServicesDialog()">-->
+                        <!--<i class="mobile-menu-icon dal-icon-manage_services_black"></i>-->
+                        <!--<p>Manage Services</p>-->
+                    <!--</md-list-item>-->
+                <!--</md-list>-->
+                <md-list style="width: 100%;color: white;padding: 0;" layout="row">
+                    <span flex="20"></span>
+                    <div flex="80">
+
+                        <md-list-item ng-click="openActivityDialog()">
+                            <i class="mobile-menu-icon dalello-icon-activity_black"></i>
+                            <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">Activity Flow</p>
+                        </md-list-item>
+                        <md-divider style="border-top-color: rgba(211,208,208,0.2);" ng-if="notContentManager"></md-divider>
+                        <md-list-item ng-click="enterMyLockrs()">
+                            <i class="mobile-menu-icon dal-icon-mylocker_black"></i>
+                            <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">Lockrs and sublockrs</p>
+                        </md-list-item>
+                        <md-divider style="border-top-color: rgba(211,208,208,0.2);"></md-divider>
+                        <md-list-item ng-if="notContentManager" ng-click="enterDashboard()">
+                            <i class="mobile-menu-icon dal-icon-dashboard_black"></i>
+                            <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">Go to Dashboard</p>
+                        </md-list-item>
+                        <md-divider style="border-top-color: rgba(211,208,208,0.2);"></md-divider>
+                        <md-list-item ng-click="openServicesDialog()">
+                            <i class="mobile-menu-icon dal-icon-manage_services_black"></i>
+                            <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">Services</p>
+                        </md-list-item>
+                    </div>
+                </md-list>
+            </nav>
+            <div layout="row" layout-align="start center" style="padding:6px 10px;" ng-click="logout()">
+                <i style="color: #006fd5;" class="mobile-menu-icon dalello-icon-logout_black"></i>
+                <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;color: #3c3c3c;margin: 0;">Log out</p>
+            </div>
+            <div layout="row" layout-align="end start" style="margin:60px 15px 0 0;">
+                <span>V{{appVersion}}</span>
+            </div>
+            <!--<li><a ng-click="logout()" style="cursor: pointer;padding: 5px 0;display:inline-block;">Log out</a> </li>-->
+        </div>
+    </div>
+
+    <!-- Notification Menu -->
+    <div class="mobile-slider-menu" md-swipe-left="openNotificationMenu()" ng-class="{'show':mobileNotificationShow}">
+        <div class="backdrop" ng-click="openNotificationMenu()"></div>
+        <div style="width:90%;bottom: 0;top: 0;right:0;z-index:6;position: absolute;background-color: #fff;">
+            <md-toolbar >
+                <div class="md-toolbar-tools" style="background-color: #006fd5;height: 56px;min-height: 56px;max-height: 56px;">
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="openNotificationMenu()">
+                        <i aria-label="close" style="color:#fff;" class="mdi mdi-close icon-size-2" ></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div>
+                <div class="m-tabs m-tabs-normal" layout="row" style="padding-top: 13px;">
+                    <div class="m-tab-item" ng-click="NotselectTabItem('notifications')" ng-class="{'active':NotcurrentTabItem === 'notifications'}" flex layout="row" layout-align="center center">
+                        <i class="mdi black-icon mdi-bell" ng-class="{'active':NotcurrentTabItem === 'notifications'}" style="color:#7f7f7f"></i>
+                    </div>
+                    <div class="m-tab-item" ng-click="NotselectTabItem('moderation')" ng-class="{'active':NotcurrentTabItem === 'moderation'}" flex layout="row" layout-align="center center">
+                        <i class="mdi black-icon dalello-icon-moderation_black" style="color:#7f7f7f" ng-class="{'active':NotcurrentTabItem === 'moderation'}"></i>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute;left: 0;bottom: 0;top: 120px; right: 0;overflow: scroll;">
+                <div class="loading-center" ng-if="loadingMessage" layout="row" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div ng-show="NotcurrentTabItem === 'notifications' " >
+                    <div ng-repeat="item in notificationsData.notifications" ng-class="{'not-pending-background':item.hasSeen}">
+                        <div layout="row" style="padding: 10px 0;border-bottom:1px solid rgba(155,155,155,0.5);" >
+                            <div style="margin: 0 15px;">
+                                <img ng-src="{{getNotificationImageSrc(item.notificationEvent)}}" style="width: 80px;"/>
+                            </div>
+                            <div layout="column" >
+                                <div layout="row">
+                                    <div style="border-radius: 50%;background-color: #006fd5;width: 20px;height:20px;"></div>
+                                    <div style="background-color: #006fd5;height: 20px;line-height:20px;color: #fff;margin-left: -10px;z-index: 7;font-size: 10px;font-weight: bold;">
+                                        <span>{{item.notificationEvent.event_showtype?item.notificationEvent.event_showtype:item.notificationEvent.event_type}}</span>
+                                    </div>
+                                    <div style="border-radius: 50%;margin-left: -10px;background-color: #006fd5;width: 20px;height:20px;"></div>
+                                </div>
+                                <div layout="column">
+                                    <div style="color:#006fd5;margin: 5px 0;font-weight: bold;">
+                                        <span>{{ ::item.notificationEvent.entity_name }}</span>
+                                    </div>
+                                    <div style="font-size: 12px;">
+                                        <span> {{item.notificationEvent.event.message ? item.notificationEvent.event.message : "no description"}}</span>
+                                    </div>
+                                    <span style="font-size: 9px;margin: 5px 0;">{{::item.notificationEvent.date | date : 'dd MMM yyyy'}}</span>
+                                </div>
+                             </div>
+                            <span flex></span>
+                            <div style="margin:0 15px;">
+                                <i style="color:#000;font-size: 22px;" ng-click="deleteNotification($event,item)" class="mdi mdi-delete"></i>
+                            </div>
+                         </div>
+                     </div>
+                     <div layout="row" layout-align="center center" style="margin: 10px 0;">
+                        <md-button ng-click="LoadMoreNotification()" style="background-color:#006fd5;color:#fff;font-size: 14px;margin: 0 3px; " ng-show="showMoreNoificationBtn">
+                          Show More...
+                        </md-button>
+                     </div>
+                </div>
+                <div ng-show="NotcurrentTabItem === 'moderation' " ng-repeat="item in moderationData" ng-class="{'not-pending-background':item.status === 'PENDING'}" >
+                    <div layout="row" style="padding: 10px 0;border-bottom:1px solid rgba(155,155,155,0.5);">
+                        <div style="margin: 0 15px;">
+                            <img ng-src="{{getApprovalImageSrc(item)}}" style="width: 80px;"/>
+                        </div>
+                        <div layout="column" flex style="margin-right: 5px;" >
+                            <div layout="row" >
+                                <div style="border-radius: 50%;background-color: #006fd5;width: 20px;height:20px;"></div>
+                                <div style="background-color: #006fd5;height: 20px;line-height:20px;color: #fff;margin-left: -10px;z-index: 7;font-size: 10px;font-weight: bold;">
+                                    <span>{{item.type}}</span>
+                                </div>
+                                <div style="border-radius: 50%;margin-left: -10px;background-color: #006fd5;width: 20px;height:20px;"></div>
+                            </div>
+                            <div layout="column">
+                                <div ng-hide="EditPendMenu && PendingMenuWatch === item.id">
+                                    <div style="color:#006fd5;margin: 5px 0;font-weight: bold;">
+                                        <span>{{ item.entity.name }}</span>
+                                    </div>
+                                </div>
+                                <div style="font-size: 12px;" ng-hide="EditPendMenu && PendingMenuWatch === item.id">
+                                    <span>{{item.type === 'SHARE' ? item.shareApproval.description : item.commentApproval.message}}</span>
+                                </div>
+                                <div style="margin-top: 5px;" ng-show="EditPendMenu && PendingMenuWatch === item.id" >
+                                    <md-content style="background-color: rgba(0,110,212,0.00);">
+                                        <md-input-container style="margin-top: 18px;margin-bottom: 0;" >
+                                            <label style="color:rgba(0,0,0,0.38);">LOCKR NAME</label>
+                                            <input  style="color:#006fd5;font-weight: bold;" ng-model="EditPendForm.lockrname">
+                                        </md-input-container>
+                                        <md-input-container class="md-block" style="margin-top: 18px;margin-bottom: 0;">
+                                            <label style="color:rgba(0,0,0,0.38);">Lockr Description</label>
+                                            <textarea  ng-model="EditPendForm.lockrdes" style="font-size: 12px;color:rgba(60,60,60,0.87);" rows="3" md-select-on-focus></textarea>
+                                        </md-input-container>
+                                    </md-content>
+                                </div>
+                                <span style="font-size: 9px;margin: 5px 0;">{{::item.dateCreated | date : 'dd MMM yyyy hh:mm'}}</span>
+                                <div ng-show="item.status === 'PENDING' && PendingMenuWatch != item.id" layout="row">
+                                    <div layout="row">
+                                        <div style="border-radius: 50%;background-color: #ffd439;width: 20px;height:20px;"></div>
+                                        <div style="background-color: #ffd439;height: 20px;line-height:20px;margin-left: -10px;z-index: 7;font-size: 10px;font-weight: bold;">
+                                            <span>{{item.status}}</span>
+                                        </div>
+                                        <div style="border-radius: 50%;margin-left: -10px;background-color: #ffd439;width: 20px;height:20px;"></div>
+                                    </div>
+                                    <span flex></span>
+                                    <div style="margin-right: 10px;margin-top: 10px" ng-click="showPendingMenu(item)">
+                                        <span>MODERATE</span>
+                                    </div>
+                                </div>
+                                <div ng-show="item.status === 'APPROVED'" layout="row">
+                                    <div layout="row">
+                                        <div style="border-radius: 50%;background-color: #009530;width: 20px;height:20px;"></div>
+                                        <div style="background-color: #009530;height: 20px;line-height:20px;color: #fff;margin-left: -10px;z-index: 7;font-size: 10px;font-weight: bold;">
+                                            <span>{{item.status}}</span>
+                                        </div>
+                                        <div style="border-radius: 50%;margin-left: -10px;background-color: #009530;width: 20px;height:20px;"></div>
+                                    </div>
+                                    <div layout="row">
+                                        <span style="max-width:100px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding-left: 5px;font-size: 12px;color: #3c3c3c;">BY : {{item.requestUser.firstName}} {{item.requestUser.lastName}}</span>
+                                    </div>
+                                </div>
+                                <div ng-show="item.status === 'DENIED'" layout="row">
+                                    <div layout="row">
+                                        <div style="border-radius: 50%;background-color: #009530;width: 20px;height:20px;"></div>
+                                        <div style="background-color: #009530;height: 20px;line-height:20px;color: #fff;margin-left: -10px;z-index: 7;font-size: 10px;font-weight: bold;">
+                                            <span>DECLINE</span>
+                                        </div>
+                                        <div style="border-radius: 50%;margin-left: -10px;background-color: #009530;width: 20px;height:20px;"></div>
+                                    </div>
+                                    <div layout="row">
+                                        <span style="max-width:100px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding-left: 5px;font-size: 12px;color: #3c3c3c;">BY : {{item.requestUser.firstName}} {{item.requestUser.lastName}}</span>
+                                    </div>
+                                 </div>
+                                <div ng-show="PendingMenuWatch === item.id && !EditPendMenu">
+                                    <div layout="row">
+                                        <i  style="color:#ffd439;height: 32px;line-height: 24px;font-size: 22px;margin-right: 10px;" class="mdi mdi-pencil "  ng-click="formPendingEdit(item)"></i>
+                                        <i  style="color:#d0021b;height: 32px;line-height: 24px;font-size: 24px;margin-right: 10px;" class="mdi mdi-close" ng-click="formPendingDelete(item)"></i>
+                                        <i style="color:#009530;height: 32px;line-height: 24px;font-size: 24px;margin-right: 10px;" class="mdi mdi-check " ng-click="formPendingMenuback()" ></i>
+                                    </div>
+                                </div>
+                                <div ng-show="EditPendMenu" layout="row" layout-align="start center">
+                                    <span ng-click="formPendingMenuback()">Cancel</span>
+                                    <span flex></span>
+                                    <span ng-if="item.type != 'SHARE' && PendingMenuWatch === item.id" style="background:#006fd5;color:#fff;outline: none;padding: 5px;font-size: 10px; " ng-click="fromPendimgApprove(item)">UPDATE & APPROVED</span>
+                                    <span ng-if="item.type === 'SHARE' && PendingMenuWatch === item.id" style="background:#006fd5;color:#fff;outline: none;padding: 5px;font-size: 10px; " ng-click="fromPendimgApprove(item)">UPDATE & SHARED</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

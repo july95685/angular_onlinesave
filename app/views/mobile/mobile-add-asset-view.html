@@ -1,0 +1,99 @@
+<div class="dal-fixed-fullscreen dal-add-asset">
+
+    <div class="preview-box" layout="row" layout-align="center start">
+        <i ng-if="!fileType.isImage" style="font-size: 160px;" class="mdi {{fileIcon}}"></i>
+    </div>
+
+    <div class="upload-field" layout="column" ng-class="{'up':step != 0}">
+        <div flex></div>
+        <div class="md-whiteframe-6dp">
+            <form name="addAssetForm" novalidate >
+                <div class="md-padding" style="background-color: white;">
+                    <div class="md-padding">
+                    <span class="md-body-2" color="primary">
+                        {{step == 1 ? 'Insert asset details' : 'Where to save the asset ?'}}
+                    </span>
+                    </div>
+                    <div class="md-padding" ng-if="step == 1" layout="column">
+                        <md-input-container class="dal-input-container">
+                            <label>ADD TITLE   <span class="require-dot">*</span></label>
+                            <input name="name" ng-model="uploadAssetEntity.name" required>
+                            <div ng-messages="addAssetForm.name.$error" ng-show="addAssetForm.name.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="dal-input-container">
+                            <label>ADD DESCRIPTION <span class="require-dot">*</span></label>
+                            <input name="description" ng-model="uploadAssetEntity.description" required>
+                            <div ng-messages="addAssetForm.description.$error" ng-show="addAssetForm.description.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="dal-input-container">
+                            <label>ADD TAGS TO ASSET</label>
+                            <input name="tags" ng-model="uploadAssetEntity.tags">
+                            <div ng-messages="addAssetForm.tags.$error" ng-show="addAssetForm.tags.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+
+                    <div class="md-padding" ng-if="step == 2" layout="column">
+
+                        <div class="m-add-asset-autocompelete" flex layout="row" ng-controller="SearchLockrAutoCompleteCtrl as ctrl">
+                            <md-autocomplete
+                                    flex
+                                    class="dal-progress"
+                                    ng-disabled="ctrl.isDisabled"
+                                    md-no-cache="ctrl.noCache"
+                                    md-selected-item="ctrl.selectedItem"
+                                    md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                    md-search-text="ctrl.searchText"
+                                    md-selected-item-change="ctrl.selectedItemChange(item)"
+                                    md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                    md-item-text="item.name"
+                                    md-min-length="0"
+                                    placeholder="SEARCH FOR LOCKR"
+                                    md-menu-class="autocomplete-custom-template">
+                                <md-item-template style="box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+                                  <span class="item-title" layout="row" layout-align="start center">
+                                      <i class="mdi mdi-folder dl-icon"></i>
+                                      <span class="dal-h-spacing-normal"></span>
+                                      <span class="dal-nowrap"> {{item.name}} </span>
+                                  </span>
+                                </md-item-template>
+                            </md-autocomplete>
+                            <md-button class="dal-btn" ng-click="ctrl.focusAutoCompleteInput('m-add-asset-autocompelete')">
+                                <i class="mdi mdi-menu-down"></i>
+                            </md-button>
+                        </div>
+
+                        <div style="margin-top: 30px;">
+                            <md-button ng-click="createOtherNewLockr()" class="dal-btn dal-btn-accent accent-small-btn">
+                                ADD NEW LOCKR
+                            </md-button>
+                        </div>
+                    </div>
+
+                </div>
+                <div layout="row" style="background-color: white;">
+                    <span flex></span>
+                    <md-button class="dal-btn" ng-click="closeView()">
+                        {{step == 1 ? 'cancel' : 'back'}}
+                    </md-button>
+                    <md-button class="dal-btn dal-btn-primary md-raised" ng-disabled="addAssetForm.$invalid || (step == 2 && pathLevel == '0' && !selectOtherLockr)" ng-click="uploadAsset()">
+                        {{step == 1 ? 'next' : 'save asset'}}
+                    </md-button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div ng-if="isUploading" class="loading-center" layout="column" layout-align="center center">
+        <md-progress-circular class="dal-primary" md-mode="determinate" value="{{determinateValue}}"></md-progress-circular>
+    </div>
+
+
+</div>

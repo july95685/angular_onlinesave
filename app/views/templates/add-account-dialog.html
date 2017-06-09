@@ -1,0 +1,274 @@
+<!--<md-dialog aria-label="Add Account" class="add-account-dialog min-width-600">-->
+    <!--<md-toolbar>-->
+        <!--<div class="md-toolbar-tools" style="background-color: #EDEDED;">-->
+            <!--<h2 class="v2-color">{{editing ? 'Edit ' + editAccountName :'Add new account'}}</h2>-->
+            <!--<span flex></span>-->
+            <!--<md-button class="md-icon-button" ng-click="answer()">-->
+                <!--<i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>-->
+            <!--</md-button>-->
+        <!--</div>-->
+    <!--</md-toolbar>-->
+    <!--<form name="create_account_form" role="form" novalidate>-->
+        <!--<md-dialog-content layout="column" class="md-padding">-->
+            <!--<md-input-container>-->
+                <!--<label>Account Name</label>-->
+                <!--<input name="title" ng-model="currentEntity.name" required>-->
+                <!--<div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">-->
+                    <!--<div ng-message="required">This is required!</div>-->
+                <!--</div>-->
+            <!--</md-input-container>-->
+            <!--<md-input-container>-->
+                <!--<label>clusterId</label>-->
+                <!--<input name="clusterid" ng-model="currentEntity.clusterId" required>-->
+                <!--<div ng-messages="create_account_form.clusterid.$error" ng-show="create_account_form.clusterid.$dirty">-->
+                    <!--<div ng-message="required">This is required!</div>-->
+                <!--</div>-->
+            <!--</md-input-container>-->
+            <!--<md-input-container>-->
+                <!--<label>Account License</label>-->
+                <!--<md-select ng-model="currentEntity.accountLicenseId" required>-->
+                    <!--<md-option ng-repeat="state in allLicense" value="{{state.id}}">-->
+                        <!--{{state.name}}-->
+                    <!--</md-option>-->
+                <!--</md-select>-->
+            <!--</md-input-container>-->
+            <!--<md-switch style="margin-left: 0;" ng-model="currentEntity.allowUserChannels" aria-label="Schedule share">-->
+                <!--Allow User Channels-->
+            <!--</md-switch>-->
+            <!--<md-switch style="margin-left: 0;" ng-model="currentEntity.trial" aria-label="Schedule share">-->
+                <!--Trial-->
+            <!--</md-switch>-->
+        <!--</md-dialog-content>-->
+        <!--<div class="md-actions" layout="row" style="background-color: #EDEDED;">-->
+            <!--<div class="v2-color form-close" ng-click="answer()">-->
+                <!--CANCEL-->
+            <!--</div>-->
+            <!--<md-button class="md-raised md-primary" ng-click="createAccount()" style="margin-right:20px;padding: 0 20px;">-->
+                <!--{{editing ? 'UPDATE':'ADD'}} ACCOUNT-->
+            <!--</md-button>-->
+        <!--</div>-->
+    <!--</form>-->
+    <!--<div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">-->
+        <!--<div layout="row" layout-sm="column" layout-align="center center">-->
+            <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</md-dialog>-->
+<!--ng-style="{'background-color':(Collaboratorshow?'rgba(0, 0, 0, 0.498039)':none)}"-->
+<md-dialog aria-label="Add Account" class="add-account-dialog min-width-600" ng-show="!Shareruleshow">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:#006fd5;">
+            <h2 style="color:#ffffff" >{{editing ? 'Edit ' + editAccountName :'Add new account'}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #fff;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+    <div class="add-new-lockr">
+        <div class="step-guide" layout="row" layout-align="center">
+            <div layout-align="center center" layout="column" class="guide-item" ng-class="{'active':stepId == 0}">
+                <span  ng-style="{'background-color':(stepId>0?'#3c3c3c':0)}"class="circle">1</span>
+                <span style="margin-top: 8px;"  flex>Details</span>
+            </div>
+            <span style="width:40px;margin:0;margin-top:10px;" class="guide-divider"></span>
+            <div layout-align="center center"layout="column" class="guide-item" ng-class="{'active':stepId  == 1}">
+                <span  ng-style="{'background-color':(stepId>1?'#3c3c3c':0)}"class="circle">2</span>
+                <span style="margin-top: 8px;" flex>Collaborator</span>
+            </div>
+            <span style="width:40px;margin:0;margin-top:10px;" class="guide-divider"></span>
+            <div layout-align="center center"layout="column" class="guide-item" ng-class="{'active':stepId == 2}">
+                <span  ng-style="{'background-color':(stepId>2?'#3c3c3c':0)}"class="circle">3</span>
+                <span style="margin-top: 8px;" flex>Channels</span>
+            </div>
+            <span style="width:40px;margin:0;margin-top:10px;"class="guide-divider"></span>
+            <div layout-align="center center" layout="column" class="guide-item" ng-class="{'active':stepId  == 3}">
+                <span class="circle">4</span>
+                <span style="margin-top: 8px;" flex>Sharing Rule</span>
+            </div>
+        </div>
+    </div>
+    <div layout="row" ng-show="stepId!=0&&stepId!=2" style="display: block;margin: 2px 0px;" >
+        <md-button class="md-raised " ng-click="AddorCreate(stepId)" style=" min-height: 25px;line-height:25px;color:#006fd5;margin-left:20px;padding: 0 18px;background: #ffd439">
+           {{constValue[stepId]}}
+        </md-button>
+    </div>
+    <div layout="row" ng-show="stepId==2&&!ChannelListshow" style="display: block;margin: 2px 0px;" >
+        <md-button class="md-raised " ng-click="AddorCreate(stepId)" style=" min-height: 25px;line-height:25px;color:#006fd5;margin-left:20px;padding: 0 18px;background: #ffd439">
+            {{constValue[stepId]}}
+        </md-button>
+    </div>
+    <div ng-if="stepId==3"><list-sharing-rule></list-sharing-rule></div>
+    </md-content>
+    <form name="create_account_form" role="form" novalidate>
+        <md-dialog-content layout="column" class="md-padding" ng-show="stepId==0">
+            <md-input-container>
+                <label>ACCOUNT NAME</label>
+                <input name="title" ng-model="currentEntity.name" required>
+                <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>CHOOSE LICENSE TYPE</label>
+                <md-select ng-model="currentEntity.accountLicenseId" required>
+                    <md-option ng-repeat="state in allLicense" value="{{state.id}}">
+                        {{state.name}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
+            </md-input-container>
+        </md-dialog-content>
+        <div  ng-click="changeShadow()" ng-show="Collaboratorshow&&stepId==1&&shadowshow" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: rgba(0,0,0,0.3);z-index: 100;overflow: hidden;">  </div>
+         <md-dialog-content layout="column" class="md-padding" ng-show="Collaboratorshow&&stepId==1" style="z-index: 102;background-color: white;position: fixed;bottom: -52px; width: 100%;min-height:0  !important">
+             <span flex style="height: 6px"></span>
+            <md-input-container>
+                <label>NAME</label>
+                <input name="title" ng-model="Collaborator.name">
+                <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>Type of Collaborator</label>
+                <md-select ng-model="Collaborator.type" required>
+                    <md-option ng-repeat="state in allLicense" value="{{state.id}}">
+                        {{state.name}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>Email address</label>
+                <input name="title" ng-model="Collaborator.mail" required>
+                <div ng-messages="create_account_form.title.$error" ng-show="create_account_form.title.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
+            </md-input-container>
+            <div layout="row">
+                <span flex></span>
+            <md-button class="md-raised md-primary" ng-click="getNext()" style="background-color: #c7c5c5;margin-right:20px;padding: 0 20px;">
+                ADD COLLABORATOR
+            </md-button>
+            </div>
+        </md-dialog-content>
+        <!--<md-dialog-content layout="column" class="md-padding" ng-show="stepId==2 && Channelsshow && !ChannelListshow">-->
+            <!--<md-input-container>-->
+                <!--<label>CHOOSE YOUR SOCIAL CHANNEL</label>-->
+                <!--<input name="title" ng-model="Account.socialChannel" ng-click="showChannel()">-->
+            <!--</md-input-container>-->
+            <!--<md-input-container>-->
+                <!--<label>ACCOUNT ADDRESS</label>-->
+                <!--<input name="title" ng-model="Account.address" >-->
+            <!--</md-input-container>-->
+        <!--</md-dialog-content>-->
+        <md-content class="content" style="background-color: #fff;height: 450px;" ng-if="stepId==2&&Channelsshow">
+            <div  class="md-padding" layout="column"  ng-class="{'container':!mobileDevice}">
+                <div style="height: 48px;width: 100%;overflow: scroll;">
+                    <div layout="row" style="width:{{ 40 * channelTypes.length + 'px'}};height: 42px;">
+                        <a ng-click="switchChannelType(type)" ng-class="{'dal-account-info-underline':type.active}"  layout="row" layout-align="center center" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                            <i ng-if="!type.active" style="font-size:22px;color:#000;" class="mdi {{type.iconClass}}"></i>
+                            <i ng-if="type.active" style="font-size:22px;color:#006fd5;" class="mdi {{type.iconClass}}"></i>
+                        </a>
+                    </div>
+                </div>
+                <div style="margin-top: 6px;">
+                    <div   style="margin-bottom: 10px;display: inline-block;margin-left:15px;" ng-repeat="channel in channelUserData">
+                        <div ng-click="chooseSocialChannels(channel)"  layout="row">
+                            <div style="z-index:2;width:30px;height:30px;border-radius: 50%;background-color: #006fd5;">
+                                <img style="height:30px;border-radius: 50%;" ng-src="{{channel.avatarPic}}"/>
+                            </div>
+                            <div ng-show="!channel.remove" style="margin-left:-15px;height:30px;background-color: #006fd5;color:#fff;">
+                                <span style="padding: 0 30px;line-height: 30px;">{{channel.name}}</span>
+                            </div>
+                            <div ng-show="channel.remove" style="margin-left:-15px;height:30px;background-color: #9b9b9b;color:#fff;">
+                                <span style="padding: 0 30px;line-height: 30px;">{{channel.name}}</span>
+                            </div>
+                            <div ng-show="!channel.remove" style="width:30px;margin-left:-15px;height:30px;background-color: #006fd5;z-index:2;border-radius: 50%;">
+                                <div  style="width:20px;height:20px;border-radius: 50%;background-color: #fff;margin-top:5px;" layout="row" layout-align="center center" ng-click="deleteSC(channel.id)">
+                                    <i  class="mdi mdi-close" style="font-size: 18px;font-weight: bold;" ></i>
+                                </div>
+                            </div>
+                            <div ng-show="channel.remove" style="width:30px;margin-left:-15px;height:30px;background-color: #9b9b9b;z-index:2;border-radius: 50%;">
+                                <div  style="border: 2px solid #fff;width:20px;height:20px;border-radius: 50%;background-color: #9b9b9b;margin-top:5px;" layout="row" layout-align="center center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="start start" style="padding-bottom: 20px;">
+                    <collaborators-add-personal></collaborators-add-personal>
+                    <!--<div class="dropdown">-->
+                        <!--<div  layout="row" layout-align="center  center" id="Add-Social-Channel" data-toggle="dropdown" aria-expanded="true">-->
+                            <!--<md-button class="md-raised " ng-click="changePassWord()" style=" min-height: 25px;line-height:25px;color:#006fd5;padding: 0 18px;background: #ffd439">-->
+                                <!--ADD PERSONAL CHANNELS-->
+                            <!--</md-button>-->
+                        <!--</div>-->
+                        <!--<ul class="dropdown-menu" ng-click="preventDefaultEvent($event)"  role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;outline: none;cursor: pointer;">-->
+
+                            <!--<li ng-show="showFacebookPage">-->
+                                <!--<div style="height: 30px;padding: 0 8px;" layout="row">-->
+                                    <!--<i class="mdi mdi-arrow-left" style="font-size: 24px;" ng-click="showFacebookPage = false"></i>-->
+                                    <!--<span flex></span>-->
+                                    <!--<span>Pages</span>-->
+                                    <!--<span flex></span>-->
+                                <!--</div>-->
+                                <!--<div ng-show="loadingPage && showFacebookPage">-->
+                                    <!--<div layout="row" layout-sm="column" layout-align="center center">-->
+                                        <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</li>-->
+
+                            <!--<li role="presentation" ng-show="showFacebookPage" ng-repeat="item in needToAddedPages"><a role="menuitem" tabindex="-1"><div layout="row"><span class="vertical-align-middle" layout="row" layout-align="start center">{{item.name}}</span><span flex></span><i style="font-size: 24px;" class="mdi mdi-plus vertical-align-middle" ng-click="addFacebookPage(item)"><md-tooltip>Add page</md-tooltip></i></div></a></li>-->
+                            <!--<li role="presentation" ng-show="showFacebookPage && !loadingPage && !needToAddedPages.length" style="min-height: 50px;"  layout="row" layout-align="center center"><span style="color: #999;font-size:13px;">Not found facebook page</span></li>-->
+
+                            <!--<li role="presentation" ng-show="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook',true)"><md-button>Add Facebook Account</md-button></a></li>-->
+
+
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Google')"><i class="mdi icon-size-1 mdi-youtube-play" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Google &amp; YouTube credentials</a></li>-->
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook')"><i class="mdi icon-size-1 mdi-facebook" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Facebook credentials</a></li>-->
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Twitter')"><i class="mdi icon-size-1 mdi-twitter" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Twitter credentials</a></li>-->
+                            <!--&lt;!&ndash;<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('DropBox')}}"><i class="fa fa-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>&ndash;&gt;-->
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('LinkedIn')"><i class="mdi icon-size-1 mdi-linkedin" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update LinkedIn credentials</a></li>-->
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Pinterest')"><i class="mdi icon-size-1 mdi-pinterest" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Pinterest credentials</a></li>-->
+                            <!--<li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Instagram')"><i class="mdi icon-size-1 mdi-instagram" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Instagram credentials</a></li>-->
+
+                            <!--&lt;!&ndash;<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('Evernote')}}"><i style="width:20px;"></i>&nbsp;Add/Update Evernote credentials</a></li>&ndash;&gt;-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                </div>
+
+            </div>
+        </md-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="getNext()" ng-show="stepId!=0">
+                SKIP
+            </div>
+            <span flex></span>
+            <div class="v2-color form-close" ng-click="getPrevious()" ng-show="stepId>0">
+                PREVIOUS
+            </div>
+            <md-button class="md-raised md-primary" ng-click="getNext(stepId)" style="margin-right:20px;padding: 0 20px;">
+                {{stepId==3 ? 'SAVE':'NEXT'}}
+            </md-button>
+        </div>
+    </form>
+</md-dialog>
+
+<div ng-if="Shareruleshow" id="manage-account-view" style="background-color:#f5f5f5; ">
+    <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+        <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Add Share Rule</span>
+        <span flex></span>
+        <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backForm()"></i>
+    </div>
+    <md-content class="content" style="top:50px;background-color: #fff;">
+        <sharing-rule-item lockr-id="{{accountEntity.aDet.id}}"></sharing-rule-item>
+    </md-content>
+</div>

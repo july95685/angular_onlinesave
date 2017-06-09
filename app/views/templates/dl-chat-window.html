@@ -1,0 +1,71 @@
+<div class="dl-chat-window">
+    <md-toolbar style="min-height: 36px;height: 36px;overflow: hidden;">
+        <div class="md-toolbar-tools" style="max-height: 36px;height: 36px;background-color: #006fd5;">
+            <md-button class="md-icon-button">
+                <i class="mdi mdi-bell-outline"></i>
+                <span style="font-size: 12px;color: white;">{{msgCount === 0 ? '' : msgCount}}</span>
+            </md-button>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="min" ng-click="minChatWindow()">
+                <i class="mdi" ng-class="{'mdi-arrow-bottom-right':!windowMin, 'mdi-arrow-top-right':windowMin}"></i>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="close" ng-click="closeChatWindow()">
+                <i class="mdi mdi-close"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div class="dl-chat-messages" style="position: absolute;top: 36px;left:0;bottom:40px;right:0;overflow: scroll;">
+
+
+        <img src="images/loading-icon.gif" ng-show="loadingConversation" style="position: absolute;top: 0;left: 0;bottom: 0;right: 0;margin: auto;z-index: 2;">
+        <span style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-size: 20px;color: #e1e1e1;" ng-show="noMessages && !loadingConversation">No messages</span>
+
+
+        <div style="text-align: center;" ng-click="loadingMore()" ng-show="!noMore && !loadingConversation"> <md-button style="text-transform: none;color: #777;">Loading more ... <img src="images/loading-icon.gif" style="width: 20px;height: 20px;" ng-show="loadingM"></md-button> </div>
+        <ul class="list-unstyled" style="padding: 5px !important;">
+            <li ng-repeat="msg in messages" class="clearfix" style="padding-top: 10px;">
+                <div class="pull-right message-item-right" ng-if="msg.me">
+                    <img ng-src="{{msg.userPic}}">
+                    <div>
+                        <div style="color: white;">
+                            {{msg.message.message}}
+                        </div>
+                        <div class="dl-chat-right-arrow" style="position: absolute;top: 5px;right: -6px;">
+                            <svg width="7px" height="12px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 7 12" enable-background="new 0 0 7 12" xml:space="preserve"><path fill="#66CEFF" d="M-1,1c0,0,8-0.188,8,0.047s0,1.875,0,1.875L-1,11"></path></svg>
+                        </div>
+                    </div>
+                    <span ng-show="msg.isSending" style="
+                    position: absolute;
+                    font-size: 12px;
+                    right: 43px;
+                    bottom: -15px;
+                    color: #777;
+                    display: block;">sending...</span>
+
+                </div>
+
+                <div class="pull-left message-item-left" ng-if="!msg.me">
+                    <img ng-src="{{msg.userPic}}">
+                    <div class="dl-chat-user" style="padding-left: 6px;">
+                       {{msg.message.fromUser.firstName}} {{msg.message.fromUser.lastName}}
+
+                    </div>
+                    <div class="dl-chat-item-left clearfix">
+                        <div style="color: #777;">
+                            {{msg.message.message}}
+                        </div>
+                        <div class="dl-chat-left-arrow" style="position: absolute;top: 3px;left: -6px;">
+                            <svg width="8px" height="12px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 8 12" enable-background="new 0 0 8 12" xml:space="preserve"><path fill="#F4F4F4" d="M9,1c0,0-9-0.188-9,0.047s0,1.875,0,1.875L9,11"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+    <div class="dl-chat-send" style="z-index: 2;">
+        <input type="text" placeholder="click enter to send ... " ng-model="message" class="dl-chat-send-input" style="border: 0;line-height: 36px;background:none;color: #777;outline: none;font-size: 18px;padding:0 10px;width: 100%;">
+    </div>
+
+</div>

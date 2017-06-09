@@ -1,0 +1,144 @@
+<div class="m-fixed-navbar">
+    <div bg="primary" class="lockr-details-navbar container-fluid" layout="row" layout-align="start center" ng-class="{'fixedDetailsNavbar':navbarFixed}">
+        <i class="mdi mdi-chevron-left" ng-class="{'v2-disabled':pathData === null}" ng-click="back()" style="color: white;line-height: 45px;cursor: pointer;outline: none;"></i>
+        <div  layout="row" ng-repeat="item in pathData" layout-align="start center">
+            <div ng-class="{'firstBar':true}" class="dropdown" ng-if="pathData.length >= (mobileDevice ? 3 : 4) && $index == 0">
+                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bar-item-btn">...</a>
+                <span style="color: white;font-size: 16px;">/</span>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li ng-repeat="item in pathData">
+                        <a ng-if="$index < pathData.length - (mobileDevice ? 2 : 3)" ng-click="backToLockr(item.id)">{{item.name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <a ng-show="$index === pathData.length - 1 || $index === pathData.length - 2 || (!mobileDevice && $index === pathData.length - 3)" class="bar-item-btn" ng-class="{'mobile':mobileDevice}" ng-click="$last === true ? null : backToLockr(item.id)">{{item.name}}</a>
+            <span ng-hide="$last ||  $index < pathData.length -  (mobileDevice ? 2 : 3)"  style="color: white;font-size: 16px;">/</span>
+        </div>
+
+        <span flex></span>
+        <div ng-if="!assetMenu && mobileDevice" style="padding-right: 10px;">
+            <md-menu>
+                <i ng-click="openToolMenu($mdOpenMenu, $event)" class="mdi mdi-dots-horizontal tb-icon icon-size-2" style="color: white;line-height: 45px;cursor: pointer;outline: none;"></i>
+                <md-menu-content width="6" style="color: black; min-width:190px">
+                    <div>
+
+                        <md-menu-item ng-click="openPathInfo()" >
+                            <md-button >
+                                <i class="v2-color mdi dalello-icon-info_black operate-icon icon-size-2" style="font-size:20px" title="INFO"></i>
+                                <span>INFO</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item ng-click="openPathEdit()">
+                            <md-button >
+                                <i class="v2-color mdi dalello-icon-edit_black operate-icon icon-size-2" style="font-size:20px" title="Edit"></i>
+                                <span>EDIT</span>
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item ng-click="openPathDownload()">
+                        <md-button >
+                            <i class="v2-color mdi dalello-icon-download_black operate-icon icon-size-2" style="font-size:20px" title="DOWNLOAD"></i>
+                            <span>DOWNLOAD</span>
+                        </md-button>
+                        </md-menu-item>
+                        <md-menu-item ng-click="openShareDialog()">
+                            <md-button >
+                                <i class="v2-color mdi dalello-icon-total_shares_black operate-icon icon-size-2" style="font-size:20px"  title="SHARE"></i>
+                                <span>SHARE</span>
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item ng-if="lockrdata.hiddenFromPublicView">
+                            <md-button ng-click="inviteUser()">
+                                <i class="v2-color mdi mdi-account-multiple operate-icon icon-size-2" style="font-size:20px" title="Edit lockr"></i>
+                                <span>INVITE</span>
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item>
+                            <md-button ng-click="openEditThumbnail()">
+                                <i class="mdi dalello-icon-locker_thumbnail_black operate-icon icon-size-2 vertical-align-middle" style="font-size:20px;color: #006fd5;" title="Delete lockr">
+                                </i>
+                                <span>EDIT THUMBNAIL</span>
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="deleteLockrOnPathbar()">
+                            <md-button >
+                                <i class="v2-color mdi dalello-icon-delete_black operate-icon icon-size-2" style="font-size:20px" title="DELETE"></i>
+                                <span>DELETE</span>
+                            </md-button>
+                        </md-menu-item>
+
+
+                    </div>
+
+                </md-menu-content>
+            </md-menu>
+        </div>
+
+        <div ng-if="assetMenu" style="padding-right: 10px;">
+            <md-menu>
+                 <i ng-click="openToolMenu($mdOpenMenu, $event)" class="mdi mdi-dots-horizontal tb-icon icon-size-2" style="color: white;line-height: 45px;cursor: pointer;outline: none;"></i>
+                <md-menu-content width="4" style="color: black;max-height: 400px;">
+                    <div >
+                        <md-menu-item ng-click="previewAsset()" style="outline: none;">
+                            <div layout="row" layout-align="start center" >
+                                <i class="v2-color mdi mdi-eye operate-icon icon-size-2"  title="Edit lockr"></i>
+                                <span>PREVIEW</span>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="ChangeAssetState()" style="outline: none;">
+                            <div layout="row" layout-align="start center">
+                                <img ng-if="assetdata.state === 'Draft'" src="images/publishicon.png"  style="width:20px;height: 20px;margin:2px 12px 2px 2px;">
+                                <img ng-if="assetdata.state === 'Published'" src="images/unpublishicon.png"  style="width:20px;height: 20px;margin:2px 12px 2px 2px;">
+                                <span>{{assetdata.state === 'Published' ? 'UNPUBLISH' : 'PUBLISH'}}</span>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="openEditAsset()" style="outline: none;">
+                            <div layout="row" layout-align="start center">
+                                <i class="v2-color mdi mdi-pencil operate-icon icon-size-2"  title="Edit lockr"></i>
+                                <span>EDIT</span>
+                            </div>
+                        </md-menu-item>
+
+
+                        <md-menu-item ng-click="openMoveAsset()" style="outline: none;">
+                            <div layout="row" layout-align="start center">
+                                <i class="v2-color mdi mdi-swap-horizontal operate-icon icon-size-2 vertical-align-middle" title="Delete asset">
+                                </i>
+                                <span>MOVE</span>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="downloadAsset()" style="outline: none;">
+                            <div layout="row" layout-align="start center" >
+                                <i style="font-size: 20px;" class="v2-color mdi  dalello-icon-download_black  operate-icon icon-size-2 vertical-align-middle" title="Delete asset">
+                                </i>
+                                <span>DOWNLOAD</span>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="setThumbnail()" style="outline: none;">
+                            <div layout="row" layout-align="start center" >
+                                <i style="font-size: 20px;" class="v2-color mdi  dalello-icon-locker_thumbnail_black operate-icon icon-size-2 vertical-align-middle" title="Delete asset">
+                                </i>
+                                <span>SET AS THUMBNAIL</span>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item ng-click="deleteAsset()" style="outline: none;">
+                            <div layout="row" layout-align="start center">
+                                <i  class="mdi v2-color mdi-delete operate-icon icon-size-2 vertical-align-middle" title="Delete lockr">
+                                </i>
+                                <span>DELETE</span>
+                            </div>
+                        </md-menu-item>
+                    </div>
+
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </div>
+</div>

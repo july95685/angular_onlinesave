@@ -1,0 +1,47 @@
+<md-dialog class="add-collaborator" aria-label="Add Collaborator" ng-cloak>
+    <form name="add_collaborator_form" role="form" novalidate>
+        <md-toolbar>
+            <div bg="primary" class="md-toolbar-tools">
+                <h2 class="white">Add Collaborator</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="close" class="mdi white mdi-close icon-size-2"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-padding" layout="column">
+                <md-input-container flex>
+                    <label>NAME</label>
+                    <input name="username" ng-model="username" required>
+                    <div ng-messages="add_collaborator_form.username.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>TYPE OF COLLABORATOR</label>
+                    <md-select ng-model="currentSet">
+                        <md-option ng-repeat="(key, item) in roleSetting" ng-value="key">
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-disabled="add_collaborator_form.$invalid" class="dal-btn dal-btn-primary md-raised" ng-click="toAdd()">
+                Add Collaborator
+            </md-button>
+        </md-dialog-actions>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+</md-dialog>

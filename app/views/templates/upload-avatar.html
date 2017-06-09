@@ -1,0 +1,37 @@
+<div>
+
+    <md-dialog-content>
+        <div ng-hide="haveSelectedImage" id="upload-avatar-area" layout="row" layout-align="center center">
+            <div layout="row" layout-align="center center" style="height: 240px;width:240px;border: 2px dashed #CCCCCC;">
+                <h3 style="color: #CCCCCC;margin: 0;text-align: center;">Drag and Drop image here</h3>
+            </div>
+        </div>
+        <div ng-show="haveSelectedImage" layout="row" layout-align="center center" >
+            <div style="width: 120px;height: 120px;border-radius: 50%;border: 1px solid #CCCCCC;overflow: hidden;">
+                <img ng-src="{{userAvatarPreview}}" alt="avatar" style="width: 100%;height: auto;">
+            </div>
+        </div>
+        <div layout="column" layout-align="center center">
+            <div flex>
+                <md-button class="md-raised" style="text-transform: none;" ng-click="uploadNewAvatar()">Select an image</md-button>
+            </div>
+            <span flex class="font-size-12">JPG, GIF or PNG image</span>
+        </div>
+        <input id="upload-avatar-input" type="file" class="hidden">
+    </md-dialog-content>
+    <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+        <div class="v2-color form-close"  ng-click="answer('not useful')">
+            CANCEL
+        </div>
+        <md-button class="md-raised md-primary" ng-disabled="!haveSelectedImage" ng-click="uploadAvatar()" style="margin-right:20px;padding: 0 20px;">
+            UPLOAD
+        </md-button>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,29 @@
+<div class="md-padding" layout="row" layout-align="start center" style="background-color: #000;padding:8px 15px;margin-bottom: 20px;">
+    <div layout-align="start center" layout="row">
+        <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="color:#30cdff;padding-right: 5px;"></i>
+        <span class="vertical-align-middle font-size-1" style="color:#fff;line-height: 12px;font-size: 12px;">{{currentAssetDetails.dateCreated | date : 'dd MMM yyyy'}}</span>
+        <span style="width: 10px;"></span>
+        <i class="mdi icon-size-1 {{item}}" style="color:#30cdff;" ng-repeat="item in currentAssetDetails.socialChannelView"></i>
+    </div>
+    <span flex></span>
+    <div layout="row" layout-align="start center">
+        <a href="javascript:void 0" ng-click="isFollowedByMe ? unFollowAsset() : followAsset($event,{id:currentAssetDetails.id,name:currentAssetDetails.name})" style="padding-right:16px;color: #fff;line-height: 12px;font-size: 12px;text-decoration: none;">{{isFollowedByMe ? 'UNLIKE' : 'LIKE'}}</a>
+        <i style="color: #30cdff;padding-right: 3px;font-size:13px;" class="mdi mdi-heart icon-size-1"></i>
+        <span style="padding: 0 8px;color: #aaaaaa;padding-bottom: 3px;">|</span>
+        <a href="javascript:void 0" ng-click="openFollowerDialog(currentAssetDetails.id)" style="padding-right:8px;color: #30cdff;text-decoration: none;">{{followerCount || 0}}</a>
+        <img ng-if="assetFollowers.length" style="width:20px;height:20px;border-radius: 50%;text-align: center;" ng-src="{{assetFollowers[0].userPic}}" />
+
+    </div>
+    <!--<p> follow asset button in old version</p>-->
+    <!--<div layout="row" layout-align="start center">-->
+        <!--<i style="color: #f27065;padding-right: 3px;font-size:13px;" class="mdi mdi-heart icon-size-1"></i>-->
+
+        <!--<span style="padding: 0 8px;color: #aaaaaa;">|</span>-->
+        <!--<md-button ng-show="!isFollowedByMe" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;"  ng-click="followAsset($event,{id:currentAssetDetails.id,name:currentAssetDetails.name})">-->
+            <!--<span class="vertical-align-middle v2-color">Follow asset</span>-->
+        <!--</md-button>-->
+        <!--<md-button ng-show="isFollowedByMe" ng-click="unFollowAsset()" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;">-->
+            <!--<span class="vertical-align-middle v2-color">Unfollow asset</span>-->
+        <!--</md-button>-->
+    <!--</div>-->
+</div>

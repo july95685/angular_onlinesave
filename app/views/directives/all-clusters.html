@@ -1,0 +1,38 @@
+
+<div class="modal fade" id="all-clusters">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title pull-left">Clusters</h4>
+                <a class="btn pull-left create-rule-icon" ng-click="turnTocreate()"  title="create a new cluster">
+                    <i class="fa fa-plus-circle pull-left"></i>
+                </a>
+                <div class="clear"></div>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Type</td>
+                        <td>Modified</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="cluster in clusters">
+                        <td><a ng-click="getCurrentCluster(cluster.clusterId)"style="cursor: pointer; text-decoration: none">{{cluster.clusterId}}</a></td>
+                        <td>{{cluster.clusterType}}</td>
+                        <td>{{cluster.dateModified}}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

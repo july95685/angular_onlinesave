@@ -1,0 +1,130 @@
+<!--<md-dialog aria-label="Manage Service" ng-class="{'min-width-600':!mobileDevice}" class="add-lockr-dialog">-->
+    <!--<md-toolbar style="background-color: transparent;">-->
+        <!--<div class="md-toolbar-tools" layout="row" style="background-color: #006fd5;position:absolute;">-->
+            <!--<h2 class="dl-text-color">Services</h2>-->
+            <!--<div flex></div>-->
+            <!--<md-button class="md-icon-button" ng-click="answer()">-->
+                <!--<i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #ffffff;"></i>-->
+            <!--</md-button>-->
+        <!--</div>-->
+    <!--</md-toolbar>-->
+    <!--<md-dialog-content >-->
+        <!--<div class="social-channels-box md-padding" style="min-height: 300px;">-->
+            <!--<div class="clearfix" style="margin:0;">-->
+                <!--<h4 class="pull-left" style="padding:0;margin:0;color: #a3a3a3;padding-bottom: 10px;font-weight: normal;">Services</h4>-->
+                <!--<div class="dropdown pull-right">-->
+                    <!--<button style="margin:0;padding:0;border:none;" class="btn btn-default dropdown-toggle" type="button" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">-->
+                        <!--<i class="pull-right mdi mdi-plus icon-size-2" data-toggle="tooltip" rel="tooltip" data-original-title="Add social channel"></i>-->
+                        <!--<md-tooltip ng-if="!mobileDevice">add social channel</md-tooltip>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;">-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('DropBox')"><i class="mdi mdi-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Box')"><i class="mdi mdi-box" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Box credentials</a></li>-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Evernote')"><i class="mdi mdi-evernote" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Evernote credentials</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div ng-if="loadingSocialChannels" layout="row" layout-sm="column" layout-align="center center" style="top: 50%;position: absolute;-->
+    <!--left: 50%;-->
+    <!--transform: translate(-50%,-50%);">-->
+                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+            <!--</div>-->
+
+            <!--<md-grid-list-->
+                    <!--md-cols="6"-->
+                    <!--md-cols-sm="6" md-cols-xs="3" md-cols-md="6" md-cols-gt-md="6"-->
+                    <!--md-row-height-gt-md="1:1" md-row-height="2:2"-->
+                    <!--md-gutter="12px" md-gutter-gt-sm="8px" ng-show="!loadingSocialChannels">-->
+                <!--<md-grid-tile ng-repeat="item in socialChannelsData" md-rowspan="1" md-colspan="1" class="social-grid-normal profile-social" style="background-color: #006fd5;">-->
+                    <!--<i ng-if="mobileDevice" class="mdi mdi-close-circle-outline icon-size-3" ng-click="deleteSC(item.id, item.socialChannelType)"  style="outline: none; cursor:pointer;color:white;position: absolute;top:1px;right:1px;opacity: 1 !important;"></i>-->
+                    <!--<i ng-if="!mobileDevice" class="mdi mdi-close-circle-outline icon-size-3" ng-click="deleteSC(item.id, item.socialChannelType)"  style="outline: none; cursor:pointer;color:white;position: absolute;top:1px;right:1px;"></i>-->
+                    <!--<div layout="column" layout-align="center center">-->
+                        <!--<i class="{{item.class}} social-icon mdi" style="color: white;font-size: 36px;"></i>-->
+                        <!--<span class="white">{{item.name.split('-')[1]}}</span>-->
+                    <!--</div>-->
+
+                <!--</md-grid-tile>-->
+            <!--</md-grid-list>-->
+        <!--</div>-->
+    <!--</md-dialog-content>-->
+<!--</md-dialog>-->
+<md-dialog aria-label="Manage Service" ng-class="{'min-width-600':!mobileDevice}" class="add-lockr-dialog">
+    <md-toolbar style="background-color: transparent;">
+        <div class="md-toolbar-tools" layout="row" style="background-color: #006fd5;position:absolute;">
+            <h2 class="dl-text-color">Services</h2>
+            <div flex></div>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #ffffff;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content >
+        <div class="social-channels-box md-padding" style="min-height: 300px;">
+            <!--<div class="clearfix" style="margin:0;">-->
+                <!--<h4 class="pull-left" style="padding:0;margin:0;color: #a3a3a3;padding-bottom: 10px;font-weight: normal;">Services</h4>-->
+                <!--<div class="dropdown pull-right">-->
+                    <!--<button style="margin:0;padding:0;border:none;" class="btn btn-default dropdown-toggle" type="button" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">-->
+                        <!--<i class="pull-right mdi mdi-plus icon-size-2" data-toggle="tooltip" rel="tooltip" data-original-title="Add social channel"></i>-->
+                        <!--<md-tooltip ng-if="!mobileDevice">add social channel</md-tooltip>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu" role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;">-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('DropBox')"><i class="mdi mdi-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Box')"><i class="mdi mdi-box" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Box credentials</a></li>-->
+                        <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Evernote')"><i class="mdi mdi-evernote" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Evernote credentials</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div layout="column">
+                  <div class="dl-border-bottom" layout="row" layout-align="center center" ng-click="show('DropBox')">
+                      <i class="mdi mdi-dropbox" style="font-size: 35px;"></i>
+                      <div class="dl-txt"><span>DropBox</span></div>
+                      <span flex></span>
+                      <div class="bt-yellow-blue" ng-click="addSocialChannel('DropBox')"><span>ADD</span></div>
+                  </div>
+
+                <md-list  ng-show="!loadingSocialChannels&&showDropbox">
+                    <md-list-item ng-repeat="item in socialChannelsData|filter:{class:'mdi-dropbox'}">
+                        <i class="mdi mdi-adjust icon-size-2" aria-label="point"></i>
+                        <p>{{item.name.split('-')[1]}}</p>
+                        <i class="mdi mdi-close icon-size-2" style="color:black;" aria-label="delete" ng-click="deleteSC(item.id, item.socialChannelType)" ></i>
+                    </md-list-item>
+                </md-list>
+
+                <div class="dl-border-bottom" layout="row" layout-align="center center" ng-click="show('Box')">
+                    <i class="mdi mdi-box" style="font-size: 35px;"></i>
+                    <div class="dl-txt" ><span>Box</span></div>
+                    <span flex></span>
+                    <div class="bt-yellow-blue" ng-click="addSocialChannel('Box')"><span>ADD</span></div>
+
+                </div>
+                <md-list  ng-show="!loadingSocialChannels&&showBox">
+                    <md-list-item ng-repeat="item in socialChannelsData|filter:{class:'mdi-box'}">
+                        <i class="mdi mdi-adjust icon-size-2" aria-label="point"></i>
+                        <p>{{item.name.split('-')[1]}}</p>
+                        <i class="mdi mdi-close icon-size-2" style="color:black;" aria-label="delete" ng-click="deleteSC(item.id, item.socialChannelType)" ></i>
+                    </md-list-item>
+                </md-list>
+                <div class="dl-border-bottom" layout="row" layout-align="center center" ng-click="show('Evernote')">
+                    <i class="mdi mdi-evernote" style="font-size: 35px;"></i>
+                    <div class="dl-txt"><span>Evernote</span></div>
+                    <span flex></span>
+                    <div class="bt-yellow-blue" ng-click="addSocialChannel('Evernote')"><span>ADD</span></div>
+                </div>
+                <md-list  ng-show="!loadingSocialChannels&&showEvernote">
+                    <md-list-item ng-repeat="item in socialChannelsData|filter:{class:'mdi-evernote'}">
+                        <i class="mdi mdi-adjust icon-size-2" aria-label="point"></i>
+                        <p>{{item.name.split('-')[1]}}</p>
+                        <i class="mdi mdi-close icon-size-2" style="color:black;" aria-label="delete" ng-click="deleteSC(item.id, item.socialChannelType)" ></i>
+                    </md-list-item>
+                </md-list>
+            </div>
+            <div ng-if="loadingSocialChannels" layout="row" layout-sm="column" layout-align="center center" style="top: 50%;position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+
+        </div>
+    </md-dialog-content>
+</md-dialog>

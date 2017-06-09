@@ -1,0 +1,22 @@
+<div id="sharing-rules">
+        <div layout="row" ng-hide="editSharingRule" layout-align="start center">
+            <div flex>
+                <md-input-container style="margin-bottom: 0;" md-no-float class="md-block">
+                    <input data-ng-model="sharingRuleFilter.filterKey" type="text" placeholder="Filter Sharing rules">
+                </md-input-container>
+            </div>
+            <div>
+                <md-button class="md-primary" ng-click="addSharingRules($event)" style="margin-right:0;text-transform: none;color: white;background-color: #006fd5;line-height: 30px;min-height: 30px;position: relative;top: -3px;" >
+                    add new rules
+                </md-button>
+            </div>
+        </div>
+
+        <div ng-if="userSharingRules.length > 0" ng-repeat="shareRule in userSharingRules | filter : {name:sharingRuleFilter.filterKey}" class="share-rule-item active">
+            <sharing-rule-item sharing-rule="shareRule"></sharing-rule-item>
+        </div>
+        <div layout="row" layout-sm="column" layout-align="center center" >
+            <md-progress-circular ng-show="isLoading" md-mode="indeterminate"></md-progress-circular>
+            <md-button ng-click="reloadData()" ng-show="!isLoading && loadError">load error !  click to reload</md-button>
+        </div>
+</div>

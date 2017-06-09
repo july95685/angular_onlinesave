@@ -1,0 +1,296 @@
+<div>
+    <div ng-if="showinfo">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <i class="mdi mdi-chevron-left" style="color:#fff;height:50px;font-size: 36px;" ng-click="cancel()"></i>
+            <span style="color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">{{lockrInfodata.name}}</span>
+            <span flex></span>
+            <i class="mdi dalello-icon-more_black icon-size-2" style="font-size:16px;color:#fff;" ></i>
+        </div>
+        <div style="background-color:#f5f5f5;min-height: 668px; " layout="column" layout-align="start center">
+            <div style="width: 92%;padding: 15px 0;">
+                <img style="width:100%;" ng-src="{{lockrInfodata.thumbnailUrl}}" />
+                <i class="mdi mdi-pencil" ng-click="openEditThumbnail()" style="top: 70px;right: 6%;position: absolute;font-size: 24px;"></i>
+            </div>
+            <div style="background-color:#fff;width: 92%;">
+                <div class="m-tabs m-tabs-normal" layout="row" style="padding-top: 16px;">
+                    <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('info')" ng-class="{'active':currentTabItem === 'info'}"  layout-align="center center">
+                        <i class="mdi black-icon dalello-icon-info_black" style="color:#000;"  ng-class="{'active':currentTabItem === 'info'}"></i>
+                    </div>
+                    <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('collaborator')" ng-class="{'active':currentTabItem === 'collaborator'}"  layout-align="center center">
+                        <i class="mdi black-icon dalello-icon-add_col_black"  style="color:#000;" ng-class="{'active':currentTabItem === 'collaborator'}"></i>
+                    </div>
+                    <div class="m-tab-item" flex style="opacity:1;" layout="row" ng-click="selectTabItem('share')" ng-class="{'active':currentTabItem === 'share'}"   layout-align="center center">
+                        <i class="mdi black-icon dalello-icon-sharingrules_black" style="color:#000;" ng-class="{'active':currentTabItem === 'share'}" ></i>
+                    </div>
+                    <!--<div class="m-tab-item"  ng-click="selectTabItem('stats')" ng-class="{'active':currentTabItem === 'stats'}" flex layout="row" layout-align="center center">-->
+                    <!--<i class="mdi black-icon dalello-icon-statistics_black" style="color:#000;" ng-class="{'active':currentTabItem === 'stats'}"></i>-->
+                    <!--</div>-->
+                </div>
+                <div ng-if="currentTabItem === 'info'" layout="column" layout-align="start center">
+                    <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="center center">
+                        <span style="color: #006fd5;font-size: 18px;">{{lockrInfodata.name}}</span>
+                        <span flex></span>
+                        <i class="mdi mdi-pencil" style="font-size: 22px;" ng-click="infoEditLockr()"></i>
+                    </div>
+                    <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="space-between center">
+                        <div layout="row">
+                            <div style="width: 45px;height: 45px;border-radius: 50%;">
+                                <img ng-src="{{lockrInfodata.useravator}}" style="width:45px;height: 45px;border-radius: 50%;">
+                            </div>
+                            <div layout="column">
+                                <span style="color: #006fd5;font-size: 15px;line-height: 22px;padding-left: 5px;">{{lockrInfodata.user.username}}</span>
+                                <span style="font-size: 14px;line-height: 22px;padding-left: 5px;color: #9b9b9b;">Owner</span>
+                            </div>
+                        </div>
+                        <span flex></span>
+                        <div layout="row" layout-align="center center">
+                            <i class="mdi mdi-clock" style="font-size: 20px;padding-right: 5px;"></i>
+                            <span style="font-size: 12px;">{{lockrInfodata.dateCreated | date : 'd MMM yyyy'}}</span>
+                        </div>
+                    </div>
+                    <div layout="row" style="width: 100%;padding: 5px 10px;font-size: 11px;" layout-align="start center">
+                        <span>{{lockrInfodata.description}}</span>
+                    </div>
+                    <div layout="column" layout-align="start start" style="width: 100%;padding: 5px 10px;">
+                        <span style="color: #006fd5;font-size: 16px;">Tags</span>
+                        <div layout="row" layout-align="start center">
+                        <div ng-repeat="item in lockrInfodata.tags" style="font-size: 13px;">
+                            {{item}},
+                        </div>
+                        </div>
+
+                    </div>
+                    <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="start center">
+                        <div layout="row" layout-align="center center" style="padding-left: 8px;">
+                            <i style="font-size: 24px;padding-right:5px;" class="mdi dalello-icon-sub_locker_black"></i>
+                            <span style="font-size: 11px;font-weight: bold">{{lockrInfodata.totalSubLockrs}}</span>
+                        </div>
+                        <div layout="row" layout-align="center center" style="padding-left: 8px;">
+                            <i style="font-size: 24px;padding-right:5px;" class="mdi dalello-icon-picture_black"></i>
+                            <span style="font-size: 12px;;">{{lockrInfodata.totalImage || 0}}</span>
+                        </div>
+                        <div layout="row" ng-if="lockrInfodata.totalvideo" layout-align="center center" style="padding-left: 8px;">
+                            <i style="font-size: 24px;padding-right:5px;" class="mdi dalello-icon-video_black"></i>
+                            <span style="font-size: 12px;;">{{lockrInfodata.totalvideo || 0}}</span>
+                        </div>
+                        <div layout="row" ng-if="lockrInfodata.totalPdf" layout-align="center center" style="padding-left: 8px;">
+                            <i style="font-size: 24px;padding-right:5px;" class="mdi dalello-icon-pdf_black"></i>
+                            <span style="font-size: 12px;;">{{lockrInfodata.totalPdf || 0}}</span>
+                        </div>
+                        <div layout="row" ng-if="lockrInfodata.totalpowerpoint" layout-align="center center" style="padding-left: 8px;">
+                            <i style="font-size: 24px;padding-right:5px;" class="mdi dalello-icon-pp_black"></i>
+                            <span style="font-size: 12px;;">{{lockrInfodata.totalpowerpoint || 0}}</span>
+                        </div>
+                    </div>
+                    <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="end center">
+                        <div layout="row" layout-align="start center" style="height: 34px;">
+                            <i style="font-size: 24px;padding-right:10px;" class="mdi mdi-heart"></i>
+                            <div style="height: 14px;width:1px;border-right: 1px solid #979797;"></div>
+                            <span style="padding:0 10px;font-size: 11px;font-weight: bold">{{lockrInfodata.numberOfFollowers}}</span>
+                            <div ng-if="lockrInfodata.lockrFollowers.avatorurl" style="height: 34px;" layout="row" layout-align="center center">
+                                <img ng-src="{{lockrInfodata.lockrFollowers.avatorurl}}" style="width: 20px;height: 20px;border-radius: 50%;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="currentTabItem === 'collaborator'" layout="column" layout-align="start center">
+                    <div ng-if="!loadColl"  style="width: 100%;">
+                        <div ng-if="accessUsers[0]" ng-repeat="item in accessUsers" style="width: 100%;padding: 15px 10px 5px 10px;" layout="row" layout-align="start center">
+                            <div>
+                                <img ng-src="{{item.userPic}}" style="width: 45px;height: 45px;border-radius: 50%;" />
+                            </div>
+                            <div layout="column" style="padding-left: 8px;" layout-align="center start">
+                                <span style="font-size: 14px;font-weight: bold;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color: #006fd5;">{{item.firstName}} {{item.lastName}}</span>
+                                <span style="font-size: 12px;color: #9b9b9b;">Manager</span>
+                            </div>
+                            <span flex></span>
+                            <i style="font-size: 24px;padding-right: 13px;" ng-click="editColl(item)" class="mdi mdi-pencil"></i>
+                            <i style="font-size: 26px;color: #000;" ng-click="removeColl(item)" class="mdi mdi-close"></i>
+                        </div>
+                        <div ng-if="!accessUsers[0]" style="width: 100%;padding: 15px 10px 5px 10px;font-size: 11px;"  layout="column" layout-align="start center">
+                            <span style="color: #7f7f7f;">No Collaborator has been added to Account/ Lockr to </span>
+                            <span style="color: #7f7f7f;">“Trend 2016” yet.</span>
+                        </div>
+                        <div layout-align="center center" layout="row">
+                            <md-button ng-click="infoAddCollaborator()" class="md-raised md-primary" style="font-size: 12px;padding: 0 6px;">ADD COLLABORATOR</md-button>
+                        </div>
+                    </div>
+                    <div ng-if="loadColl">
+                        <div layout="row" layout-sm="column" layout-align="center center">
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div ng-if="currentTabItem === 'share'" layout="column"  layout-align="start center">
+                    <div layout="row" style="width: 100%;padding: 5px 10px;" layout-align="end center">
+                        <div style="background-color: #ffd439;">
+                            <span ng-click="infoAddShareRule()" style="color: #006fd5;font-size: 11px;padding: 5px;">CREATE SHARE RULE</span>
+                        </div>
+                    </div>
+                    <md-radio-group style="width: 100%;" ng-model="selectedRule">
+                        <div ng-repeat="rule in shareRuleDetail" style="width: 100%;padding:0 10px;">
+                        <div class="row-head" ng-click="openShareRule(rule)" style="padding:10px 0;" layout-align="start center" layout="row">
+                            <md-radio-button style="margin: 0;" class="dal-primary md-v2" value="{{rule.id}}"> {{rule.name}} </md-radio-button>
+                            <span flex></span>
+                            <i  ng-show="rule.selected" ng-click="editInfoShareRule(rule)"  class="mdi mdi-pencil" style="font-size: 26px;color: #000;padding-right: 10px;"></i>
+                            <i class="mdi" style="width: 25px;height: 25px;font-size: 26px;line-height: 25px;" ng-class="{'mdi-plus-circle dal-iconcolor-black':!rule.selected,'mdi-minus-circle':rule.selected}"></i>
+                        </div>
+                        <div  ng-show="rule.selected">
+                            <md-input-container style="margin-bottom: 0;" flex>
+                                <label>NAME</label>
+                                <input style="margin-top: -10px;border-bottom: 0;" name="name" ng-model="rule.name" >
+                            </md-input-container>
+                            <md-input-container style="margin-bottom: 0;" flex>
+                                <label>DESCRIPTION</label>
+                                <input style="margin-top: -10px;border-bottom: 0;" name="description" ng-model="rule.description" >
+                            </md-input-container>
+                        </div>
+                        <div ng-if="rule.selected">
+                                <div layout="row" class="tab-head">
+                                    <a ng-click="rule.tabIndex = 0" ng-class="{'active':rule.tabIndex == 0}" href="javascript:void(0)" flex>Mime Type</a>
+                                    <a ng-click="rule.tabIndex = 1" ng-class="{'active':rule.tabIndex == 1}" href="javascript:void(0)" flex>Channels</a>
+                                </div>
+                                <div class="tab-content">
+                                    <div layout="row" class="mime-type-view" layout-align="space-between" ng-show="rule.tabIndex == 0">
+                                        <i ng-repeat="item in mimeTypes" ng-class="{'active':mimeTypeIsActive(item,rule)}" class="mime-type-icon {{item.icon}}"></i>
+                                    </div>
+                                    <div class="mime-type-view" ng-show="rule.tabIndex == 1">
+                                        <div style="height: 48px;width: 100%;overflow: scroll;">
+                                            <div layout="row" style="width:{{ 58 * channelTypes.length + 'px'}};height: 48px;">
+                                                <a ng-class="{'active':rule.channelActive == type.name}" ng-click="switchChannelType(rule,type)" layout="row" layout-align="center center" class="channel-item" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                                                    <i class="mdi {{type.iconClass}}"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 6px;">
+                                                <span layout-wrap layout="row" layout-align="start center" ng-repeat="channel in rule.postOnSocialChannelDetail | filter:{socialChannelType:rule.channelActive}" class="social-item">
+                                                    <img ng-show="channel.imgLink" ng-src="{{channel.imgLink}}">
+                                                    <i ng-show="!channel.imgLink" class="mdi {{channel.iconClass}}"></i>
+                                                    <span>{{channel.name.split('-')[1]}}</span>
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="color: #4a4a4a;font-weight: bold;font-size: 16px;margin: 10px 0;" layout="row" layout-align="start center" >
+                                    <span>License Type</span>
+                                </div>
+                                <div layout="column" style="font-size: 11px;color: #9b9b9b;" layout-align="start center">
+                                    <p class="cc-text" >
+                                        {{rule.ccContent.text}}
+                                    </p>
+                                    <div style="margin-bottom: 10px;" class="cc-image" layout="row" layout-align="center center">
+                                        <img ng-src="{{rule.ccContent.image}}">
+                                    </div>
+                                    <p class="cc-desc">
+                                        {{rule.ccContent.desc}}
+                                    </p>
+                                </div>
+
+
+
+                            </div>
+                    </div>
+                    </md-radio-group>
+                    <div ng-if="loadshare">
+                        <div layout="row" layout-sm="column" layout-align="center center">
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="showselectthumb">
+            <lockr-select-thumbnail lockr-infodata = "lockrInfodata"></lockr-select-thumbnail>
+        </div>
+    </div>
+    <div ng-if="!showinfo && showAddColl">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Add Collaborator</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backFormColl()"></i>
+        </div>
+        <div layout="column" layout-align="start center" style="margin-top: 25px;">
+            <div layout="row" style="width: 90%;">
+                <md-input-container flex style="margin-bottom: 0;">
+                    <label>NAME</label>
+                    <input style="color:#006fd5;" type="text" ng-model="assign.name">
+                </md-input-container>
+            </div>
+            <div layout="row" style="width: 90%;padding-bottom: 15px;">
+                <md-input-container style="width: 100%;margin-top: 0;" layout="row">
+                    <label>TYPE OF COLLABORATOR<span class="require-dot">*</span> </label>
+                    <md-select required ng-model="assign.userrole" md-on-open="loaduserrole()" style="width: 100%;">
+                        <md-option ng-value="data.name" ng-repeat="data in chooseuserrole">{{data.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row" style="width: 90%;">
+                <md-input-container flex style="margin-top: 0;">
+                    <label>E_MAIL</label>
+                    <input style="color:#006fd5;" type="text" ng-model="assign.email">
+                </md-input-container>
+            </div>
+            <div layout="row" style="width: 90%;">
+                <md-input-container flex style="margin-top: 0;">
+                    <label>PASSWORD</label>
+                    <input style="color:#006fd5;" type="text" ng-model="assign.password">
+                </md-input-container>
+            </div>
+            <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+                <md-button class="md-raised" ng-class="{'md-primary':assignUser !== ''}" ng-disabled="assignUser === ''" ng-click="assignLockrToUser()" style="margin-right:20px;padding: 0 20px;">
+                    GRANT
+                </md-button>
+            </div>
+            <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                <div layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!showinfo && showAddShareRule">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Add Share Rule</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backFormSR()"></i>
+        </div>
+        <sharing-rule-item lockr-id="{{lockrInfodata.id}}"></sharing-rule-item>
+    </div>
+    <div ng-if="!showinfo && showEditColl">
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center">
+            <span style="padding-left:15px;color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Edit Collaborator</span>
+            <span flex></span>
+            <i class="mdi mdi-close" style="color:#fff;font-size: 26px;" ng-click="backFormColl()"></i>
+        </div>
+        <div layout="column" layout-align="start center" style="margin-top: 25px;">
+            <div layout="row" style="width: 90%;">
+                <md-input-container flex style="margin-bottom: 0;">
+                    <label>NAME</label>
+                    <input style="color:#006fd5;" type="text" ng-model="assign.name">
+                </md-input-container>
+            </div>
+            <div layout="row" style="width: 90%;padding-bottom: 15px;">
+                <md-input-container style="width: 100%;margin-top: 0;" layout="row">
+                    <label>TYPE OF COLLABORATOR<span class="require-dot">*</span> </label>
+                    <md-select required ng-model="assign.userrole" md-on-open="loaduserrole()" style="width: 100%;">
+                        <md-option ng-value="data.name" ng-repeat="data in chooseuserrole">{{data.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row" style="width: 90%;">
+                <md-input-container flex style="margin-top: 0;">
+                    <label>E_MAIL</label>
+                    <input style="color:#006fd5;" type="text" ng-model="assign.email">
+                </md-input-container>
+            </div>
+            <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                <div layout="row" layout-sm="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

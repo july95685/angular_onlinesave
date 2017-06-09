@@ -1,0 +1,267 @@
+<div style="padding:20px 30px 20px 30px;">
+    <div id="asset-right-list" style="position: relative;min-height: 400px;">
+
+        <div style="position: relative;top:-15px;right:0;z-index: 1;">
+            <md-button style="border: 1px solid #006fd5;padding: 0 15px;" class="v2-color pull-right" ng-click="openCommentBox()">Add Comment</md-button>
+        </div>
+
+
+        <div class="comment-flow-box">
+
+        <ol class="list-unstyled" style="position: relative;">
+            <li class="top-floor" ng-repeat="item in commentsData" ng-if="$index <= 0">
+                <!-- comment date --->
+                <div class="date-range" ng-class="{'top-date':$index === 0}">
+                    <span class="v2-color" ng-show="$index === 0">{{todayHasComment === false ? (item.date | date : 'dd MMM yyyy') : "TODAY"}}</span>
+                    <span ng-show="$index !== 0">{{item.date | date : 'dd MMM yyyy'}}</span>
+                </div>
+
+
+                <ol class="list-unstyled one-floor">
+                    <li ng-repeat="comment in item.comments" id="comment-{{comment.id}}">
+                        <!-- comment -->
+                        <div class="social-icon">
+                            <i class="mdi {{comment.iType}} icon-size-1"></i>
+                        </div>
+                        <div class="com-time">
+                            <i class="mdi mdi-clock icon-size-1"></i>
+                            <span>{{comment.commentDate | date : 'dd MMM yyyy'}}</span>
+                        </div>
+                        <div class="com-desc">
+                            <p>
+                                {{comment.message}}
+                            </p>
+                        </div>
+                        <div class="com-toolbar">
+                            <div ng-if="comment.commentType.toLowerCase() === 'twitter'">
+                                <ul class="list-unstyled clearfix">
+                                    <li class="pull-left" ng-click="openReplyFlow($event,comment.id)">
+                                        <i class="mdi mdi-reply icon-size-1"></i>
+                                        <span>Reply({{comment.comments.length}})</span>
+                                    </li>
+                                    <li class="pull-left" ng-click="openReplyCommentBox(comment.id)">
+                                        <i class="mdi mdi-twitter-retweet icon-size-1"></i>
+                                        <span>Retweet</span>
+                                    </li>
+                                    <li ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(comment.id)">
+                                        <i ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-star icon-size-1"></i>
+                                        <span ng-style="comment.likes.length !== 0 ? likeStyle : ''">Add o favorite</span>
+                                    </li>
+                                    <li class="pull-left">
+                                        <i class="mdi mdi-heart icon-size-1"></i>
+                                        <span>Follow</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div ng-if="comment.commentType.toLowerCase() === 'facebook'">
+                                <ul class="list-unstyled clearfix">
+                                    <li ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(comment.id)">
+                                        <i ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                        <span ng-style="comment.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                    </li>
+                                    <li class="pull-left" ng-click="openReplyCommentBox(comment.id)">
+                                        <i class="mdi mdi-message icon-size-1"></i>
+                                        <span>Reply</span>
+                                    </li>
+                                    <li class="pull-left" ng-click="openReplyFlow($event,comment.id)">
+                                        <i class="mdi mdi-share icon-size-1"></i>
+                                        <span>Share({{comment.comments.length}})</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div ng-if="comment.commentType.toLowerCase() === 'dalockr'">
+                                <ul class="list-unstyled clearfix">
+                                    <li class="pull-left" ng-click="openReplyCommentBox(comment.id)">
+                                        <i class="mdi mdi-message icon-size-1"></i>
+                                        <span>Reply</span>
+                                    </li>
+                                    <li ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(comment.id)">
+                                        <i ng-style="comment.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                        <span ng-style="comment.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                    </li>
+                                    <li class="pull-left" ng-click="openReplyFlow($event,comment.id)">
+                                        <i class="mdi mdi-share icon-size-1"></i>
+                                        <span>Share({{comment.comments.length}})</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- two floor -->
+                        <ol class="list-unstyled two-floor" ng-if="comment.comments.length !== 0">
+                            <li ng-repeat="obj in comment.comments" style="position: relative;" id="comment-{{obj.id}}">
+                                <img style="width: 30px;height: 30px;border-radius: 50%;position: absolute;left: -35px;" ng-src="{{getUserPic(obj.commentType.toLowerCase(),obj)}}" alt="user">
+
+                                <div class="com-time">
+                                    <i class="mdi mdi-clock icon-size-1"></i>
+                                    <span>{{obj.commentDate  | date : 'dd MMM yyyy'}}</span>
+                                </div>
+                                <div class="com-desc">
+                                    <p>
+                                        {{obj.message}}
+                                    </p>
+                                </div>
+                                <div class="com-toolbar">
+                                    <div ng-if="obj.commentType.toLowerCase() === 'twitter'">
+                                        <ul class="list-unstyled clearfix">
+                                            <li class="pull-left" ng-click="openReplyFlow($event,obj.id)">
+                                                <i class="mdi mdi-reply icon-size-1"></i>
+                                                <span>Reply({{obj.comments.length}})</span>
+                                            </li>
+                                            <li class="pull-left" ng-click="openReplyCommentBox(obj.id)">
+                                                <i class="mdi mdi-twitter-retweet icon-size-1"></i>
+                                                <span>Retweet</span>
+                                            </li>
+                                            <li ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(obj.id)">
+                                                <i ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-star icon-size-1"></i>
+                                                <span ng-style="obj.likes.length !== 0 ? likeStyle : ''">Add o favorite</span>
+                                            </li>
+                                            <li class="pull-left">
+                                                <i class="mdi mdi-heart icon-size-1"></i>
+                                                <span>Follow</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div ng-if="obj.commentType.toLowerCase() === 'facebook'">
+                                        <ul class="list-unstyled clearfix">
+                                            <li ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(obj.id)">
+                                                <i ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                                <span ng-style="obj.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                            </li>
+                                            <li class="pull-left" ng-click="openReplyCommentBox(obj.id)">
+                                                <i class="mdi mdi-message icon-size-1"></i>
+                                                <span>Reply</span>
+                                            </li>
+                                            <li class="pull-left" ng-click="openReplyFlow($event,obj.id)">
+                                                <i class="mdi mdi-share icon-size-1"></i>
+                                                <span>Share({{obj.comments.length}})</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div ng-if="obj.commentType.toLowerCase() === 'dalockr'">
+                                        <ul class="list-unstyled clearfix">
+                                            <li class="pull-left" ng-click="openReplyCommentBox(obj.id)">
+                                                <i class="mdi mdi-message icon-size-1"></i>
+                                                <span>Reply</span>
+                                            </li>
+                                            <li ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(obj.id)">
+                                                <i ng-style="obj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                                <span ng-style="obj.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                            </li>
+                                            <li class="pull-left" ng-click="openReplyFlow($event,obj.id)">
+                                                <i class="mdi mdi-share icon-size-1"></i>
+                                                <span>Share({{obj.comments.length}})</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- three floor -->
+                                <ol class="list-unstyled three-floor" ng-if="obj.comments.length !== 0">
+                                    <li ng-repeat="threeObj in obj.comments" style="position: relative;" id="comment-{{threeObj.id}}">
+                                        <img style="width: 30px;height: 30px;border-radius: 50%;position: absolute;left: -35px;" ng-src="{{getUserPic(threeObj.commentType.toLowerCase(),threeObj)}}" alt="user">
+
+                                        <div class="com-time">
+                                            <i class="mdi mdi-clock icon-size-1"></i>
+                                            <span>{{threeObj.commentDate  | date : 'dd MMM yyyy'}}</span>
+                                        </div>
+                                        <div class="com-desc">
+                                            <p>
+                                                {{threeObj.message}}
+                                            </p>
+                                        </div>
+                                        <div class="com-toolbar">
+                                            <div ng-if="threeObj.commentType.toLowerCase() === 'twitter'">
+                                                <ul class="list-unstyled clearfix">
+                                                    <li class="pull-left" ng-click="openReplyFlow($event,threeObj.id)">
+                                                        <i class="mdi mdi-reply icon-size-1"></i>
+                                                        <span>Reply({{threeObj.comments.length}})</span>
+                                                    </li>
+                                                    <li class="pull-left" ng-click="openReplyCommentBox(threeObj.id)">
+                                                        <i class="mdi mdi-twitter-retweet icon-size-1"></i>
+                                                        <span>Retweet</span>
+                                                    </li>
+                                                    <li ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(threeObj.id)">
+                                                        <i ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-star icon-size-1"></i>
+                                                        <span ng-style="threeObj.likes.length !== 0 ? likeStyle : ''">Add o favorite</span>
+                                                    </li>
+                                                    <li class="pull-left">
+                                                        <i class="mdi mdi-heart icon-size-1"></i>
+                                                        <span>Follow</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div ng-if="threeObj.commentType.toLowerCase() === 'facebook'">
+                                                <ul class="list-unstyled clearfix">
+                                                    <li ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" class="pull-left" ng-click="likeThisComment(threeObj.id)">
+                                                        <i ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                                        <span ng-style="threeObj.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                                    </li>
+                                                    <li class="pull-left" ng-click="openReplyCommentBox(threeObj.id)">
+                                                        <i class="mdi mdi-message icon-size-1"></i>
+                                                        <span>Reply</span>
+                                                    </li>
+                                                    <li class="pull-left" ng-click="openReplyFlow($event,threeObj.id)">
+                                                        <i class="mdi mdi-share icon-size-1"></i>
+                                                        <span>Share({{threeObj.comments.length}})</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div ng-if="threeObj.commentType.toLowerCase() === 'dalockr'">
+                                                <ul class="list-unstyled clearfix">
+                                                    <li class="pull-left" ng-click="openReplyCommentBox(threeObj.id)">
+                                                        <i class="mdi mdi-message icon-size-1"></i>
+                                                        <span>Reply</span>
+                                                    </li>
+                                                    <li class="pull-left" ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" ng-click="likeThisComment(threeObj.id)">
+                                                        <i ng-style="threeObj.likes.length !== 0 ? likeStyle : ''" class="mdi mdi-thumb-up icon-size-1"></i>
+                                                        <span ng-style="threeObj.likes.length !== 0 ? likeStyle : ''">Like</span>
+                                                    </li>
+                                                    <li class="pull-left" ng-click="openReplyFlow($event,threeObj.id)">
+                                                        <i class="mdi mdi-share icon-size-1"></i>
+                                                        <span>Share({{threeObj.comments.length}})</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <md-button style="border: 1px solid #006fd5;padding: 0 15px;text-transform: none;position: relative;left: -15px;" ng-show="commentsData !==null && commentsData.length !== 0" class="v2-color" ng-click="seeAllComments()">See all comments</md-button>
+
+        <div id="asset-all-comment-box" class="clearfix">
+            <div style="background-color: white">
+                <textarea class="reply-textarea" ng-disabled="isCommenting" data-ng-model="commentMessage" style="border-radius: 3px;outline:none;border: 1px solid #006fd5;width: 100%;resize: none;padding:3px 6px;" rows="3">
+
+                </textarea>
+                <div class="pull-right">
+                    <md-button style="margin-right:0;" ng-click="cancelComment()" ng-disabled="isCommenting">Cancel</md-button>
+                    <md-button style="margin-right:0;" class="v2-color" ng-disabled="commentMessage === '' || isCommenting" ng-click="addComment()">Comment</md-button>
+                </div>
+            </div>
+        </div>
+
+        <div style="top:150px;text-align: center;position: relative;"  ng-show="commentsData.length === 0">
+            <span style="font-size: 40px;color: #ececec;">No comments</span>
+        </div>
+
+    </div>
+    <!--//<div class="col-md-3 pull-right"><button>Add Comment</button></div>-->
+</div>

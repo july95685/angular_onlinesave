@@ -1,0 +1,234 @@
+<div layout="column" class="m-dashboard">
+
+    <div layout="row" layout-align="center center" ng-if="isLoading" class="loading-view">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <div class="head-view">
+        <h3 class="title">My Dashboard for {{currentAccount.name}}</h3>
+
+        <md-button ng-click="openDateSetting($event)" class="select-date md-icon-button" aria-label="Date setting">
+            <i class="mdi mdi-calendar" style="font-size: 18px;"></i>
+        </md-button>
+
+    </div>
+
+
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Account">
+            <md-content class="md-padding">
+                <md-grid-list
+                        md-cols-xs="2" md-cols-sm="2"
+                        md-row-height="2:1.5"
+                        md-gutter="16px">
+                    <md-grid-tile ng-repeat="stat in dashStats" class="md-whiteframe-2dp">
+                        <div class="stat-card" layout="column" layout-align="center center">
+                            <i class="mdi {{stat.icon}}"></i>
+                            <span>{{stat.percent ? ( stat.text *100 ).toFixed(0) + '%' : stat.text}}</span>
+                        </div>
+                    </md-grid-tile>
+                </md-grid-list>
+
+                <div class="stats-card md-whiteframe-2dp">
+                    <h3 class="title md-padding" style="margin: 0;padding: 15px;">Monthly Stats per channels</h3>
+                    <daily-stats series-data="seriesData" show-title="false"></daily-stats>
+                </div>
+                <div class="channels-card md-whiteframe-2dp">
+                    <h3 class="title">Channels across the world</h3>
+                    <div layout="row" style="width:320px;">
+                        <div layout="column" style="margin-left: 16px;width:50px;height:240px;" layout-align="center center">
+                            <i class="dli dalello-icon-twitter_black"></i>
+                            <i class="dli dalello-icon-fb_black"></i>
+                            <i class="dli dalello-icon-publishing_point_rounded"></i>
+                        </div>
+                        <div  style="width: 100%;height: 250px;padding: 5px;" class="md-padding" id="social-world-map">
+                        </div>
+                    </div>
+                </div>
+            </md-content>
+        </md-tab>
+
+        <md-tab label="Lockr">
+            <md-content class="md-padding">
+
+                <div layout="column" style="margin-bottom: 20px;" ng-if="compareToDateRange">
+                    <div layout="row" layout-align="start center">
+                        <span class="compare-from-dot"></span>
+                        <span>From {{currentDateRange.startDate | date :'dd/MM/yy'}} to {{currentDateRange.endDate | date :'dd/MM/yy'}}</span>
+                    </div>
+                    <span style="height: 8px;"></span>
+                    <div layout="row" layout-align="start center">
+                        <span class="compare-to-dot"></span>
+                        <span>From {{compareToDateRange.startDate | date :'dd/MM/yy'}} to {{compareToDateRange.endDate | date :'dd/MM/yy'}}</span>
+                    </div>
+                </div>
+
+                <div class="stats-menu" layout="row">
+                    <div flex>
+                        <md-menu>
+                            <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                <i class="mdi {{viewSetting.mode[lockrsView.activeMode].icon}}"></i>
+                                <span>{{viewSetting.mode[lockrsView.activeMode].desc}}</span>
+                                <span flex></span>
+                                <i class="mdi mdi-menu-down"></i>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-repeat="(key,mode) in viewSetting.mode">
+                                    <md-button md-autofocus="key == lockrsView.activeMode"
+                                               ng-class="{active:key == lockrsView.activeMode}"
+                                               ng-click="lockrsView.activeMode = key" class="m-dash-btn-item">
+                                        <i class="mdi {{mode.icon}}"></i>
+                                        <span>{{mode.desc}}</span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                    <div></div>
+                    <div flex>
+                        <md-menu>
+                            <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                <i class="mdi {{viewSetting.channels[lockrsView.activeChannel].icon}}"></i>
+                                <span>{{viewSetting.channels[lockrsView.activeChannel].name}}</span>
+                                <span flex></span>
+                                <i class="mdi mdi-menu-down"></i>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-click="lockrsView.activeChannel = key"
+                                              ng-repeat="(key,channel) in viewSetting.channels">
+                                    <md-button md-autofocus="key == lockrsView.activeMode"
+                                               ng-class="{active:key == lockrsView.activeChannel}"
+                                               class="m-dash-btn-item">
+                                        <i class="mdi {{channel.icon}}"></i>
+                                        <span>{{channel.name}}</span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+
+                </div>
+
+                <md-grid-list
+                        md-cols-xs="2" md-cols-sm="2"
+                        md-row-height="1:1.2"
+                        md-gutter="16px">
+                    <md-grid-tile ng-click="enterEntityStatsDisplay($event,lockr,'lockr')"
+                                  ng-repeat="lockr in lockrsData" class="md-whiteframe-2dp">
+                        <div class="thumb-text-card" layout="column">
+                            <img on-error ng-src="{{lockr.thumbnail}}" alt="{{lockr.lockrName}}">
+                            <div layout="column" class="md-padding">
+                                <span>
+                                    {{lockr.lockrName}}
+                                </span>
+                                <span ng-if="!compareToDateRange" layout="row" layout-align="center center" flex>
+                                    {{viewSetting.channels[lockrsView.activeChannel].calc[lockrsView.activeMode](lockr,lockrsView.activeMode) || 0}}
+                                </span>
+                                <div class="card-compared" flex ng-if="compareToDateRange" layout="row" layout-align="space-between center">
+                                    <span class="from-text">
+                                    {{viewSetting.channels[lockrsView.activeChannel].calc[lockrsView.activeMode](lockr,lockrsView.activeMode) || 0}}
+                                    </span>
+                                    <span class="to-text">
+                                    {{viewSetting.channels[lockrsView.activeChannel].calc[lockrsView.activeMode](comparedStatsOfEntity('lockr',lockr,comparedLockrsData),lockrsView.activeMode) || 0}}                                        
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </md-grid-tile>
+                </md-grid-list>
+            </md-content>
+        </md-tab>
+
+        <md-tab label="Asset">
+            <md-content class="md-padding">
+
+                <div layout="column" style="margin-bottom: 20px;" ng-if="compareToDateRange">
+                    <div layout="row" layout-align="start center">
+                        <span class="compare-from-dot"></span>
+                        <span>From {{currentDateRange.startDate | date :'dd/MM/yy'}} to {{currentDateRange.endDate | date :'dd/MM/yy'}}</span>
+                    </div>
+                    <span style="height: 8px;"></span>
+                    <div layout="row" layout-align="start center">
+                        <span class="compare-to-dot"></span>
+                        <span>From {{compareToDateRange.startDate | date :'dd/MM/yy'}} to {{compareToDateRange.endDate | date :'dd/MM/yy'}}</span>
+                    </div>
+                </div>
+
+
+                <div class="stats-menu" layout="row">
+                    <div flex>
+                        <md-menu>
+                            <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                <i class="mdi {{viewSetting.mode[assetsView.activeMode].icon}}"></i>
+                                <span>{{viewSetting.mode[assetsView.activeMode].desc}}</span>
+                                <span flex></span>
+                                <i class="mdi mdi-menu-down"></i>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-repeat="(key,mode) in viewSetting.mode">
+                                    <md-button ng-class="{active:key == assetsView.activeMode}"
+                                               ng-click="assetsView.activeMode = key" class="m-dash-btn-item">
+                                        <i class="mdi {{mode.icon}}"></i>
+                                        <span>{{mode.desc}}</span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                    <div></div>
+                    <div flex>
+                        <md-menu>
+                            <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                <i class="mdi {{viewSetting.channels[assetsView.activeChannel].icon}}"></i>
+                                <span>{{viewSetting.channels[assetsView.activeChannel].name}}</span>
+                                <span flex></span>
+                                <i class="mdi mdi-menu-down"></i>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-click="assetsView.activeChannel = key"
+                                              ng-repeat="(key,channel) in viewSetting.channels">
+                                    <md-button ng-class="{active:key == assetsView.activeChannel}"
+                                               class="m-dash-btn-item">
+                                        <i class="mdi {{channel.icon}}"></i>
+                                        <span>{{channel.name}}</span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+
+
+                <md-grid-list
+                        md-cols-xs="2" md-cols-sm="2"
+                        md-row-height="1:1.2"
+                        md-gutter="16px">
+                    <md-grid-tile ng-click="enterEntityStatsDisplay($event,asset,'asset')"
+                                  ng-repeat="asset in assetsData" class="md-whiteframe-2dp">
+                        <div class="thumb-text-card" layout="column">
+                            <img on-error ng-src="{{asset.thumbnail}}" alt="{{asset.assetName}}">
+                            <div layout="column" class="md-padding">
+                               <span>
+                                    {{asset.assetName}}
+                                </span>
+                                <span ng-if="!compareToDateRange" layout="row" layout-align="center center" flex>
+                                    {{viewSetting.channels[assetsView.activeChannel].calc[assetsView.activeMode](asset,assetsView.activeMode) || 0}}
+                                </span>
+                                <div class="card-compared" flex ng-if="compareToDateRange" layout="row" layout-align="space-between center">
+                                    <span class="from-text">
+                                        {{viewSetting.channels[assetsView.activeChannel].calc[assetsView.activeMode](asset,assetsView.activeMode) || 0}}     
+                                    </span>
+                                    <span class="to-text">
+                                        {{viewSetting.channels[assetsView.activeChannel].calc[assetsView.activeMode](comparedStatsOfEntity('asset',asset,comparedAssetsData),assetsView.activeMode) || 0}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </md-grid-tile>
+                </md-grid-list>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+
+</div>

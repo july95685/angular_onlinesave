@@ -1,0 +1,90 @@
+<div ng-if="initial" style="background-color: #30cdff;min-height:700px;">
+    <div style="width:100%;">
+
+        <md-button class="md-icon-button" ng-click="hide()">
+            <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #fff;"></i>
+        </md-button>
+    </div>
+    <div layout="column" layout-align="center center" style="margin-top:40px;">
+        <div style="border-radius: 50%;background-color: #FFF;width:150px;height:150px;" layout="column" layout-align="end center">
+            <i style="font-size:75px;margin-bottom:-10px;color:#006fd5;" class="mdi vertical-align-middle mdi-robot"> </i>
+        </div>
+        <div style="font-size:42px;color:#fff;margin: 10px 0;font-weight: bold;">
+            <span>Ask Beatrice !</span>
+        </div>
+        <div style="font-size: 12px;color:#fff;" layout="column" layout-align="center center">
+            <span>about the latest asset added </span>
+            <span>or to show the  latest comments </span>
+            <span>and even ask him to help you to schedule</span>
+            <span>your posts…</span>
+        </div>
+        <div style="background-color: #fff;width:280px;border-radius: 10px;">
+            <div layout-align="start center" layout="row" style="border-bottom: 1px solid #aaaaaa;margin:0 10px 5px 10px; ">
+                <i style="font-size:25px;color:#006fd5;margin-right: 5px" class="mdi vertical-align-middle mdi-robot"> </i>
+                <div layout="row" layout-align="start center">
+                    <span style="width:0;height:0;display:block;border-bottom: 4px solid #FFF;border-top:4px solid #FFF;border-left: none;border-right: 4px solid #eaeaea;"></span>
+                    <div style="width:100%;background-color:#eaeaea;color:#505559;padding: 0 5px;font-size:12px;border-radius: 5px;line-height: 28px;">
+                        <span style="margin: 0 15px;">{{BobResponse?BobResponse:"Hi how can i help you ?"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin:5px 10px;" layout-align="start center" layout="row" >
+                <img style="height:25px;width:25px;border-radius: 50%;" ng-src="{{Rbavator}}" />
+                <form ng-submit="askToBob()">
+                    <input ng-model="sendMessage.title" placeholder="Ask Beatrice something..." style="border:none;outline: none;margin:0 15px;">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="!initial" layout="column">
+    <div style="background-color: #006fd5;height:50px;padding:0 15px;" layout="row" layout-align="space-between center">
+        <span style="color:#fff;font-size: 16px;font-weight: bold;">Ask Beatrice</span>
+        <i  class="mdi mdi-close icon-size-2" style="color:#fff;" ng-click="cancel()"></i>
+    </div>
+    <div layout="row" layout-align="center center" style="margin-bottom: 10px;margin-top: 15px;">
+        <span style="color:#505559;line-height: 12px;font-size: 12px;">Today,</span>
+        <span style="color:#505559;line-height: 12px;font-size: 12px;">{{oData  | date : 'hh : mm a'}}</span>
+    </div>
+    <div  ng-repeat="item in talkList" >
+        <div ng-if="item.formBob" layout="column">
+            <div layout-align="start center" layout="row" style="margin:0 10px 5px 10px; ">
+                <i style="font-size:25px;color:#006fd5;margin-right: 5px" class="mdi vertical-align-middle mdi-robot"> </i>
+                <div layout="row" layout-align="start center">
+                    <span style="width:0;height:0;display:block;border-bottom: 4px solid #FFF;border-top:4px solid #FFF;border-left: none;border-right: 4px solid #eaeaea;"></span>
+                    <div style="width:100%;background-color:#eaeaea;color:#505559;padding: 0 5px;font-size:12px;border-radius: 5px;line-height: 28px;">
+                        <span style="margin: 0 15px;">{{item.title}}</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="item.getMessage"  style="margin:10px 10px 5px 10px;box-shadow: 0 2px 2px 1px rgba(182,182,182,0.20);">
+                <div ng-repeat="item in item.getMessage" layout="row" style="width: 95%;border-bottom: 1px solid rgba(182,182,182,0.20);padding: 10px;;">
+                    <div style="height: 40px;min-width:55px;max-width: 55px;" layout="row" layout-align="center center">
+                        <img style="width:55px;" ng-src="{{item.src}}">
+                    </div>
+                    <div flex layout="column" style="height: 40px;">
+                        <span style="line-height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;padding-left: 6px;font-size: 14px;">{{item.name}}</span>
+                        <span style="font-style: italic;font-size:13px;line-height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;padding-left: 6px;">{{item.description}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!item.formBob"  layout-align="end center" layout="row" style="margin:0 10px 5px 10px; ">
+            <div layout="row" layout-align="start center">
+                <div style="width:100%;background-color:rgba(48,204,255,0.18);color:#505559;padding: 0 5px;font-size:12px;border-radius: 5px;line-height: 28px;">
+                    <span style="margin: 0 15px;">{{item.title}}</span>
+                </div>
+                <span style="width:0;height:0;display:block;border-bottom: 4px solid #FFF;border-top:4px solid #FFF;border-right: none;border-left: 4px solid #eaeaea;"></span>
+            </div>
+            <img style="min-height:25px;max-height:25px;min-width:25px;max-width:25px;border-radius: 50%;" ng-src="{{Rbavator}}" />
+        </div>
+    </div>
+    <span flex></span>
+    <div layout="row" layout-align="start end" style="margin: 0 15px;position:fixed;bottom:10px;right:0;left: 0;border-bottom: 1px solid rgba(0,0,0,0.12);">
+        <form ng-submit="askToBobAgain()" style="width: 90%;">
+            <input ng-model="sendMessage.title" placeholder="Ask Beatrice something..." style="width:80%;font-size:16px;border:none;outline: none;margin:5px 15px;">
+        </form>
+        <i class="mdi dalello-icon-send_black" style="font-size: 25px;color: #7f7f7f;" ng-click="askToBobAgain()"></i>
+    </div>
+
+</div>

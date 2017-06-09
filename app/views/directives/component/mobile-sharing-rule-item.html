@@ -1,0 +1,299 @@
+<div>
+    <!--<div>-->
+    <!--<md-card class="sharing-rule-card" ng-class="{'md-whiteframe-8dp':isEditing}">-->
+
+    <!--<div layout="row" class="md-padding" ng-if="sharingRule">-->
+    <!--<h4 flex ng-show="!isEditing" ng-click="showContentCard()" class="v2-color text-overflow-hidden" style="outline: none;">{{sharingRule.name}}</h4>-->
+
+    <!--<md-input-container ng-show="isEditing" style="padding-bottom:0;margin-bottom: 0;">-->
+    <!--<label>Sharing rule name</label>-->
+    <!--<input ng-model="sharingRule.name" type="text" required>-->
+    <!--</md-input-container>-->
+
+
+    <!--<div flex style="text-align: right;" layout="row" layout-align="end center">-->
+    <!--<i class="mdi icon-size-3 hover-active" ng-class="{'mdi-pencil':!isEditing,'mdi-check':isEditing}" style="margin-right: 20px;" ng-click="editThisSharingRule()"></i>-->
+    <!--<i ng-show="isEditing" ng-click="cancelEditing()" class="mdi mdi-close icon-size-3 hover-active"></i>-->
+    <!--<i ng-click="deleteSharingRule()" ng-show="!isEditing" class="mdi mdi-delete icon-size-3 hover-active"></i>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div layout="row" class="md-padding" ng-if="!sharingRule" style="padding-bottom: 0;">-->
+    <!--<div layout-align="start center" layout="row">-->
+    <!--<md-input-container style="padding-bottom:0;margin-bottom: 0;">-->
+    <!--<label>Sharing rule name</label>-->
+    <!--<input ng-model="sharingRulesName.name" class="add-sharingrule-name" type="text" required>-->
+    <!--</md-input-container>-->
+    <!--</div>-->
+    <!--<div flex layout="row" layout-align="end center">-->
+    <!--<md-button ng-click="saveThisSharingRule()">Save</md-button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="md-padding sharing-rule-expandbox" ng-show="!sharingRule || sharingRule.expandBox">-->
+    <!--<div  layout-lt-md="column" layout-gt-sm="row">-->
+    <!--<div flex>-->
+    <!--<div style="margin-top: 5px;">Define your licence type</div>-->
+    <!--<div style="margin-top: 10px;" class="v2-color">Your choices  will update the license type</div>-->
+
+    <!--<div style="margin-top: 10px;"><strong>Allow adaptations of your work to be shared?</strong></div>-->
+    <!--<md-radio-group ng-class="{'v2-disabled':!isEditing}" layout="column" ng-model="creativeCommons.isShare" style="margin: 10px 0;">-->
+    <!--<div layout="row">-->
+    <!--<md-radio-button style="margin: 0;" flex="none" value="1">YES</md-radio-button>-->
+    <!--<span style="width: 20px;"></span>-->
+    <!--<md-radio-button style="margin: 0;" flex="none" value="0">NO</md-radio-button>-->
+    <!--</div>-->
+    <!--<div flex style="padding-top: 8px;">-->
+    <!--<md-radio-button  style="margin: 0;" value="-1">Yes as long as other share alike</md-radio-button>-->
+    <!--</div>-->
+    <!--</md-radio-group>-->
+    <!--<div style="margin-top: 10px;"><strong>Allow commercial uses of your work?</strong></div>-->
+    <!--<md-radio-group ng-class="{'v2-disabled':!isEditing}" layout="row" ng-model="creativeCommons.isCommercial" style="margin: 10px 0;">-->
+    <!--<md-radio-button flex style="margin: 0;" value="1">YES</md-radio-button>-->
+    <!--<span style="width: 20px;"></span>-->
+    <!--<md-radio-button flex style="margin: 0;" value="0"> NO </md-radio-button>-->
+    <!--</md-radio-group>-->
+
+    <!--<div class="v2-color" style="margin-top: 10px;">-->
+    <!--{{ccTypeString}}-->
+    <!--</div>-->
+    <!--<div layout="row" layout-align="center" style="margin-top: 5px;">-->
+    <!--<img style="width: 88px;height: 31px;" ng-src="{{ccTypeImage}}" alt="{{ccTypeString}}">-->
+    <!--</div>-->
+
+    <!--<div style="margin-top: 10px;">{{ccType}}</div>-->
+    <!--<div style="padding: 10px;margin-top: 3px;">-->
+    <!--<p style="color: #aaaaaa;">-->
+    <!--{{ccDescription}}-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--<a href="{{ccLinks.normal}}" target="_blank">View License Deed</a>-->
+    <!--<span>|</span>-->
+    <!--<a href="{{ccLinks.legal}}" target="_blank">View Legal Code</a>-->
+    <!--</p>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--<md-divider></md-divider>-->
+    <!--<div flex>-->
+
+    <!--<div layout="column" style="color: #9b9b9b;padding: 8px 0;" layout-align="center center">-->
+    <!--<span>Please select the type of asset & </span>-->
+    <!--<span>social channel to share</span>-->
+    <!--</div>-->
+    <!--<div layout="row">-->
+    <!--<div class="sharing-rule-tab" ng-click="switchSRTab('mimeType')" ng-class="{'active':currentSRTab === 'mimeType'}" layout="row" flex layout-align="center center">-->
+    <!--<span>MIME TYPE</span>-->
+    <!--</div>-->
+    <!--<div class="sharing-rule-tab" ng-click="switchSRTab('accounts')" ng-class="{'active':currentSRTab === 'accounts'}" layout="row" flex layout-align="center center">-->
+    <!--<span>ACCOUNTS</span>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div ng-class="{'v2-disabled':!isEditing}" ng-show="currentSRTab === 'mimeType'" class="md-padding">-->
+    <!--<div layout="row" layout-align="center center">-->
+    <!--<button ng-click="selectedMimeType(item)" md-ink-ripple class="sr-btn" style="padding:8px;position:relative;" ng-repeat="item in allMimeType"  aria-label="MimeType">-->
+    <!--<i class="mdi {{item.icon}} icon-size-2 vertical-align-middle default-color" ng-class="{'v2-color':item.currentActive}"></i>-->
+    <!--</button>-->
+    <!--</div>-->
+
+    <!--<span layout="row" layout-align="center center" style="padding:8px 0;">shared on</span>-->
+
+    <!--<div layout="row" layout-align="center center">-->
+    <!--<button ng-click="selectedThisAccount(item)" md-ink-ripple class="sr-btn" style="padding:8px;position:relative;" ng-repeat="item in socialChannelArrByType">-->
+    <!--<i ng-class="{'v2-color':item.active}" style="color: #999999;" class="mdi icon-size-20 {{item.icon}}"></i>-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div ng-class="{'v2-disabled':!isEditing}" ng-show="currentSRTab === 'accounts'" class="md-padding">-->
+    <!--<div ng-repeat="item in socialChannelArrByType">-->
+    <!--<i ng-click="selectedThisAccount(item)" ng-class="{'v2-color':item.active}" style="color: #999999;" class="mdi icon-size-20 {{item.icon}}"></i>-->
+    <!--<md-divider></md-divider>-->
+    <!--<ul class="list-unstyled clearfix" style="padding: 5px 0;">-->
+    <!--<li class="pull-left" ng-repeat="social in item.data" style="margin-right: 5px;">-->
+    <!--<a style="color: #aaaaaa;font-size: 12px;" ng-click="updateSharingChannelActive(social,item)" ng-class="{'v2-color':social.sharingRuleActive}">{{social.name}}</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</md-card>-->
+
+    <!--<div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="!sharingRule && isAdding">-->
+    <!--<div layout="row" layout-sm="column" layout-align="space-around">-->
+    <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <md-card style="margin: 0px;box-shadow:none;width:100%;" class="sharing-rule-card"
+             ng-class="{'md-whiteframe-8dp':isEditing}">
+        <!--<div layout="row" style="width:100%;margin-top:24px;margin-left:75px;height:35px">-->
+            <!--<div style="border-radius : 50%;width:25px;height:25px;background-color:#000000;text-align: center">-->
+                <!--<span style="color: #FFFFFF;height:25px;line-height:25px;">1</span>-->
+            <!--</div>-->
+            <!--<div style="margin-left: 12px;"><span-->
+                    <!--style="color:#3c3c3c;height:25px;line-height:25px;">Detials</span></div>-->
+            <!--<div style="width:40px;margin-top:12.5px;margin-left:10px;margin-right:10px;border-top: 1px solid #979797;"></div>-->
+            <!--<div style="border-radius : 50%;width:25px;height:25px;background-color:#006fd5;text-align: center">-->
+                <!--<span style="color: #FFFFFF;height:25px;line-height:25px;">2</span>-->
+            <!--</div>-->
+            <!--<div style="margin-left: 12px;"><span style="color:#3c3c3c;height:25px;line-height:25px;">License</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="add-new-lockr">
+            <div class="step-guide" layout="row" layout-align="center center">
+                <div class="guide-item" ng-class="{'active':stepId == 0}">
+                    <span class="circle">1</span>
+                    <span class="title">Details</span>
+                </div>
+                <span class="guide-divider"></span>
+                <div class="guide-item" ng-class="{'active':stepId  == 1}">
+                    <span class="circle">2</span>
+                    <span class="title">License</span>
+                </div>
+            </div>
+        </div>
+        <div class="md-padding sharing-rule-expandbox" ng-show="(!sharingRule || sharingRule.expandBox)&&stepId==1">
+            <div layout-lt-md="column" layout-gt-sm="row">
+                <div flex>
+                    <div style="margin-top: 5px;"><strong style="color: #3c3c3c">Define your licence type</strong></div>
+                    <div style="margin-top: 10px;" class="v2-color">Your choices will update the license type</div>
+
+                    <div style="margin-top: 10px;"><strong>Allow adaptations of your work to be shared?</strong></div>
+                    <md-radio-group ng-class="{'v2-disabled':!isEditing}" layout="column"
+                                    ng-model="creativeCommons.isShare" style="margin: 10px 0;">
+                        <div layout="row">
+                            <md-radio-button style="margin: 0;font-size: 12.5px;" flex="none" value="1">Yes
+                            </md-radio-button>
+                            <span style="width: 70px;"></span>
+                            <md-radio-button style="margin: 0;font-size: 12.5px;" flex="none" value="0">No
+                            </md-radio-button>
+                        </div>
+                        <div flex style="padding-top: 8px;">
+                            <md-radio-button style="margin: 0;" value="-1">Yes as long as other share alike
+                            </md-radio-button>
+                        </div>
+                    </md-radio-group>
+                    <div style="margin-top: 10px;"><strong>Allow commercial uses of your work?</strong></div>
+                    <md-radio-group ng-class="{'v2-disabled':!isEditing}" layout="row"
+                                    ng-model="creativeCommons.isCommercial" style="margin: 10px 0;">
+                        <md-radio-button style="margin: 0;font-size: 12.5px;" value="1">Yes</md-radio-button>
+                        <span style="width: 70px;"></span>
+                        <md-radio-button style="margin: 0;font-size: 12.5px;" value="0"> No</md-radio-button>
+                    </md-radio-group>
+
+                    <div layout="row" layout-align="center" style="margin-top: 5px;">
+                        <img style="width: 88px;height: 31px;" ng-src="{{ccTypeImage}}" alt="{{ccTypeString}}">
+                    </div>
+                    <div style="padding: 10px;margin-top: 3px;">
+                        <p style="color: #aaaaaa;font-size: 12.5px;">
+                            {{ccDescription}}
+                        </p>
+                        <p>
+                            <a href="{{ccLinks.normal}}" target="_blank" style="font-size:13px">View License Deed</a>
+                            <span>|</span>
+                            <a href="{{ccLinks.legal}}" target="_blank" style="font-size:13px">View Legal Code</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div layout="row" ng-show="stepId==1">
+            <md-button style="min-width:60px;background-color: #ffffff ;color:#3c3c3c" class="md-primary " ng-click="stepId==1? stepId=0 : stepId=1">BACK
+            </md-button>
+            <span style="width:210px"></span>
+            <md-button ng-show="!editSharingrules" ng-click="saveThisSharingRule()" style="min-width:50px;background-color: #006fd5;color:#ffffff" class="md-primary ">SAVE
+            </md-button>
+            <md-button ng-show="editSharingrules" ng-click="editThisSharingRule()" style="background-color: #006fd5;color:#ffffff" class="md-primary ">UPDATE
+            </md-button>
+        </div>
+        <div layout="column" layout-align="start center">
+        <div ng-show="stepId==0" style="width: 90%;margin-top: 15px;">
+            <md-input-container name="add-sharingrule-name" class="md-block" >
+                <label style="color: rgba(0,0,0,0.38);margin-top: -5px;">NAME</label>
+                <input ng-model="sharingRulesName.name" style="color: #006fd5;">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label style="color: #61000000" style="color: rgba(0,0,0,0.38);margin-top: -5px;">DESCRIPTION</label>
+                <input ng-model="sharingRulesName.description" style="color: #006fd5;">
+            </md-input-container>
+        </div>
+        <div layout="row" ng-show="stepId==0" style="width: 90%;">
+            <div class="sharing-rule-tab" ng-click="switchSRTab('mimeType')"
+                 ng-class="{'active':currentSRTab === 'mimeType'}" layout="row" flex layout-align="center center">
+                <span style="color: #006fd5">Mime Type</span>
+            </div>
+            <div class="sharing-rule-tab" ng-click="switchSRTab('accounts')"
+                 ng-class="{'active':currentSRTab === 'accounts'}" layout="row" flex layout-align="center center">
+                <span style="color: #4a4a4a">Channels</span>
+            </div>
+        </div>
+        <div ng-class="{'v2-disabled':!isEditing}" ng-show="currentSRTab === 'mimeType'&&stepId==0" class="md-padding">
+            <div layout="row" layout-align="center center">
+                <button ng-click="selectedMimeType(item)" md-ink-ripple class="sr-btn"
+                        style="padding:8px;position:relative;" ng-repeat="item in allMimeType"
+                        aria-label="MimeType">
+                    <i style="color: #000000" class="mdi {{item.icon}} icon-size-2 vertical-align-middle default-color"
+                       ng-class="{'v2-color':item.currentActive}"></i>
+                </button>
+            </div>
+        </div>
+
+        <div ng-class="{'v2-disabled':!isEditing}" ng-show="currentSRTab === 'accounts'&&stepId==0" class="md-padding">
+            <!--<share-on-list></share-on-list>-->
+            <div layout="column" >
+                <div layout="row" layout-align="center center">
+                    <button  md-ink-ripple class="sr-btn" ng-click="activeThisChannel(item)"
+                            style="padding:8px;position:relative;" ng-repeat="item in channelTypes"
+                            aria-label="MimeType">
+                        <i style="color: #000000" class="mdi {{item.iconClass}} icon-size-2 vertical-align-middle default-color"
+                           ng-class="{'v2-color':item.active}"></i>
+                    </button>
+                </div>
+                <div layout="row" >
+                        <div ng-if="items.active && items.data[0]"   ng-repeat="items in channelTypes"   >
+                           <div ng-click="chooseChannelUser(item)" ng-repeat="item in items.data" style="margin-bottom: 10px;display: inline-block;margin-left:15px;">
+                            <div layout="row">
+                                <div style="z-index:2;width:40px;height:40px;border-radius: 50%;background-color: #006fd5;">
+                                    <img style=":40px;height:40px;border-radius: 50%;" ng-src="{{item.avatarPic}}"/>
+                                </div>
+                                <div  ng-show="item.selected" style="margin-left:-20px;height:40px;background-color: #006fd5;color:#fff;">
+                                    <span style="padding: 0 30px;line-height: 40px;">{{item.name.split('-')[1]}}</span>
+                                </div>
+                                <div ng-show="!item.selected" style="margin-left:-20px;height:40px;background-color: #9b9b9b;color:#fff;">
+                                    <span style="padding: 0 30px;line-height: 40px;">{{item.name.split('-')[1]}}</span>
+                                </div>
+                                <div ng-show="item.selected" style="width:40px;margin-left:-20px;height:40px;background-color: #006fd5;z-index:2;border-radius: 50%;">
+                                    <div  style="width:30px;height:30px;border-radius: 50%;background-color: #fff;margin-top:5px;" layout="row" layout-align="center center">
+                                        <i  class="mdi mdi-check" style="font-size: 20px;font-weight: bold;" ></i>
+                                    </div>
+                                </div>
+                                <div ng-show="!item.selected" style="width:40px;margin-left:-20px;height:40px;background-color: #9b9b9b;z-index:2;border-radius: 50%;">
+                                    <div  style="border: 2px solid #fff;width:30px;height:30px;border-radius: 50%;background-color: #9b9b9b;margin-top:5px;" layout="row" layout-align="center center">
+
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        <div layout="row" layout-align="end center" ng-show="stepId==0" ng-click="stepId==0? stepId=1 : stepId=0">
+            <md-button class="md-primary" style="background-color: #006fd5;color: #fff;">NEXT</md-button>
+        </div>
+        <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="!sharingRule && isAdding">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </md-card>
+</div>

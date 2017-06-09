@@ -1,0 +1,267 @@
+<!--<div id="notification-center" ng-class="{'mobile':mobileDevice}">-->
+    <!--<md-whiteframe ng-hide="moderateDetailsShow" class="content-scroll-box" ng-class="{'md-whiteframe-9dp':!mobileDevice}" style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: scroll;">-->
+        <!--<md-content style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;background-color: #f5f5f5;">-->
+            <!--<md-subheader class="md-no-sticky notification-header" ng-class="{'mobile':mobileDevice}" style="font-size: 20px;">-->
+                <!--<div layout="row">-->
+                    <!--<i class="mdi mdi-close" ng-click="closeNotificationCenter()" ng-if="mobileDevice"></i>-->
+                    <!--<span flex></span>-->
+                    <!--<span class="head-item" ng-class="{'active':currentParItem === 'notifications'}" ng-click="switchParItem('notifications')" style="margin-right:20px;">Notifications</span>-->
+                    <!--<span class="head-item" ng-class="{'active':currentParItem === 'moderation'}" ng-click="switchParItem('moderation')" style="margin-left:20px;">Moderation</span>-->
+                    <!--<span flex></span>-->
+                <!--</div>-->
+            <!--</md-subheader>-->
+            <!--<div class="notification-sub-header" ng-class="{'md-whiteframe-4dp':!mobileDevice}" layout="row" layout-align="space-around" ng-show="currentParItem === 'notifications'">-->
+                <!--<span ng-hide="mobileDevice">All {{totalReadCount + totalUnreadCount}}</span>-->
+                <!--<span ng-click="switchItem('read')" class="" ng-class="{'active':currentItem === 'read'}"> Read {{totalReadCount}}</span>-->
+                <!--<span ng-click="switchItem('unread')" class="" ng-class="{'active':currentItem === 'unread'}"> Unread {{totalUnreadCount}}</span>-->
+            <!--</div>-->
+            <!--<div class="notification-sub-header" ng-class="{'md-whiteframe-3dp':!mobileDevice}" layout="row" layout-align="space-around" ng-show="currentParItem === 'moderation'">-->
+                <!--<span ng-hide="mobileDevice">All {{moderationOtherCount + moderationPendingCount}}</span>-->
+                <!--<span ng-click="switchItem('moderation-attended')" class="" ng-class="{'active':currentItem === 'moderation-attended'}"> Attended {{moderationOtherCount}}</span>-->
+                <!--<span ng-click="switchItem('moderation-unattended')" class="" ng-class="{'active':currentItem === 'moderation-unattended'}"> Unattended {{moderationPendingCount}}</span>-->
+            <!--</div>-->
+
+
+
+            <!--<div style="position: absolute;left: 0;bottom: 0;top: 100px; right: 0;overflow: scroll;" >-->
+
+                <!--<div ng-show="currentItem === 'unread' && currentParItem === 'notifications'">-->
+                    <!--<div ng-if="mobileDevice" class="md-padding">-->
+                        <!--<div class="md-padding" ng-click="enterNotificationDetails(item)" ng-repeat="item in unReadNotifications | orderBy : 'notificationEvent.date':true" layout="column" style="background-color: white;margin-bottom: 8px;">-->
+                            <!--<div layout="row">-->
+                                <!--<div layout="column">-->
+                                    <!--<span>{{ ::item.notificationEvent.event_type_string }}</span>-->
+                                    <!--<span class="v2-color dal-wrap-text" style="text-transform: uppercase;padding-top: 3px;">{{ ::item.notificationEvent.entity_name }}</span>-->
+                                    <!--<span style="padding-top: 3px;" class="font-size-12 dal-wrap-text" ng-if="::item.notificationEvent.entity_parent_name">in {{::item.notificationEvent.entity_parent_name}}</span>-->
+                                <!--</div>-->
+                                <!--<span flex></span>-->
+                                <!--<i class="mdi mdi-close icon-size-2" ng-click="deleteNotification($event,item,true)"></i>-->
+                            <!--</div>-->
+                            <!--<div layout="row" style="padding:8px 0;">-->
+                                <!--<div style="width: 100px;height: 80px;overflow: hidden;">-->
+                                    <!--<img width="100%" height="auto" ng-src="{{getNotificationImageSrc(item.notificationEvent)}}">-->
+                                <!--</div>-->
+                                <!--<p style="font-size: 10px;color: #9b9b9b;padding: 0 8px;">-->
+                                    <!--{{item.notificationEvent.event.message ? item.notificationEvent.event.message : "no description"}}-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<md-divider></md-divider>-->
+                            <!--<div layout="row" layout-align="start center" style="padding-top: 8px;padding-bottom: 10px;">-->
+                                <!--<i class="mdi icon-size-1 mdi-clock" style="padding-right: 5px;"></i>-->
+                                <!--<span style="font-size: 9px;">{{::item.notificationEvent.date | date : 'MMM,d yyyy hh:mm'}}</span>-->
+                                <!--<span flex></span>-->
+                                <!--<div layout="row" layout-align="start center">-->
+                                    <!--<img ng-src="{{userAvatar(item.notificationEvent.cluster_id,item.notificationEvent.event.initiator_username)}}" style="width: 35px;height: 35px;border-radius: 50%;" class="md-avatar" alt="{{::item.notificationEvent.event.initiator_username}}">-->
+                                    <!--<span style="width: 5px;"></span>-->
+                                    <!--<span style="font-size: 10px;text-overflow: ellipsis;overflow: hidden;">{{::item.notificationEvent.event.initiator_name}}</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<div layout="row">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span flex></span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<md-button  class="v2-color" ng-click="deleteNotification($event,item,true)">DELETE</md-button>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+                    <!--<div class="md-padding" layout="row" layout-align="center center">-->
+                        <!--<button class="dl-btn-outline" ng-show="totalUnreadCount > unReadNotifications.length && !loadingUnread" ng-click="loadingMoreUnRead()">SEE MORE</button>-->
+                        <!--<md-progress-circular md-diameter="20"  ng-show="loadingUnread"></md-progress-circular>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<div ng-show="currentItem === 'read' && currentParItem === 'notifications'">-->
+                    <!--<div ng-if="mobileDevice" class="md-padding">-->
+                        <!--<div class="md-padding" ng-click="enterNotificationDetails(item)" ng-repeat="item in hasReadNotifications | orderBy : 'notificationEvent.date':true" layout="column" style="background-color: white;margin-bottom: 8px;">-->
+                            <!--<div layout="row">-->
+                                <!--<div layout="column">-->
+                                    <!--<span>{{ ::item.notificationEvent.event_type_string }}</span>-->
+                                    <!--<span class="v2-color dal-wrap-text" style="text-transform: uppercase;padding-top: 3px;">{{ ::item.notificationEvent.entity_name }}</span>-->
+                                    <!--<span style="padding-top: 3px;" class="font-size-12 dal-wrap-text" ng-if="::item.notificationEvent.entity_parent_name">in {{::item.notificationEvent.entity_parent_name}}</span>-->
+                                <!--</div>-->
+                                <!--<span flex></span>-->
+                                <!--<i class="mdi mdi-close icon-size-2" ng-click="deleteNotification($event,item,false)"></i>-->
+                            <!--</div>-->
+                            <!--<div layout="row" style="padding:8px 0;">-->
+                                <!--<div style="width: 100px;height: 80px;overflow: hidden;">-->
+                                    <!--<img width="100%" height="auto" ng-src="{{getNotificationImageSrc(item.notificationEvent)}}">-->
+                                <!--</div>-->
+                                <!--<p style="font-size: 10px;color: #9b9b9b;padding: 0 8px;">-->
+                                    <!--{{item.notificationEvent.event.message ? item.notificationEvent.event.message : "no description"}}-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<md-divider></md-divider>-->
+                            <!--<div layout="row" layout-align="start center" style="padding-top: 8px;padding-bottom: 10px;">-->
+                                <!--<i class="mdi icon-size-1 mdi-clock" style="padding-right: 5px;"></i>-->
+                                <!--<span style="font-size: 9px;">{{::item.notificationEvent.date | date : 'MMM,d yyyy hh:mm'}}</span>-->
+                                <!--<span flex></span>-->
+                                <!--<div layout="row" layout-align="start center">-->
+                                    <!--<img ng-src="{{userAvatar(item.notificationEvent.cluster_id,item.notificationEvent.event.initiator_username)}}" style="width: 35px;height: 35px;border-radius: 50%;" class="md-avatar" alt="{{::item.notificationEvent.event.initiator_username}}">-->
+                                    <!--<span style="width: 5px;"></span>-->
+                                    <!--<span style="font-size: 10px;text-overflow: ellipsis;overflow: hidden;">{{::item.notificationEvent.event.initiator_name}}</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+                    <!--<div class="md-padding" layout="row" layout-align="center center">-->
+                        <!--<button class="dl-btn-outline" ng-show="totalReadCount > hasReadNotifications.length && !loadingRead" ng-click="loadingMoreRead()">SEE MORE</button>-->
+                        <!--<md-progress-circular md-diameter="20"  ng-show="loadingRead"></md-progress-circular>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<div ng-show="currentItem === 'moderation-attended' && currentParItem === 'moderation'">-->
+
+                    <!--<div ng-if="mobileDevice" class="md-padding">-->
+                        <!--<div class="md-padding" ng-repeat="item in moderationOther" layout="column" style="background-color: white;margin-bottom: 8px;">-->
+                            <!--<div layout="row">-->
+                                <!--<div layout="column">-->
+                                    <!--<span>Moderate this new post</span>-->
+                                    <!--<span class="v2-color dal-wrap-text" style="text-transform: uppercase;padding-top: 3px;">{{ ::item.entity.name }}</span>-->
+                                <!--</div>-->
+                                <!--<span flex></span>-->
+                                <!--<i class="mdi {{icon}}" ng-repeat="icon in item.socialChannelIcons track by $index" style="background-color: #006fd5;color: white;border-radius: 50%;width: 20px;height: 20px;line-height: 20px;text-align: center;font-size: 12px;margin: 2px;"></i>-->
+                            <!--</div>-->
+                            <!--<div layout="row" style="padding:8px 0;">-->
+                                <!--<div style="width: 100px;height: 80px;overflow: hidden;">-->
+                                    <!--<img width="100%" height="auto" ng-src="{{getApprovalImageSrc(item)}}">-->
+                                <!--</div>-->
+                                <!--<p style="font-size: 10px;color: #9b9b9b;padding: 0 8px;">-->
+                                    <!--{{item.type === 'SHARE' ? item.shareApproval.description : item.commentApproval.message}}-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<md-divider></md-divider>-->
+                            <!--<div layout="row" layout-align="start center" style="padding-top: 8px;">-->
+                                <!--<i class="mdi icon-size-1 mdi-clock" style="padding-right: 5px;"></i>-->
+                                <!--<span style="font-size: 9px;">{{::item.dateCreated | date : 'MMM,d yyyy hh:mm'}}</span>-->
+                                <!--<span flex></span>-->
+                                <!--<div layout="row">-->
+                                    <!--<img ng-src="{{userAvatar(item.requestUser.clusterId,item.requestUser.username)}}" style="width: 35px;height: 35px;border-radius: 50%;" class="md-avatar" alt="{{::item.requestUser.username}}">-->
+                                    <!--<div layout="column" style="padding-left: 5px;">-->
+                                        <!--<span  class="v2-color" style="line-height: 18px;font-size: 14px;">{{::item.requestUser.username}}</span>-->
+                                        <!--<span style="font-size: 10px;">{{::item.requestUser.firstName}} {{::item.requestUser.lastName}}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash; <div class="md-padding" layout="row" layout-align="center center">-->
+                        <!--<button class="dl-btn-outline" ng-show="totalModerationToApprovalsCount > moderationToApprovals.length && !loadingModerationToApprovals" ng-click="loadingMoreModerationToApprovals()">SEE MORE</button>-->
+                        <!--<md-progress-circular md-diameter="20" ng-show="loadingModerationToApprovals"></md-progress-circular>-->
+                    <!--</div> &ndash;&gt;-->
+
+                <!--</div>-->
+                <!--<div ng-show="currentItem === 'moderation-unattended' && currentParItem === 'moderation'">-->
+
+
+                    <!--<div ng-if="mobileDevice" class="md-padding">-->
+                        <!--<div class="md-padding" ng-repeat="item in moderationPending" layout="column" style="background-color: white;margin-bottom: 8px;">-->
+                            <!--<div layout="row">-->
+                                <!--<div layout="column">-->
+                                    <!--<span>Moderate this new post</span>-->
+                                    <!--<span class="v2-color dal-wrap-text" style="text-transform: uppercase;padding-top: 3px;">{{ ::item.entity.name }}</span>-->
+                                <!--</div>-->
+                                <!--<span flex></span>-->
+                                <!--<i class="mdi {{icon}}" ng-repeat="icon in item.socialChannelIcons track by $index" style="background-color: #006fd5;color: white;border-radius: 50%;width: 20px;height: 20px;line-height: 20px;text-align: center;font-size:12px;margin: 2px;"></i>-->
+                            <!--</div>-->
+                            <!--<div layout="row" style="padding:8px 0;">-->
+                                <!--<div style="width: 100px;height: 80px;overflow: hidden;">-->
+                                    <!--<img width="100%" height="auto" ng-src="{{getApprovalImageSrc(item)}}">-->
+                                <!--</div>-->
+                                <!--<p style="font-size: 10px;color: #9b9b9b;padding: 0 8px;">-->
+                                    <!--{{item.type === 'SHARE' ? item.shareApproval.description : item.commentApproval.message}}-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<md-divider></md-divider>-->
+                            <!--<div layout="row" layout-align="start center" style="padding-top: 8px;padding-bottom: 10px;">-->
+                                <!--<i class="mdi icon-size-1 mdi-clock" style="padding-right: 5px;"></i>-->
+                                <!--<span style="font-size: 9px;">{{::item.dateCreated | date : 'MMM,d yyyy hh:mm'}}</span>-->
+                                <!--<span flex></span>-->
+                                <!--<div layout="row">-->
+                                    <!--<img ng-src="{{userAvatar(item.requestUser.clusterId,item.requestUser.username)}}" style="width: 35px;height: 35px;border-radius: 50%;" class="md-avatar" alt="{{item.requestUser.username}}">-->
+                                    <!--<div layout="column" style="padding-left: 5px;">-->
+                                        <!--<span  class="v2-color" style="line-height: 18px;font-size: 14px;">{{::item.requestUser.username}}</span>-->
+                                        <!--<span style="font-size: 10px;">{{::item.requestUser.firstName}} {{::item.requestUser.lastName}}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div layout="row">-->
+                                <!--<span flex></span>-->
+                                <!--<md-button  class="v2-color" style="min-width: 0;" ng-click="deniedMoreModeration(item)">DELETE</md-button>-->
+                                <!--<md-button class="v2-color" style="margin-right: 0;min-width: 0;" ng-click="openApprovalDetails(item)">OPEN</md-button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="md-padding" layout="row" layout-align="center center">-->
+                        <!--<button class="dl-btn-outline" ng-show="moderationPendingCount > moderationPending.length && !loadingModerationToApprovals" ng-click="loadingMoreModerationRequests()">SEE MORE</button>-->
+                        <!--<md-progress-circular md-diameter="20" ng-show="loadingModerationToApprovals"></md-progress-circular>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</md-content>-->
+    <!--</md-whiteframe>-->
+
+
+    <!--<div ng-if="moderateDetailsShow" class="mobile-header" style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;background-color: #f5f5f5;width: 100%;height: 100%;">-->
+        <!--<md-toolbar class="md-hue-2">-->
+            <!--<div class="md-toolbar-tools" style="background-color: white;">-->
+                <!--<md-button style="margin-left: 0;padding-left: 0;width: 30px;" class="md-icon-button" ng-click="hideApprovalDetails()" aria-label="Back">-->
+                    <!--<md-icon><i class="mdi mdi-arrow-left tb-icon"></i></md-icon>-->
+                <!--</md-button>-->
+                <!--<span style="color: black;">Moderate</span>-->
+            <!--</div>-->
+        <!--</md-toolbar>-->
+        <!--<div class="md-padding" style="position: absolute;left: 0;bottom: 0;top: 56px; right: 0;overflow: scroll;">-->
+            <!--<div class="md-padding" layout="column" style="background-color: white;margin-bottom: 8px;">-->
+                <!--<div layout="row">-->
+                    <!--<div layout="column">-->
+                        <!--<span>Moderate this new post</span>-->
+                        <!--<span class="v2-color" style="text-transform: uppercase;padding-top: 3px;">{{ modetationItemDetails.entity.name }}</span>-->
+                    <!--</div>-->
+                    <!--<span flex></span>-->
+                    <!--<i class="mdi icon-size-1 mdi-clock" style="padding-right: 5px;"></i>-->
+                    <!--<span style="font-size: 9px;">{{modetationItemDetails.dateCreated | date : 'MMM,d yyyy hh:mm'}}</span>-->
+                <!--</div>-->
+                <!--<div layout="column" style="padding:8px 0;">-->
+                    <!--<img ng-src="{{getApprovalImageSrc(modetationItemDetails)}}" style="width: 100%;height: auto;">-->
+
+                    <!--<md-input-container ng-if="modetationItemDetails.editing" class="md-block">-->
+                        <!--<textarea aria-label="Edit message" ng-model="modetationItemDetails.commentApproval.message" rows="5"></textarea>-->
+                    <!--</md-input-container>-->
+
+                    <!--<p style="font-size: 10px;color: #9b9b9b;padding-top:10px;"  ng-if="!modetationItemDetails.editing">-->
+                        <!--{{modetationItemDetails.type === 'SHARE' ? modetationItemDetails.shareApproval.description : modetationItemDetails.commentApproval.message}}-->
+                    <!--</p>-->
+                <!--</div>-->
+                <!--<md-divider></md-divider>-->
+                <!--<div layout="column" style="padding-top: 8px;padding-bottom: 10px;">-->
+                    <!--<div layout="row">-->
+                        <!--<i class="mdi {{item}}" ng-repeat="item in modetationItemDetails.socialChannelIcons track by $index"  style="background-color: #006fd5;color: white;border-radius: 50%;width: 20px;height: 20px;line-height: 20px;text-align: center;font-size: 12px;margin: 2px;"></i>-->
+                    <!--</div>-->
+                    <!--<md-divider style="margin: 10px 0;"></md-divider>-->
+                    <!--<div layout="row">-->
+                        <!--<img ng-src="{{userAvatar(modetationItemDetails.requestUser.clusterId,modetationItemDetails.requestUser.username)}}" style="width: 35px;height: 35px;border-radius: 50%;" class="md-avatar" alt="{{item.requestUser.username}}">-->
+                        <!--<div layout="column" style="padding-left: 5px;">-->
+                            <!--<span  class="v2-color" style="line-height: 18px;font-size: 14px;">{{::modetationItemDetails.requestUser.username}}</span>-->
+                            <!--<span style="font-size: 10px;">{{::modetationItemDetails.requestUser.firstName}} {{::modetationItemDetails.requestUser.lastName}}</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div layout="row">-->
+                    <!--<span flex></span>-->
+                    <!--<md-button class="v2-color" style="min-width: 0;" ng-click="approvedMoreModeration(modetationItemDetails)">APPROVE</md-button>-->
+                    <!--<md-button class="v2-color" style="min-width: 0;" ng-click="editApprove(modetationItemDetails)" ng-if="modetationItemDetails.type !== 'SHARE'">EDIT</md-button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div class="loading-center" ng-if="isUpdating" layout="row" layout-align="center center">-->
+        <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+    <!--</div>-->
+
+<!--</div>-->

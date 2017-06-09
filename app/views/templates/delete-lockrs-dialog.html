@@ -1,0 +1,42 @@
+<md-dialog aria-label="Delete Lockr" class="delete-lockrs-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Delete Lockrs</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="delete_asset_form" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+
+            <!--<div ng-show="isLocked" style="text-align: center;">This Lockr is locked !</div>-->
+
+            <div>
+                <p>Are you sure you want to delete this lockr(s) ?</p>
+
+                <ul class="list-unstyled" ng-repeat="item in haveSelectedItem">
+                    <li>
+                        <strong style="color:#006fd5;">{{ item.name }}</strong>
+                    </li>
+                </ul>
+
+            </div>
+
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="startDeleteLockrs()" style="margin-right:20px;padding: 0 20px;">
+                DELETE
+            </md-button>
+        </div>
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isDeleting">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

@@ -1,0 +1,125 @@
+<md-dialog aria-label="Edit Lockr" class="add-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Edit lockr</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="update_lockr_form" role="form" novalidate>
+        <md-dialog-content class="md-padding">
+           <div class="md-padding" style="margin-bottom:42px;">       
+                <div layout="row">
+                    <div flex>
+                        <md-input-container flex ng-class="{'md-input-invalid':(update_lockr_form.title.$invalid && update_lockr_form.title.$dirty) || (update_lockr_form.title.$error.required && submitted)}">
+                            <label>Lockr Name</label>
+                            <input name="title" ng-model="currentLockrData.name" required>
+
+                            <div ng-messages="update_lockr_form.title.$error" ng-show="update_lockr_form.title.$dirty || submitted">
+                                <div ng-message="required" ng-show="update_lockr_form.title.$error.required">This is required!</div>
+                            </div>
+
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex style="padding-bottom: 26px;">
+                        <label style="color: #777;font-size: 12px;padding-left: 3px;">Lockr Description</label>
+                        <div flex style="padding-left: 1px;">
+                            <textarea aria-label="description" style="border:1px solid rgba(0,0,0,0.12);;width:100%;outline:none;height:120px;resize: none;overflow: scroll;" ng-model="currentLockrData.description"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex style="padding-bottom: 26px;">
+                        <label style="color: #777;font-size: 12px;padding-left: 3px;">Sharing Rules</label>
+                        <div flex>
+                            <md-radio-group ng-model="shareRules">
+                                <md-radio-button value="private" class="md-v2" style="display: inline-block;margin-left: 3px;">Private Lockr</md-radio-button>
+                                <md-radio-button value="public" class="md-v2" style="display: inline-block;">Public Lockr</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            <!-- Moderation -->
+            <div>
+                <div>
+                    <md-switch style="margin-left: 0;" ng-model="moderationActive" aria-label="Schedule share">
+                        Active moderation
+                    </md-switch>
+                </div>
+                <div ng-show="moderationActive">
+                    <div layout="row">
+                        <div>
+                            <md-checkbox aria-label="share" ng-model="moderationType.share">
+                                SHARE
+                            </md-checkbox>
+                        </div>
+                        <span style="width: 20px;"></span>
+                        <div>
+                            <md-checkbox aria-label="comment" ng-model="moderationType.comment">
+                                COMMENT
+                            </md-checkbox>
+                        </div>
+                    </div>
+
+
+
+                    <div class="chipsdemoContactChips">
+                        <md-content class="autocomplete" style="margin: 8px;" layout="column">
+                            <md-contact-chips
+                                    ng-model="contacts"
+                                    md-contacts="querySearch($query)"
+                                    md-contact-name="name"
+                                    md-contact-image="image"
+                                    md-contact-email="email"
+                                    md-require-match="true"
+                                    md-highlight-flags="i"
+                                    filter-selected="filterSelected"
+                                    md-no-cache="true"
+                                    placeholder="To">
+                            </md-contact-chips>
+                            <md-list class="fixedRows">
+                                <md-subheader class="md-no-sticky">Users</md-subheader>
+                                <md-list-item class="md-2-line contact-item" ng-click="selectedThisContact(contact)" ng-repeat="(index, contact) in allContacts"
+                                              ng-if="contacts.indexOf(contact) < 0">
+                                    <img ng-src="{{contact.image}}" class="md-avatar" alt="{{contact.name}}" />
+                                    <div class="md-list-item-text compact">
+                                        <h3>{{contact.name}}</h3>
+                                        <p>{{contact.email}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-content>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;z-index:1;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="updateLockr()" style="margin-right:20px;padding: 0 20px;">
+                UPDATE
+            </md-button>
+        </div>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

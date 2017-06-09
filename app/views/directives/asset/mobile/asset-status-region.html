@@ -1,0 +1,170 @@
+<div ng-cloak style="background-color: #fff;">
+    <div class="m-tabs m-tabs-normal" layout="row" style="padding-top: 16px;">
+        <div class="m-tab-item" ng-click="selectTabItem('share')" ng-class="{'active':currentTabItem === 'share'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon mdi-share-variant" style="color:#000;" ng-class="{'active':currentTabItem === 'share'}"></i>
+        </div>
+        <div class="m-tab-item" ng-click="selectTabItem('comment')" ng-class="{'active':currentTabItem === 'comment'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon mdi-comment-text"  style="color:#000;" ng-class="{'active':currentTabItem === 'comment'}"></i>
+        </div>
+        <div class="m-tab-item"  ng-click="selectTabItem('stats')" ng-class="{'active':currentTabItem === 'stats'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon dalello-icon-statistics_black" style="color:#000;" ng-class="{'active':currentTabItem === 'stats'}"></i>
+        </div>
+    </div>
+    <div class="dal-fab-btn"  style="position: fixed;background-color:transparent;z-index:4;bottom:16px;right: 5px;height:60px;width: 65px;overflow: hidden;">
+        <div style="position: relative;">
+            <md-button aria-label="menu" class="md-fab" style="right: 5px;"  ng-click="openRobot()">
+                <i style="font-size:24px;color:#006fd5;" class="mdi vertical-align-middle mdi-robot"> </i>
+            </md-button>
+            <div class="fb-background" style="right: 5px;"></div>
+        </div>
+    </div>
+
+    <div class="m-tabs-fixed m-tabs" layout="row" style="padding-top: 16px;left:0;">
+        <div class="m-tab-item" ng-click="selectTabItem('share')" ng-class="{'active':currentTabItem === 'share'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon mdi-share-variant" ng-class="{'active':currentTabItem === 'share'}"></i>
+        </div>
+        <div class="m-tab-item" ng-click="selectTabItem('comment')" ng-class="{'active':currentTabItem === 'comment'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon mdi-comment-text"  ng-class="{'active':currentTabItem === 'comment'}"></i>
+        </div>
+        <div class="m-tab-item"  ng-click="selectTabItem('stats')" ng-class="{'active':currentTabItem === 'stats'}" flex layout="row" layout-align="center center">
+            <i class="mdi black-icon dalello-icon-statistics_black" ng-class="{'active':currentTabItem === 'stats'}"></i>
+        </div>
+    </div>
+
+    <div class="md-padding" style="position: relative;">
+        <div ng-show="currentTabItem === 'share'" style="margin-top:-17px;">
+
+            <div layout="column" ng-hide="shareDialogHidden" style="position: relative;margin-top: 8px;">
+                <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                    <div layout="row" layout-sm="column" layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+
+                <form name="reshare_asset_form" role="form" novalidate>
+                    <div style="margin-top: 15px;" layout="column">
+                        <div layout="row" layout-align="start center">
+                            <strong class="v2-color">CREATE NEW POST</strong>
+                            <span flex></span>
+                            <md-button ng-click="shareDialogHidden = true">Cancel</md-button>
+                        </div>
+
+                        <md-input-container >
+                            <input name="title" ng-model="shareEntity.title" placeholder='ADD TITLE'>
+                        </md-input-container>
+                        <md-input-container style='margin-top:-18px'>
+                            <input name="message" ng-model="shareEntity.shareMsg" placeholder='POST'>
+                        </md-input-container>
+                    </div>
+
+
+
+                    <share-on-list change-callback="changeCallback(items)" social-channels="socialChannels"></share-on-list>
+                    <div layout="row" style="padding-top: 8px;">
+                        <span>Sharing Rule :</span>
+                        <span class="v2-color" style="padding-left: 3px;" ng-hide="loadSharingRule">{{currentAvaliableSharingRule.name || 'No available sharing rule'}}</span>
+                    </div>
+
+
+                    <div layout="row" style="padding:20px 0;">
+                        <md-button ng-click="shareAsset()" class="v2-bg-color" style="color: white;padding: 0 8px;">POST NOW</md-button>
+                        <span flex></span>
+                        <md-button ng-click="schedulePostForMobile()">
+                            <span layout="row" layout-align="start center">
+                                <i class="mdi mdi-clock icon-size-20"></i>
+                                <span class="v2-color">Schedule Post</span>
+                            </span>
+                        </md-button>
+                    </div>
+                </form>
+            </div>
+
+            <div layout="column">
+                <!--<div layout="row" ng-show="shareDialogHidden">-->
+                    <!--<span flex></span>-->
+                    <!--<md-button style="color:white;padding: 0 8px;background-color: #006fd5;"  ng-click="openMobileShareDialog()">NEW POST</md-button>-->
+                <!--</div>-->
+                <div layout="row" layout-align="start center" style="margin:30px 0;">
+                    <span style="color:#006fd5;font-weight: bold;">SHARED ON</span>
+                    <span flex></span>
+                    <span ng-if="isShared" style="color:white;height:30px;font-weight:bold;line-height:30px;font-size:12px;padding:0 10px;background-color: #006fd5;"  ng-click="openMobileShareDialog(commentsDetails.comments[0])">RESHARE</span>
+                    <span ng-if="!isShared" style="color:white;height:30px;font-weight:bold;line-height:30px;font-size:12px;padding:0 10px;background-color: #006fd5;"  ng-click="openMobileShareDialog()">SHARE</span>
+                </div>
+
+                <div layout="row" layout-sm="column" ng-show="loadingCommentFlow" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div ng-hide="isShared" layout="row" layout-align="center center">
+                    <span style="font-size: 15px;color: #9b9b9b;text-align: center;font-style: italic;">This asset has not been shared yet</span>
+                </div>
+                <div  ng-click="openShareEditDialog(item)" layout="row" ng-show="isShared" ng-repeat="item in commentsDetails.comments" ng-if="item.by.length !== 0">
+                    <div style="width:18px;" layout="row">
+                        <div style="width:50%;border-right:1px #aaaaaa solid;"></div>
+                        <svg style="width:18px;height:18px;position: absolute;margin-top: -5px;" ng-if="item.firstTimelineIcon" viewBox="0 0 24 24">
+                            <path fill="#006fd5" d="M19,12C19,15.86 15.86,19 12,19C8.14,19 5,15.86 5,12C5,8.14 8.14,5 12,5C15.86,5 19,8.14 19,12Z" />
+                        </svg>
+                        <svg style="width:18px;height:18px;position: absolute;margin-top: -5px;" ng-if="!item.firstTimelineIcon" viewBox="0 0 24 24">
+                            <path fill="#aaaaaa" d="M19,12C19,15.86 15.86,19 12,19C8.14,19 5,15.86 5,12C5,8.14 8.14,5 12,5C15.86,5 19,8.14 19,12Z" />
+                        </svg>
+                    </div>
+
+                    <div style="margin-left: 10px;margin-bottom:40px;max-width:240px;margin-top: -3px;" layout="column">
+                        <div layout="row" layout-align="start center" style="margin-bottom: 10px;">
+                            <i class="mdi icon-size-1 mdi-clock" style="padding-right:5px;"></i>
+                            <span class="font-size-1 line-height-self">{{item.commentDate | date : 'dd MMM yyyy'}}</span>
+                        </div>
+                        <div layout="column" style="margin-bottom: 10px;">
+                            <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">STATUS</span>
+                            <span style="font-size: 12px;font-weight: bold;">{{item.state === 'Active'?'PUBLISH':'UNPUBLISH'}}</span>
+                        </div>
+                        <div layout="column" style="margin-bottom: 10px;">
+                            <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">TITLE</span>
+                            <span style="font-size: 12px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 100%;">{{item.title}}</span>
+                        </div>
+                        <div ng-if="item.message" layout="column" style="margin-bottom: 10px;">
+                            <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">DESCRIPTION</span>
+                            <span style="font-size: 12px;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.message}}</span>
+                        </div>
+                        <div layout="column" ng-if="item.customShareMsg" style="margin-bottom: 10px;">
+                            <span style="color:#006fd5;font-size: 10px;margin-bottom: 2px;">MESSAGE</span>
+                            <span style="font-size: 12px;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.customShareMsg}}</span>
+                        </div>
+                        <!--<div layout="column">-->
+                            <!--<span style="color:#006fd5;font-size: 12px;">MESSAGE</span>-->
+                            <!--<span style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 10%;">{{item.message}}</span>-->
+                        <!--</div>-->
+                        <div layout="row" style="margin-bottom: 10px;">
+                            <div layout="column" style="padding-right: 15px;border-right: 1px solid #aaa;">
+                                <span style="color:#006fd5;font-size: 10px;margin-bottom: 5px;">SHARED ON</span>
+                                <div layout="row">
+                                    <div ng-repeat="socialChannel in item.byFormat"  style="padding: 0 3px;">
+                                    <i class="mdi {{socialChannel[0].iconClass}}" style="margin-right:10px;font-size:12px;width: 14px;height: 14px;border-radius: 50%;line-height: 14px;text-align: center;color: white;background-color: #006fd5;display: block;"></i>
+                                    <!--<span style="padding-left: 3px;"></span>-->
+                                    <!--<span ng-if="socialChannel.length >= 2">({{socialChannel.length}})</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" style="margin-left: 15px;">
+                                <span style="color:#006fd5;font-size: 10px;margin-bottom: 5px;">SHARING RULE APPLIED</span>
+                                <span style="font-size:10px;">{{currentAvaliableSharingRule.name}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div ng-show="currentTabItem === 'comment'">
+            <dl-comments show-see-all="true" entity-type="asset" entity-id="{{currentAssetId}}"></dl-comments>
+        </div>
+
+        <div ng-show="currentTabItem === 'stats'">
+            <div class="box-shadow">
+                <daily-stats series-data="seriesData" show-title="true"></daily-stats>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,235 @@
+<md-dialog class="date-setting-dialog" aria-label="Date Setting" ng-cloak>
+        <md-toolbar>
+            <div bg="primary" class="md-toolbar-tools">
+                <h2 class="white">Date Settings</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="close" class="mdi white mdi-close icon-size-2"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-tabs md-selected="selectedTab" md-dynamic-height md-border-bottom>
+                <md-tab label="Day">
+                    <md-list ng-cloak>
+                        <md-content class="md-padding">
+                            <md-radio-group ng-model="selection.day">
+                                <md-list-item>
+                                    <md-radio-button aria-label="select today" value="today" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>Today</dt>
+                                        <dd>{{timeList.today.start | date :'dd/MM/yy'}}</dd>
+                                    </dl>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-radio-button aria-label="select yesterday" value="yesterday" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>Yesterday</dt>
+                                        <dd>{{timeList.yesterday.start | date :'dd/MM/yy'}}</dd>
+                                    </dl>
+                                </md-list-item>
+                            </md-radio-group>
+                        </md-content>
+                        <div ng-if="isCompareTo">
+                            <span class="divider"></span>
+                            <md-content class="md-padding">
+                                <md-list-item>
+                                    <p color="primary">COMPARE TO</p>
+                                    <md-switch class="md-secondary" ng-model="compareTo.day"></md-switch>
+                                </md-list-item>
+                                <md-radio-group ng-model="compareSelection.day" ng-if="compareTo.day">
+                                    <md-list-item>
+                                        <md-radio-button aria-label="select compare yesterday" value="yesterday" class="dal-primary md-v2"></md-radio-button>
+                                        <span style="width: 18px;"></span>
+                                        <dl class="dl-item">
+                                            <dt>Yesterday</dt>
+                                            <dd>{{timeList.yesterday.start | date :'dd/MM/yy'}}</dd>
+                                        </dl>
+                                    </md-list-item>
+                                </md-radio-group>
+                            </md-content>
+                        </div>
+                     
+                    </md-list>
+                </md-tab>
+
+
+                <md-tab label="Week">
+                    <md-content class="md-padding">
+                        <md-radio-group ng-model="selection.week">
+                            <md-list-item>
+                                <md-radio-button aria-label="select last 7 days" value="last7days" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>Last 7 days</dt>
+                                    <dd>{{timeList.last7days.start | date :'dd/MM/yy' }} - {{timeList.last7days.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-radio-button aria-label="select this week" value="thisweek" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>This week</dt>
+                                    <dd>{{timeList.thisweek.start | date :'dd/MM/yy' }} - {{timeList.thisweek.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-radio-button aria-label="select last week" value="lastweek" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>Last week</dt>
+                                    <dd>{{timeList.lastweek.start | date :'dd/MM/yy' }} - {{timeList.lastweek.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                        </md-radio-group>
+                    </md-content>
+                    <div ng-if="isCompareTo">
+                        <span class="divider"></span>
+                        <md-content class="md-padding">
+                            <md-list-item>
+                                <p color="primary">COMPARE TO</p>
+                                <md-switch class="md-secondary" ng-model="compareTo.week"></md-switch>
+                            </md-list-item>
+                            <md-radio-group ng-model="compareSelection.week" ng-if="compareTo.week">
+                                <md-list-item>
+                                    <md-radio-button value="previousweek" aria-label="select previous week" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>Previous week</dt>
+                                        <dd>{{timeList.lastweek.start | date :'dd/MM/yy' }} - {{timeList.lastweek.end | date :'dd/MM/yy' }}</dd>
+                                    </dl>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-radio-button aria-label="select four weeks ago" value="fourweeksago" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>Four weeks ago</dt>
+                                        <dd>{{timeList.fourweeksago.start | date :'dd/MM/yy' }} - {{timeList.fourweeksago.end | date :'dd/MM/yy' }}</dd>
+                                    </dl>
+                                </md-list-item>
+                            </md-radio-group>
+                        </md-content>                        
+                    </div>
+
+                </md-tab>
+
+                <md-tab label="Month">
+                    <md-content class="md-padding">
+                        <md-radio-group ng-model="selection.month">
+                            <md-list-item>
+                                <md-radio-button aria-label="select last 30 days" value="last30days" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>Last 30 days</dt>
+                                    <dd>{{timeList.last30days.start | date :'dd/MM/yy' }} - {{timeList.last30days.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-radio-button aria-label="select this month" value="thismonth" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>This month</dt>
+                                    <dd>{{timeList.thismonth.start | date :'dd/MM/yy' }} - {{timeList.thismonth.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                            <md-list-item>
+                                <md-radio-button aria-label="select last month" value="lastmonth" class="dal-primary md-v2"></md-radio-button>
+                                <span style="width: 18px;"></span>
+                                <dl class="dl-item">
+                                    <dt>Last month</dt>
+                                    <dd>{{timeList.lastmonth.start | date :'dd/MM/yy' }} - {{timeList.lastmonth.end | date :'dd/MM/yy' }}</dd>
+                                </dl>
+                            </md-list-item>
+                        </md-radio-group>
+                    </md-content>
+                    <div ng-if="isCompareTo">
+                        <span class="divider"></span>
+                        <md-content class="md-padding">
+                            <md-list-item>
+                                <p color="primary">COMPARE TO</p>
+                                <md-switch class="md-secondary" ng-model="compareTo.month"></md-switch>
+                            </md-list-item>
+                            <md-radio-group ng-model="compareSelection.month" ng-if="compareTo.month">
+                                <md-list-item>
+                                    <md-radio-button value="thismonth" aria-label="select this month" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>This Month</dt>
+                                        <dd>{{timeList.thismonth.start | date :'dd/MM/yy' }} - {{timeList.thismonth.end | date :'dd/MM/yy' }}</dd>
+                                    </dl>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-radio-button value="onemonthago" aria-label="select one month ago" class="dal-primary md-v2"></md-radio-button>
+                                    <span style="width: 18px;"></span>
+                                    <dl class="dl-item">
+                                        <dt>One month ago</dt>
+                                        <dd>{{timeList.onemonthago.start | date :'dd/MM/yy' }} - {{timeList.onemonthago.end | date :'dd/MM/yy' }}</dd>
+                                    </dl>
+                                </md-list-item>
+                            </md-radio-group>
+                        </md-content>                        
+                    </div>
+
+                </md-tab>
+
+                <md-tab label="Custom">
+
+                    <md-content class="md-padding">
+                        <md-list-item>
+                            <dl ng-click="selectStartDate($event)" class="dl-item">
+                                <dt ng-class="{'from-text':isCompareTo}">Start date</dt>
+                                <dd>{{currentDateRange.startDate | date :'dd/MM/yy'}}</dd>
+                            </dl>
+                        </md-list-item>
+                        <md-list-item>
+                            <dl ng-click="selectEndDate($event)" class="dl-item">
+                                <dt ng-class="{'from-text':isCompareTo}">End date</dt>
+                                <dd>{{currentDateRange.endDate | date :'dd/MM/yy'}}</dd>
+                            </dl>
+                        </md-list-item>
+                    </md-content>
+
+                    <div ng-if="isCompareTo">
+                        <span class="divider"></span>
+                        <md-content class="md-padding">
+                            <md-list-item>
+                                <p color="primary">COMPARE TO</p>
+                                <md-switch class="md-secondary" ng-model="compareTo.custom"></md-switch>
+                            </md-list-item>
+                            <md-list-item  ng-if="compareTo.custom">
+                                <dl ng-click="selectStartDate($event,true)" class="dl-item">
+                                    <dt class="to-text">Start date</dt>
+                                    <dd>{{compareDateRange.startDate | date :'dd/MM/yy'}}</dd>
+                                </dl>
+                            </md-list-item>
+                            <md-list-item ng-if="compareTo.custom">
+                                <dl ng-click="selectEndDate($event,true)" class="dl-item">
+                                    <dt class="to-text">End date</dt>
+                                    <dd>{{compareDateRange.endDate | date :'dd/MM/yy'}}</dd>
+                                </dl>
+                            </md-list-item>
+                        </md-content>
+                    </div>
+                
+
+                </md-tab>
+            </md-tabs>
+
+
+        </md-dialog-content>
+
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="hide()" style="color: #3c3c3c;" class="dal-btn">
+                CANCEL
+            </md-button>
+            <md-button class="dal-btn dal-btn-primary md-raised" ng-click="hide(true)">
+                SAVE
+            </md-button>
+        </md-dialog-actions>
+
+</md-dialog>

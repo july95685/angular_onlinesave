@@ -1,0 +1,20 @@
+<div>
+    <div  ng-click="closeselectthumb()" style="background-color:rgba(0,0,0,0.5);top: 0;bottom: 0;left: 0;right:0;z-index: 3;position: absolute;">
+
+    </div>
+    <div  style="position: fixed;width: 100%;height: 90px;bottom: 0;left: 0;z-index: 4;background-color: #fff;" layout="row" layout-align="space-around center">
+        <div id="crop-lockr-thumbnail-area"  layout="column" layout-align="center center" >
+        <i class="mdi dalello-icon-crop_black" style="font-size: 30px;color:#000;vertical-align: middle;"></i>
+        <span style="color: #006fd5;font-size: 12px;font-weight: bold;">CROP</span>
+        <input id="crop-lockr-thumbnail-input" accept="image/*" type="file" class="hidden">
+        </div>
+        <div layout="column" layout-align="center center" ng-click="selectThumbLockr()">
+        <i class="mdi dalello-icon-change_black" style="font-size: 30px;color:#000;vertical-align: middle;"></i>
+        <span style="color: #006fd5;font-size: 12px;font-weight: bold;">REPLACE</span>
+        </div>
+        <div layout="column" layout-align="center center" ng-click="deleteThumbLockr()" >
+        <i class="mdi dalello-icon-decline_black" style="font-size: 30px;color:#000;vertical-align: middle;"></i>
+        <span style="color: #006fd5;font-size: 12px;font-weight: bold;">REMOVE</span>
+        </div>
+    </div>
+</div>

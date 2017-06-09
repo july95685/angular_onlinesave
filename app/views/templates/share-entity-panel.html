@@ -1,0 +1,9 @@
+<div class="share-entity-panel">
+    <div layout="row" layout-wrap>
+        <div class="share-panel-item" layout="column" layout-align="center center" ng-repeat="item in ctrl.entity.by">
+            <i ng-if="!item.avatarURL" class="mdi {{::item.iconClass}}"></i>
+            <img ng-if="item.avatarURL" ng-src="{{item.avatarURL}}"/>
+            <span style="overflow: hidden;white-space: nowrap;width: 60px;text-overflow: ellipsis;text-align: center;font-size: 12px;">{{::item.channelName.split('-')[item.channelName.split('-').length - 1]}}</span>
+        </div>
+    </div>
+</div>

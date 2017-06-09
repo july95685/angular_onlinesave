@@ -1,0 +1,39 @@
+<!--<div class="filter-toolbar" style="border: 1px solid rgba(170, 170, 170, 0.34);z-index: 8;" >-->
+    <!--<div layout="row" layout-align="start center">-->
+        <!--<span ng-hide="openFilterItem" flex class="v2-color" style="padding:0 8px;overflow: hidden;font-size: 18px;text-overflow: ellipsis;white-space: nowrap;">{{showText}}</span>-->
+        <!--<div ng-click="open()" ng-hide="openFilterItem" layout="row" layout-align="start center" bg="primary" style="min-width: 60px;height: 100%;color: white;">-->
+            <!--<span flex ng-hide="activeItems.length"></span>-->
+            <!--<span ng-hide="activeItems.length">ALL</span>-->
+            <!--<i ng-hide="activeItems.length" class="mdi mdi-chevron-right white" style="font-size: 24px;color: white;"></i>-->
+            <!--<i class="mdi {{item.icon}}" style="color: white;padding: 0 5px;" ng-repeat="item in activeItems"></i>-->
+        <!--</div>-->
+        <!--<div ng-click="open()" ng-show="openFilterItem" layout="row" layout-align="start center" bg="primary" style="min-width:60px;height: 100%;color: white;">-->
+            <!--<i class="mdi mdi-chevron-left" style="font-size: 24px;color: white;"></i>-->
+            <!--<span>ALL</span>-->
+            <!--<span flex></span>-->
+        <!--</div>-->
+        <!--<div class="filter-delegate" ng-show="openFilterItem" flex layout="row" layout-align="start center">-->
+            <!--<span layout="row" ng-click="selectOrUnselectItem(item)" style="outline: none;" ng-repeat="item in filterItems" layout-align="center center" flex><i data-filter-type="public" data-filter-icon="{{item.icon}}" ng-class="{'v2-color':item.active}" class="mdi {{item.icon}} icon-size-2">-->
+                <!--<md-tooltip ng-if="!mobileDevice">{{item.tooltip}}</md-tooltip>-->
+            <!--</i></span>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div>-->
+<div>
+<div ng-if="!showFilterItemList" class="filter-toolbar" style="border-bottom: 1px solid rgba(170, 170, 170, 0.34);z-index: 2;position: relative;" >
+    <div layout="row" layout-align="start center" style="height: 100%;background-color: #f5f5f5;" >
+        <i class="mdi vertical-align-middle icon-size-2 dal-icon-mylocker_black" style="color: #006fd5;margin-left: 15px;"></i>
+        <span style="margin-left: 20px;font-weight: bold;color: #3c3c3c;">{{textvalue}}</span>
+        <span flex></span>
+        <i class="mdi mdi-menu-down" ng-click="openFilterList()" style="color: #006fd5;margin-right: 10px;font-size: 20px !important;"></i>
+    </div>
+</div>
+<div ng-show="showFilterItemList" style="z-index: 7;position: fixed;width: 90%;background-color: #fff;">
+    <div ng-click="selectOrUnselectItem(item)"  layout="row" layout-align="start center" style="height: 100%;background-color: #fff;margin: 8px 0;" ng-repeat="item in filterItems" >
+        <i class="mdi vertical-align-middle icon-size-2 {{item.icon}}" ng-class="{'v2-color':item.active}" style="margin-left: 15px;color: #000;"></i>
+        <span style="margin-left: 30px;font-weight: bold;color: #3c3c3c;" ng-class="{'v2-color':item.active}">{{item.tooltip}}</span>
+        <span flex></span>
+    </div>
+</div>
+</div>

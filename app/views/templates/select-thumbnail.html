@@ -1,0 +1,48 @@
+<div>
+    <div>
+        <div style="background-color: #006fd5;height:50px;padding:0 15px 0 5px;" layout="row" layout-align="start center" >
+            <i class="mdi mdi-chevron-left" style="color:#fff;height:50px;font-size: 36px;" ng-click="cancel()"></i>
+            <span style="color:#fff;font-size: 16px;font-weight: bold;line-height: 50px;">Browse for an Asset</span>
+            <span flex></span>
+            <!--<i class="mdi dalello-icon-more_black icon-size-2" style="font-size:16px;color:#fff;" ></i>-->
+        </div>
+        <div class="text-center" ng-if="!showThumbList" style="background-color: rgba(0,0,0,0.5);position: absolute;top: 50px;bottom: 0;right: 0;left: 0;">
+            <div layout="row" layout-sm="column" style="margin-top: 50%" layout-align="center start">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+        <div ng-if="showThumbList">
+            <div layout="row" layout-align="center center" style="height: 50px;margin: 30px 20px 0 20px">
+                <i class="mdi dalello-icon-search_black" style="height:50px;font-size: 24px;" ></i>
+                <md-input-container style="margin: 0;" flex>
+                    <label>Search</label>
+                    <input ng-model="search.text">
+                </md-input-container>
+            </div>
+            <div masonry reload-on-show load-images="false" ng-style="{padding:mobileGap + 'px'}">
+                <div ng-if="!item.searchHide" ng-style="{padding:mobileGap + 'px',width:mobileCardWidth + 'px'}" ng-click="selectThumbAsset(item)" style="box-sizing: content-box;" ng-repeat="item in thumbData | orderBy : 'dateCreated' : true | filter : filterValue" class="masonry-brick m">
+                    <div class="card-shadow" style="background-color: white;" layout="column">
+                        <div class="image-wrapper" style="position: relative;overflow: hidden;">
+
+                            <div ng-if="item.isChannel" style="height: 165px;width: 100%;" bg="primary"></div>
+                            <div layout="row" layout-align="end start">
+                                <img ng-if="!item.changeTH" height="{{item.tnSize.showHeight}}"  data-ng-src="{{::item.thumbnailUrl}}" style="max-width: 400px;width:100%;">
+                                <div ng-if="item.changeTH" style="width: 100%;height: 110px;background-color:#30CDFF; "></div>
+                            </div>
+                            <md-button aria-label="{{::item.fileType}}" class="md-fab type-icon v2-bg-color md-mini">
+                                <i style="font-size: 20px;" class="mdi vertical-align-middle icon-size-2 {{::item.fileTypeIcon}} white"></i>
+                            </md-button>
+                        </div>
+                        <div layout="row" layout-align="start between"  style="overflow: hidden;margin: 15px;">
+                            <span>{{item.name}}</span>
+                            <span flex></span>
+                            <div ng-click="updataThumb(item,$event)" ng-if="item.assetType" style="background-color: #ffd439;">
+                                <span style="color:#006fd5;font-size: 11px;font-weight: bold;padding: 0 5px;">SELECT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

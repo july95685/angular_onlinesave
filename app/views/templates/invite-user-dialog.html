@@ -1,0 +1,163 @@
+<!--<div>-->
+    <!--<md-toolbar>-->
+        <!--<div class="md-toolbar-tools" style="background-color: #EDEDED;">-->
+            <!--<h2 class="v2-color">Invite user for <strong>{{lockrName}}</strong></h2>-->
+            <!--<span flex></span>-->
+            <!--<md-button class="md-icon-button" ng-click="answer('not applicable')">-->
+                <!--<i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>-->
+            <!--</md-button>-->
+        <!--</div>-->
+    <!--</md-toolbar>-->
+
+    <!--<form name="invite_user_form" role="form" novalidate ng-controller="autoCompletedCtrl as ctrl">-->
+        <!--<md-dialog-content class="md-padding">-->
+            <!--<md-input-container style="margin-top:20px;margin-bottom: 0;width:100%;">-->
+                <!--<label style="color:#999;">Type your friend's  email  </label>-->
+                <!--<input name="email"  style="color:#000000" ng-model="ctrl.emailOrUser" />-->
+            <!--</md-input-container>-->
+            <!--<div style="margin-bottom:10px;font-size:15px;">OR</div>-->
+            <!--<md-autocomplete-->
+                    <!--md-autofocus="ctrl.autoFocus"-->
+                    <!--ng-disabled="ctrl.isFindingFriends"-->
+                    <!--md-no-cache="ctrl.noCache"-->
+                    <!--md-selected-item="ctrl.selectedItem"-->
+                    <!--md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"-->
+                    <!--md-search-text="ctrl.searchText"-->
+                    <!--md-selected-item-change="ctrl.selectedItemChange(item)"-->
+                    <!--md-items="item in ctrl.querySearch(ctrl.searchText)"-->
+                    <!--md-item-text="item.name"-->
+                    <!--md-min-length="0"-->
+                    <!--placeholder="{{ctrl.message}}"-->
+                    <!--md-menu-class="autocomplete-custom-template">-->
+                <!--<md-item-template>-->
+
+                  <!--<img style="border-radius:50%;width: 40px;height: 40px;" ng-src="{{item.profileImageURL}}" class="md-avatar" alt="{{item.name}}" />&nbsp;-->
+
+                  <!--<span class="item-title">-->
+                    <!--<span> {{item.name}} </span>-->
+                  <!--</span>-->
+                <!--</md-item-template>-->
+                <!--<md-not-found>-->
+                    <!--No matches found.-->
+                <!--</md-not-found>-->
+            <!--</md-autocomplete>-->
+
+            <!--<div style="margin:20px 0;font-size:15px;">OR</div>-->
+
+
+            <!--<md-button style="text-transform: none;margin-left:0;" class="md-raised md-primary" ng-click="inviteFbUser()">-->
+                <!--<span ng-hide="waitingFb || loadLinkError">Invite facebook user</span>-->
+                <!--<span ng-show="waitingFb">waiting...</span>-->
+                <!--<span ng-show="loadLinkError">error ! click to reload</span>-->
+            <!--</md-button>-->
+
+        <!--</md-dialog-content>-->
+        <!--<div class="md-actions" layout="row" style="background-color: #EDEDED;">-->
+            <!--<div class="v2-color form-close" ng-click="answer()">-->
+                <!--CANCEL-->
+            <!--</div>-->
+            <!--<md-button class="md-raised" ng-class="{'md-primary':ctrl.currentText !== '' || ctrl.emailOrUser !== ''}" ng-disabled="ctrl.currentText === '' && ctrl.emailOrUser === ''" ng-click="inviteUser({'socialInviteId':ctrl.socialInviteId,'userNameOrMail':ctrl.currentText,'emailOrUser':ctrl.emailOrUser})" style="margin-right:20px;padding: 0 20px;">-->
+                <!--INVITE-->
+            <!--</md-button>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
+<div>
+    <div style="background-color: #006fd5;height:50px;padding:0 15px;" layout="row" layout-align="space-between center">
+        <span ng-if="!showTwitterList" style="color:#fff;font-size: 16px;font-weight: bold;">Invite user</span>
+        <span ng-if="showTwitterList" style="color:#fff;font-size: 16px;font-weight: bold;">Twitter Contacts</span>
+        <i ng-if="!showTwitterList" class="mdi mdi-close icon-size-2" style="color:#fff;" ng-click="cancel()"></i>
+        <i ng-if="showTwitterList" class="mdi mdi-close icon-size-2" style="color:#fff;" ng-click="backToInviteUser()"></i>
+    </div>
+    <div layout="column"   style="position: relative;margin-top: 8px;height:460px;overflow: auto;">
+        <div ng-if="!showTwitterList">
+            <!--<div layout="row" layout-align="space-between center" style="margin:0 15px;">-->
+                <!--<span>INVITEES ({{inviteeslength}})</span>-->
+                <!--<div style="width: 20px;height:20px;background-color: #000;">-->
+                    <!--<i></i>-->
+                <!--</div>-->
+            <!--</div>-->
+            <md-input-container style="width: 90%;margin-left: 5%;margin-right:5%;margin-bottom: 0;">
+                <label style="color:#999;font-size: 12px;margin-bottom: 0;">NEW EMAIL ADD</label>
+                <input  style="color:#999;" ng-model="inviteUserData.email"/>
+            </md-input-container>
+            <div layout="row" layout-align="center center" style="color:#3c3c3c;margin-bottom: 20px;">
+                <span>OR Invite your friends via Facebook or Twitter</span>
+            </div>
+
+
+            <div layout="row" style="width: 100%" layout-align="center center">
+                <!--<md-button style="text-transform: none;margin-left:0;" class="md-raised md-primary" ng-click="inviteFbUser()">-->
+                    <!--<span ng-hide="waitingFb || loadLinkError">Invite facebook user</span>-->
+                    <!--<span ng-show="waitingFb">waiting...</span>-->
+                    <!--<span ng-show="loadLinkError">error ! click to reload</span>-->
+                <!--</md-button>-->
+                <div   layout="row" style="width: 50%;">
+                    <span flex></span>
+                    <div style="background-color:#006fd5;border-radius: 50%;width: 22px;height: 22px;margin-left:10%;">
+                        <a href="fb://messaging/compose/" class="mdi mdi-facebook" style="font-size: 16px;color: #fff;width: 22px;text-align: center;"></a>
+                    </div>
+                    <span flex></span>
+                    <a href="fb://messaging/compose/"  style="margin-right: 20%;color: #006fd5;font-weight: bold;font-size: 13px;">FaceBook</a>
+                </div>
+                <div style="border-right: 1px solid #999;width: 1px;height: 22px;">
+
+                </div>
+                <div ng-click="InvitechooseTwitter()" layout="row" style="width: 50%;">
+                    <div style="background-color:#006fd5;border-radius: 50%;width: 22px;height: 22px;margin-left:20%;">
+                        <i class="mdi mdi-twitter" style="font-size: 16px;color: #fff;width: 22px;text-align: center;"></i>
+                    </div>
+                    <span flex></span>
+                    <span style="margin-right: 25%;color: #006fd5;font-size: 13px;font-weight: bold;">Twitter</span>
+                </div>
+            </div>
+        </div>
+        <div ng-if="showTwitterList" ng-controller="autoCompletedCtrl as ctrl">
+            <div layout="row" layout-align="space-between center" style="margin: 0 5%;height: 60px">
+                <div style="width: 22px;height: 22px;">
+                <i  class="mdi mdi-magnify icon-size-2" style="color:#006fd5;" ></i>
+                </div>
+                <md-input-container style="width: 60%;margin: 0;padding-top: 26px; ">
+                    <label style="color:#006fd5;font-size: 14px;margin-bottom: -24px;">Search</label>
+                    <input  style="color:#006fd5;" ng-model="inviteUserData.searchtwitter" />
+                </md-input-container>
+                <div layout-align="center center" layout="row">
+                    <span style="margin-right: 10px;">ALL</span>
+                    <md-checkbox  style="margin: 0;" aria-label="Check all"  md-indeterminate="isIndeterminate()" ng-checked="existsAllTwitter()"  ng-click="chooseAllTwitterUser()">
+
+                    </md-checkbox>
+
+                </div>
+            </div>
+            <div layout="row" style="padding:15px 5%;background-color: #f7f7f7;" ng-repeat="item in twitterContactsData">
+                <img style="width: 40px;height: 40px;border-radius: 50%;" src="{{item.profileImageURL}}" />
+                <div layout="row" style="margin: 0 10px;" flex>
+                    <div layout="column">
+                        <span style="line-height:20px;color: #006fd5;font-weight: bold;font-size: 13px;">{{item.name}}</span>
+                        <span style="font-size: 11px;line-height:20px;">{{item.socialIdentifier}}</span>
+                    </div>
+                    <span flex></span>
+                    <md-checkbox ng-click="chooseTwitterUser(item)" ng-checked="existsThisTwitter(item)" style="margin: 0;width: 30px;height: 30px;" aria-label="Check all">
+                    </md-checkbox>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+    <div style="position: fixed;bottom: 0;left: 0;right: 0;height: 110px;background-color: #fff;z-index: 2;" layout="column" layout-align="start center">
+        <md-input-container style="width: 90%;margin-left: 5%;margin-right:5%;margin-bottom: -20px;">
+        <label style="color:#999;font-size: 12px;margin-bottom: 0;">MESSAGE</label>
+        <input  style="color:#006fd5;"  />
+        </md-input-container>
+        <div style="width: 100%;" layout="row">
+            <span flex></span>
+            <md-button style="background-color: #006fd5;color:#fff;box-shadow: -1px -2px 6px #999;margin-right: 5%;" ng-click="postInvite()">INVITE</md-button>
+        </div>
+    </div>
+</div>

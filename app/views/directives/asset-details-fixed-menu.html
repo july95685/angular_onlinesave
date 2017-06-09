@@ -1,0 +1,44 @@
+<div style="position: fixed;right:70px;top:120px;z-index:60;">
+    <div style="display: inline-block;" class="fixed-menu">
+            <div>
+                <md-button ng-hide="mobileDevice" aria-label="menu" class="md-fab v2-bg-color" ng-click="showDropMenu()">
+                    <i style="color:white;transition:transform .2s;" ng-class="{'openmenu': ismenuopen}"  class="mdi vertical-align-middle mdi-plus"></i>
+                </md-button>
+                <div class="dropdown-fixed-menu" style="position: relative;left:7px;">
+                    <md-button  aria-label="Twitter" class="menu-item md-fab md-raised md-mini block" ng-click="editAsset($event)">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-pencil"></i>
+                        <md-tooltip>
+                            edit asset
+                        </md-tooltip>
+                    </md-button>
+                    <md-button  aria-label="Twitter" class="menu-item md-fab md-raised md-mini block" ng-click="putchannals($event)">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-folder-move"></i>
+                        <md-tooltip>
+                            join channel
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="publish asset by date" class="menu-item md-fab md-raised md-mini block" ng-click="openUpdateAssetDialog($event)">
+                        <i  class="mdi icon-size-2 vertical-align-middle mdi-clock"></i>
+                        <md-tooltip>
+                            publish asset by date
+                        </md-tooltip>
+                    </md-button>
+                    <md-button ng-show="canShare"  aria-label="share" class="menu-item md-fab md-raised md-mini block" ng-click="openShareAssetDialog($event)">
+                        <i class="mdi icon-size-2 vertical-align-middle mdi-share-variant"></i>
+                        <md-tooltip>
+                            share asset
+                        </md-tooltip>
+                    </md-button>
+                    <md-button aria-label="preview" class="menu-item md-fab md-raised md-mini block" ng-click="previewAsset()">
+                        <i  class="mdi icon-size-2 vertical-align-middle mdi-eye"></i>
+                        <md-tooltip>
+                            Preview
+                        </md-tooltip>
+                    </md-button>
+                </div>
+                <md-button ng-show="mobileDevice" aria-label="menu" class="md-fab v2-bg-color" ng-click="showDropMenu()">
+                    <i style="color:white;transition:transform .2s;" ng-class="{'openmenu': ismenuopen}"  class="mdi vertical-align-middle mdi-plus"></i>
+                </md-button>
+            </div>
+    </div>
+</div>

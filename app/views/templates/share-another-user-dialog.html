@@ -1,0 +1,54 @@
+<md-dialog aria-label="Share with another user" class="share-user-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Share with another user</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer()">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <form name="invite_user_form" role="form" novalidate ng-controller="autoCompletedCtrl as ctrl">
+        <md-dialog-content class="md-padding">
+            <md-autocomplete
+                    md-autofocus="ctrl.autoFocus"
+                    ng-disabled="ctrl.isFindingFriends"
+                    md-no-cache="ctrl.noCache"
+                    md-selected-item="ctrl.selectedItem"
+                    md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                    md-search-text="ctrl.searchText"
+                    md-selected-item-change="ctrl.selectedItemChange(item)"
+                    md-items="item in ctrl.querySearch(ctrl.searchText)"
+                    md-item-text="item.name"
+                    md-min-length="0"
+                    placeholder="{{ctrl.message}}"
+                    md-menu-class="autocomplete-custom-template">
+                <md-item-template>
+
+                  <img style="border-radius:50%;width: 40px;height: 40px;" ng-src="{{item.profileImageURL}}" class="md-avatar" alt="{{item.name}}" />&nbsp;
+
+                  <span class="item-title">
+                    <span> {{item.name}} </span>
+                  </span>
+                </md-item-template>
+                <md-not-found>
+                    No matches found.
+                </md-not-found>
+            </md-autocomplete>
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer()">
+                CANCEL
+            </div>
+            <md-button class="md-raised" ng-class="{'md-primary':ctrl.currentText !== ''}" ng-disabled="ctrl.currentText === ''" ng-click="shareUser({'socialInviteId':ctrl.socialInviteId,'userNameOrMail':ctrl.currentText})" style="margin-right:20px;padding: 0 20px;">
+                INVITE
+            </md-button>
+        </div>
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

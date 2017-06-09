@@ -1,0 +1,136 @@
+@font-face {
+  font-family: 'dalockr';
+  src: url('../fonts/dalockr.eot?24674859');
+  src: url('../fonts/dalockr.eot?24674859#iefix') format('embedded-opentype'),
+       url('../fonts/dalockr.woff2?24674859') format('woff2'),
+       url('../fonts/dalockr.woff?24674859') format('woff'),
+       url('../fonts/dalockr.ttf?24674859') format('truetype'),
+       url('../fonts/dalockr.svg?24674859#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/*@font-face {*/
+    /*font-family: 'fontello';*/
+    /*src: url('../fonts/fontello.eot?33851152');*/
+    /*src: url('../fonts/fontello.eot?33851152#iefix') format('embedded-opentype'),*/
+    /*url('../fonts/fontello.woff2?33851152') format('woff2'),*/
+    /*url('../fonts/fontello.woff?33851152') format('woff'),*/
+    /*url('../fonts/fontello.ttf?33851152') format('truetype'),*/
+    /*url('../fonts/fontello.svg?33851152#fontello') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?24674859#fontello') format('svg');
+  }
+}
+*/
+
+[class*="icon-size-2 dal-icon-"]{
+    font-size: 20px !important;
+}
+
+ [class^="dal-icon-"]:before, [class*="dal-icon-"]:before {
+  font-family: "dalockr";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+     margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.dal-icon-add_col_black:before { content: '\e800'; } /* '' */
+.dal-icon-activity_black:before { content: '\e801'; } /* '' */
+.dal-icon-add_newasset_black:before { content: '\e802'; } /* '' */
+.dal-icon-add_newdropbox_black:before { content: '\e803'; } /* '' */
+.dal-icon-add_newlocker_black:before { content: '\e804'; } /* '' */
+.dal-icon-add_newprivate_locker_black:before { content: '\e805'; } /* '' */
+.dal-icon-add_newsafe_locker_black:before { content: '\e806'; } /* '' */
+.dal-icon-add_newsub_locker_black:before { content: '\e807'; } /* '' */
+.dal-icon-amplification_rate_black:before { content: '\e808'; } /* '' */
+.dal-icon-applause_rate_black:before { content: '\e809'; } /* '' */
+.dal-icon-avatar_black:before { content: '\e80a'; } /* '' */
+.dal-icon-brand_timeline_black:before { content: '\e80b'; } /* '' */
+.dal-icon-calendar_black:before { content: '\e80c'; } /* '' */
+.dal-icon-chat_black:before { content: '\e80d'; } /* '' */
+.dal-icon-comments_black:before { content: '\e80f'; } /* '' */
+.dal-icon-conversation_rate_black:before { content: '\e810'; } /* '' */
+.dal-icon-cool_black:before { content: '\e811'; } /* '' */
+.dal-icon-dashboard_black:before { content: '\e812'; } /* '' */
+.dal-icon-delete_black:before { content: '\e813'; } /* '' */
+.dal-icon-devil_black:before { content: '\e815'; } /* '' */
+.dal-icon-download_black:before { content: '\e816'; } /* '' */
+.dal-icon-edit_black:before { content: '\e817'; } /* '' */
+.dal-icon-excel_black:before { content: '\e818'; } /* '' */
+.dal-icon-fb_black:before { content: '\e819'; } /* '' */
+.dal-icon-google_plus:before { content: '\e81a'; } /* '' */
+.dal-icon-happy_black:before { content: '\e81b'; } /* '' */
+.dal-icon-likes_black:before { content: '\e81c'; } /* '' */
+.dal-icon-linkedin_black:before { content: '\e81d'; } /* '' */
+.dal-icon-locker_info_black:before { content: '\e81e'; } /* '' */
+.dal-icon-locker_thumbnail_black:before { content: '\e81f'; } /* '' */
+.dal-icon-locker_view_black:before { content: '\e820'; } /* '' */
+.dal-icon-manage_services_black:before { content: '\e821'; } /* '' */
+.dal-icon-manage_user_black:before { content: '\e822'; } /* '' */
+.dal-icon-more_black:before { content: '\e824'; } /* '' */
+.dal-icon-music_black:before { content: '\e825'; } /* '' */
+.dal-icon-mylocker_black:before { content: '\e826'; } /* '' */
+.dal-icon-neutral_black:before { content: '\e827'; } /* '' */
+.dal-icon-notifications_black:before { content: '\e828'; } /* '' */
+.dal-icon-pdf_black:before { content: '\e829'; } /* '' */
+.dal-icon-picture_black:before { content: '\e82a'; } /* '' */
+.dal-icon-pinterest_black:before { content: '\e82b'; } /* '' */
+.dal-icon-pp_black:before { content: '\e82c'; } /* '' */
+.dal-icon-preview_black:before { content: '\e82d'; } /* '' */
+.dal-icon-private_locker_black:before { content: '\e82e'; } /* '' */
+.dal-icon-reply_black:before { content: '\e82f'; } /* '' */
+.dal-icon-sad_black:before { content: '\e830'; } /* '' */
+.dal-icon-safe_locker_black:before { content: '\e831'; } /* '' */
+.dal-icon-search_black:before { content: '\e832'; } /* '' */
+.dal-icon-sentiment_ratings_black:before { content: '\e833'; } /* '' */
+.dal-icon-statistics_black:before { content: '\e834'; } /* '' */
+.dal-icon-store_locker_black:before { content: '\e835'; } /* '' */
+.dal-icon-sub_locker_black:before { content: '\e836'; } /* '' */
+.dal-icon-time_date_black:before { content: '\e837'; } /* '' */
+.dal-icon-tongue_black:before { content: '\e838'; } /* '' */
+.dal-icon-total_likes_black:before { content: '\e839'; } /* '' */
+.dal-icon-total_shares_black:before { content: '\e83a'; } /* '' */
+.dal-icon-twitter_black:before { content: '\e83b'; } /* '' */
+.dal-icon-unpublish_black:before { content: '\e83c'; } /* '' */
+.dal-icon-video_black:before { content: '\e83d'; } /* '' */
+.dal-icon-word_black:before { content: '\e83e'; } /* '' */
+.dal-icon-ytube_black:before { content: '\e83f'; } /* '' */
+.dal-icon-close_black:before { content: '\e841'; } /* '' */
+.dal-icon-minimise_black:before { content: '\e842'; } /* '' */
+.dal-icon-moderation_black:before { content: '\e849'; }

@@ -1,0 +1,70 @@
+<md-dialog class="m-dashboard stats-dialog" aria-label="Stats Display" ng-cloak>
+        <md-toolbar>
+            <div bg="primary" class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="back" class="mdi white mdi-arrow-left icon-size-2"></i>
+                </md-button>
+                <h2 class="white">{{displayEntity[entityType +'Name']}}</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content style="position: relative;">
+            <div class="md-padding">
+
+
+                <div layout="row" class="stats-menu" layout-align="start center">
+                    <md-menu style="border-bottom: 1px solid rgba(0,0,0,0.12);">
+                        <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                            <i class="mdi {{channels[currentChannelKey].icon}}"></i>
+                            <span>{{channels[currentChannelKey].name}}</span>
+                            <span flex></span>
+                            <i class="mdi mdi-menu-down"></i>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-menu-item ng-click="switchViewMode(key)" ng-repeat="(key,channel) in channels">
+                                <md-button ng-class="{active:key == currentChannelKey}" class="m-dash-btn-item">
+                                    <i class="mdi {{channel.icon}}"></i>
+                                    <span>{{channel.name}}</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-button ng-click="openDateSetting($event)" class="md-icon-button" aria-label="Date setting">
+                        <i class="mdi mdi-calendar" style="font-size: 18px;"></i>
+                    </md-button>
+                </div>
+
+                <div class="thumb" style="position: relative;">
+                    <img on-error ng-src="{{displayEntity.thumbnail}}">
+                </div>
+
+                <md-grid-list
+                        md-cols-xs="2" md-cols-sm="2"
+                        md-row-height="2:1.5"
+                        md-gutter="16px">
+                    <md-grid-tile ng-repeat="(key,stat) in dashStats" class="md-whiteframe-2dp">
+                        <div class="stat-card" layout="column" layout-align="center center">
+                            <i class="mdi {{stat.icon}}"></i>
+                            <span ng-if="dashData">{{stat.percent ? ( channels[currentChannelKey].calc[key](dashData) *100 ).toFixed(0) + '%' : channels[currentChannelKey].calc[key](dashData)}}</span>
+                        </div>
+                    </md-grid-tile>
+                </md-grid-list>
+
+
+                <div class="stats-card md-whiteframe-2dp" style="margin-bottom: 16px;">
+                    <h3 class="title" style="margin-bottom: 0;">Monthly Stats per channels</h3>
+                    <daily-stats series-data="seriesData" show-title="false"></daily-stats>
+                </div>
+
+
+
+            </div>
+
+            <div layout="row" layout-align="center center" ng-if="isLoading" class="loading-view">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+
+        </md-dialog-content>
+
+</md-dialog>

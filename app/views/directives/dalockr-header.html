@@ -1,0 +1,108 @@
+<div id="dalock-header">
+    <div id="main-top-menu" ng-class="{'v2-bg-color':showMenu}">
+
+        <div layout="column" class="mobile-down-menu hidden-lg" ng-class="{'show':showMenu}">
+            <div bg="primary">
+                <md-list>
+                    <md-list-item
+                            ng-click="enterMyLockrs()">
+                        <i class="mobile-menu-icon dal-icon-mylocker_black"></i>
+                        <p>My Lockrs</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item ng-if="notContentManager" ng-click="enterDashboard()">
+                        <i class="mobile-menu-icon dal-icon-dashboard_black"></i>
+                        <p>Go to dashboard</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item ng-click="openActivityDialog()">
+                        <i class="mobile-menu-icon dal-icon-time_date_black"></i>
+                        <p>Activity flow</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item ng-click="openServicesDialog()">
+                        <i class="mobile-menu-icon dal-icon-manage_services_black"></i>
+                        <p>Manage Services</p>
+
+                    </md-list-item>
+                </md-list>
+            </div>
+            <div flex layout="row" style="padding: 50px;" layout-align="center center">
+                <md-button aria-label="Open Menu" ng-click="openMainTopMenu()">
+                    <i class="mdi mdi-close white vertical-align-middle"></i>
+                </md-button>
+            </div>
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <div layout="row" layout-align="start center" style="height: 75px;">
+                <i class="mdi mdi-menu icon-size-3" ng-class="{'white':showMenu}" style="vertical-align: middle;margin-left: 10px;cursor: pointer;outline: none;" ng-click="openMainTopMenu()"></i>
+                <img class="hidden-xs" ng-hide="showMenu" style="height: 40px;vertical-align: middle;margin-left: 10px;" src="images/avatar.png" ng-click="backMainPage()">
+                <span flex class="visible-xs"></span>
+                <div class="menu-box hidden-sm hidden-xs hidden-md" flex>
+                    <ul class="menu-item list-unstyled head-normal-menu clearfix">
+                        <li  class="pull-left" ng-class="{'active-menu':navActive.mylockrs}"><a ng-click="enterMyLockrs()" style="line-height: 75px;margin-right: 20px;text-decoration: none;margin-left: 20px;"><i class="white vertical-align-middle dal-icon-mylocker_black icon-size-3"></i><b style="margin-left: 5px;" class="white icon-size-1 vertical-align-middle">My Lockrs</b></a></li>
+                        <li class="pull-left" ng-if="notContentManager" ng-class="{'active-menu':navActive.dashboard}"><a ng-click="enterDashboard()" style="line-height: 75px;margin-right: 20px;text-decoration: none;"><i class="white vertical-align-middle dal-icon-dashboard_black icon-size-3"></i><b style="margin-left: 5px;" class="white icon-size-1 vertical-align-middle">Go to dashboard</b></a></li>
+                        <li class="pull-left" ng-class="{'active-menu':navActive.activity}"><a href="" style="line-height: 75px;margin-right: 20px;text-decoration: none;outline: none;" ng-click="openActivityDialog()"><i class="white vertical-align-middle dal-icon-time_date_black icon-size-3"></i><b style="margin-left: 5px;" class="white icon-size-1 vertical-align-middle">Activity flow</b></a></li>
+                        <li class="pull-left" ng-class="{'active-menu':navActive.upgrade}"><a href="" style="line-height: 75px;margin-right: 20px;text-decoration: none;" ng-click="openEditPpView()"><i class="mdi white vertical-align-middle mdi-plus-circle-outline icon-size-3"></i><b style="margin-left: 5px;" class="white icon-size-1 vertical-align-middle">Publishing point</b></a></li>
+                        <li class="pull-left nav-manage-service">
+                            <div class="btn-group">
+                                <button type="button" style="padding: 0;background-color: transparent;border: none;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-manage-service-a" href="" ng-click="showServices()" style="line-height: 75px;text-decoration: none;"><i class="white vertical-align-middle dal-icon-manage_services_black icon-size-3"></i><b style="margin-left: 5px;" class="white icon-size-1 vertical-align-middle">Manage Services</b></a>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li layout="row" layout-align="center center" ng-show="loadServices">
+                                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                    </li>
+                                    <li ng-repeat="item in services">
+                                        <a><i class="mdi {{item.class}}" style="font-size: 18px;vertical-align: middle;margin-right: 10px;"></i><span class="vertical-align-middle">{{item.name}}</span></a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a ng-click="openServicesDialog($event)"><i class="mdi mdi-plus-circle-outline" style="font-size: 18px;vertical-align: middle;"></i> <span class="vertical-align-middle v2-color">Add new service</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="dalockr-search" class="hidden-xs" flex ng-hide="showMenu">
+                    <div ng-show="showSearchBar">
+                    <form ng-submit="ctrl.searchByKeyword()" ng-controller="searchAutoComplete as ctrl" style="height: 100%;overflow: hidden;" novalidate>
+                        <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="ctrl.selectedItem"
+                        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                        md-search-text="ctrl.searchText"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="item in ctrl.querySearch(ctrl.searchText)"
+                        md-item-text="item.name"
+                        md-min-length="0"
+                        placeholder="Search for your asset lockr"
+                        md-menu-class="autocomplete-custom-template">
+                        <md-item-template>
+                        <span class="item-title">
+                        <i class="mdi mdi-folder vertical-align-middle v2-color icon-size-2" ng-show="item.typeOfLockr"></i>
+                        <i class="mdi vertical-align-middle v2-color icon-size-2 {{item.icon}}" ng-show="item.typeOfDa"></i>
+                        </span>
+                        <span ng-bind-html="item.nameHtml" class="item-metadata vertical-align-middle" style="padding-left: 10px;">
+                        </span>
+                        </md-item-template>
+                        </md-autocomplete>
+                    </form>
+                    <span style="outline: none; margin-left: 10px; color:#006fd5;" class="glyphicon glyphicon-search" aria-hidden="true" ng-click="searchByKeyword()"></span>
+                    </div>
+                </div>
+                <dalockr-user-profile-region ng-class="usernameTextColor"></dalockr-user-profile-region>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

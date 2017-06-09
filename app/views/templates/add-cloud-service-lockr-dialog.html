@@ -1,0 +1,37 @@
+<md-dialog class="add-lockr-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Add DropBox and Box </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div style="margin-top: 3px;overflow: scroll;position: relative;" class="md-padding">
+            <am-tree ng-model="treeData" select-item-callback="selectItemCallback(node)"></am-tree>
+            <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+                <div layout="row" layout-sm="column" layout-align="center center" style="top: 50%;position: absolute;
+        left: 50%;
+        transform: translate(-50%,-50%);">
+                    <md-progress-circular md-mode="indeterminate" class="md-v2" "></md-progress-circular>
+                </div>
+            </div>
+        </div>
+
+    </md-dialog-content>
+
+
+    <md-dialog-actions layout="row" style="padding: 0;">
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;width: 100%;">
+        <p>{{selectName}}</p>
+        <md-button class="md-raised md-primary" ng-show="hasDropbox" ng-click="addIt()" style="margin-right:20px;padding: 0 20px;">
+            {{addText}}
+        </md-button>
+         </div>
+    </md-dialog-actions>
+
+
+</md-dialog>

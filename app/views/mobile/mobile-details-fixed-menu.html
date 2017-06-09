@@ -1,0 +1,24 @@
+<div class="dal-fab-btn" style="position: fixed;background-color:transparent;right:0;z-index:4;bottom:0;height:70px;width: 90px;overflow: hidden;">
+    <div style="position: relative;">
+        <md-button aria-label="menu" class="md-fab" ng-click="openMenu()">
+            <i style="font-size:24px;color:#006fd5;" class="mdi vertical-align-middle mdi-plus"> </i>
+        </md-button>
+        <div class="fb-background"></div>
+
+        <div layout="row" class="fab-actions">
+            <div bg="accent" layout="row" style="width: 100%;" layout-align="center center">
+                <div flex="30" layout="row" layout-align="center center">
+                    <span color="primary" class="md-body-1">ADD NEW</span>
+                </div>
+                <span color="primary">|</span>
+                <div layout="row" ng-click="selectOp($event)" layout-align="space-around center" flex="70">
+                    <i data-index="0" class="dl-icon mdi mdi-image"></i>
+                    <i data-index="1" class="mdi dl-icon mdi-file-document-box"></i>
+                    <i data-index="2" ng-if="isManager" class="mdi dl-icon mdi-folder-plus"></i>
+                    <!--<i data-index="3" ng-if="isManager" class="mdi dl-icon mdi-folder-lock"></i>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

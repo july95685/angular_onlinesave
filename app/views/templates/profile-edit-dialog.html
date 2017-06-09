@@ -1,0 +1,142 @@
+<md-dialog aria-label="Mango (Fruit)" class="add-lockr-dialog">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Profile</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;line-height: 48px;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+        <md-dialog-content style="padding-top:10px;">
+            <div class="clearfix" style="margin:3px 0;">
+                <h4 class="pull-left" style="padding:0;margin:0;color: #a3a3a3;padding-bottom: 10px;font-weight: normal;">Edit Profile</h4>
+                <a style="cursor: pointer;position: relative;float: right;">
+                    <i class="mdi mdi-key-variant icon-size-2 vertical-align-middle pull-right"   ng-click="openChangePwdDialog()" data-original-title="Change password"></i>
+                    <md-tooltip>change password</md-tooltip>
+                </a>
+            </div>
+            <form name="profile_form" role="form" ng-submit="uploadAsset()" novalidate>
+                <md-content layout-padding class="autoScroll" style="padding:8px 0;">
+                    <md-input-container class="md-icon-float" >
+                        <!-- Use floating label instead of placeholder -->
+                        <label style="margin-left: 0;">Roles</label>
+                        <input ng-model="userDetailsData.roles" type="text" disabled>
+                    </md-input-container>
+
+
+                    <md-input-container class="md-icon-float" >
+                        <!-- Use floating label instead of placeholder -->
+                        <label style="margin-left: 0;">First name</label>
+                        <input type="text" name="firstName" ng-model="userDetailsData.firstName" required>
+
+                        <div ng-messages="profile_form.firstName.$error">
+                            <div ng-message="required">This is required !</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-icon-float" >
+                        <!-- Use floating label instead of placeholder -->
+                        <label style="margin-left: 0;">last name</label>
+                        <input type="text" name="lastName" ng-model="userDetailsData.lastName" required>
+                        <div ng-messages="profile_form.lastName.$error">
+                            <div ng-message="required">This is required !</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container md-no-float>
+                        <label style="margin-left: 0;">Phone Number</label>
+                        <input type="text" name="phoneNumber" ng-model="userDetailsData.phoneNumber" required>
+                        <div ng-messages="profile_form.phoneNumber.$error">
+                            <div ng-message="required">This is required !</div>
+                        </div>
+                    </md-input-container>
+                </md-content>
+
+                <md-button style="width: 100%;margin:0;background-color: #006fd5;color:white;" ng-click="updateUser()">Save</md-button>
+            </form>
+
+            <div class="social-channels-box" style="margin:30px 0;">
+                <div class="clearfix" style="margin:0;">
+                    <h4 class="pull-left" style="padding:0;margin:0;color: #a3a3a3;padding-bottom: 10px;font-weight: normal;">Social Channels</h4>
+
+                    <div class="dropdown pull-right">
+                        <button style="margin:0;padding:0;border:none;" class="btn btn-default dropdown-toggle" type="button" id="add-social-channel" data-toggle="dropdown" aria-expanded="true">
+                            <i class="pull-right mdi mdi-plus icon-size-2" data-toggle="tooltip" rel="tooltip" data-original-title="Add social channel"></i>
+                            <md-tooltip>add social channel</md-tooltip>
+                        </button>
+                        <ul class="dropdown-menu" ng-click="preventDefaultEvent($event)"  role="menu" aria-labelledby="add-social-channel" style="margin-bottom: 20px;outline: none;cursor: pointer;">
+
+                            <li ng-show="showFacebookPage">
+                                <div style="height: 30px;padding: 0 8px;" layout="row">
+                                    <i class="mdi mdi-arrow-left" style="font-size: 24px;" ng-click="showFacebookPage = false"></i>
+                                    <span flex></span>
+                                    <span>Pages</span>
+                                    <span flex></span>
+                                </div>
+                                <div ng-show="loadingPage && showFacebookPage">
+                                    <div layout="row" layout-sm="column" layout-align="center center">
+                                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li role="presentation" ng-show="showFacebookPage" ng-repeat="item in needToAddedPages"><a role="menuitem" tabindex="-1"><div layout="row"><span class="vertical-align-middle" layout="row" layout-align="start center">{{item.name}}</span><span flex></span><i style="font-size: 24px;" class="mdi mdi-plus vertical-align-middle" ng-click="addFacebookPage(item)"><md-tooltip>Add page</md-tooltip></i></div></a></li>
+                            <li role="presentation" ng-show="showFacebookPage && !loadingPage && !needToAddedPages.length" style="min-height: 50px;"  layout="row" layout-align="center center"><span style="color: #999;font-size:13px;">Not found facebook page</span></li>
+
+                            <li role="presentation" ng-show="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook',true)"><md-button>Add Facebook Account</md-button></a></li>
+
+
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Google')"><i class="mdi icon-size-1 mdi-youtube-play" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Google &amp; YouTube credentials</a></li>
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Facebook')"><i class="mdi icon-size-1 mdi-facebook" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Facebook credentials</a></li>
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Twitter')"><i class="mdi icon-size-1 mdi-twitter" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Twitter credentials</a></li>
+                            <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('DropBox')}}"><i class="fa fa-dropbox" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update DropBox credentials</a></li>-->
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('LinkedIn')"><i class="mdi icon-size-1 mdi-linkedin" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update LinkedIn credentials</a></li>
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Pinterest')"><i class="mdi icon-size-1 mdi-pinterest" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Pinterest credentials</a></li>
+                            <li role="presentation" ng-hide="showFacebookPage"><a role="menuitem" tabindex="-1" ng-click="addSocialChannel('Instagram')"><i class="mdi icon-size-1 mdi-instagram" style="width:20px;font-size: 16px;"></i>&nbsp;Add/Update Instagram credentials</a></li>
+
+                            <!--<li role="presentation"><a role="menuitem" tabindex="-1" ng-href="{{getAddSocialChannelUrl('Evernote')}}"><i style="width:20px;"></i>&nbsp;Add/Update Evernote credentials</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-show="loadingSocialChannels" style="position: relative;margin-top: 10px;">
+                    <img style="position: absolute; left: 50%; top: 50%;-webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);transform: translate(-50%,-50%);" src="images/loading-icon.gif">
+                </div>
+                <md-grid-list
+                        md-cols-sm="6" md-cols-md="6" md-cols-gt-md="6"
+                        md-row-height-gt-md="1:1" md-row-height="2:2"
+                        md-gutter="12px" md-gutter-gt-sm="8px" ng-show="!loadingSocialChannels">
+                    <md-grid-tile ng-repeat="item in socialChannelsData" md-rowspan="1" md-colspan="1" class="social-grid-normal profile-social" style="background-color: #006fd5;">
+
+                        <i class="mdi mdi-close-circle-outline icon-size-3" ng-click="deleteSC(item.id)"  style="outline: none; cursor:pointer;color:white;position: absolute;top:1px;right:1px;"></i>
+
+                        <i class="{{item.class}} mdi" style="color: white;font-size: 50px;">
+
+                        </i>
+                        <md-tooltip>{{item.name}}</md-tooltip>
+
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+
+
+
+
+
+        </md-dialog-content>
+        <!--<div class="md-actions" layout="row" style="background-color: #EDEDED;">-->
+            <!--<md-button class="v2-color" ng-click="answer('not useful')">-->
+                <!--CANCEL-->
+            <!--</md-button>-->
+            <!--<md-button class="md-raised md-primary" type="submit" style="margin-right:20px;padding: 0 20px;">-->
+                <!--ADD ASSET-->
+            <!--</md-button>-->
+        <!--</div>-->
+    </form>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="isUpdating">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

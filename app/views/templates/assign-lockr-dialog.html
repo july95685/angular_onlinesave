@@ -1,0 +1,44 @@
+<md-dialog class="grant-permisions min-width-600" aria-label="Grant permisions">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Grant permissions</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <div style="margin-top: 10px;">Grant to</div>
+        <div layout="row">
+            <md-input-container flex>
+                <label>username or email</label>
+                <input type="text" ng-model="assignUser">
+            </md-input-container>
+            <!--<div style="padding-top: 32px;">Role: {{assignRole}}</div>-->
+        </div>
+        <span>With Role</span>
+        <md-radio-group layout="row" ng-model="assignRole" style="margin: 10px 0;">
+            <md-radio-button flex  style="margin: 0;" value="CONTENT_MANAGER">CONTENT MANAGER</md-radio-button>
+            <md-radio-button flex  style="margin: 0;" value="COMMUNITY_MANAGER">COMMUNITY MANAGER</md-radio-button>
+        </md-radio-group>
+        <span>With permission</span>
+        <md-radio-group layout="row" ng-model="assignType" style="margin: 10px 0;">
+            <md-radio-button flex  style="margin: 0;" value="READ_AND_MANAGE_CONTENT">READ AND MANAGE CONTENT</md-radio-button>
+            <md-radio-button flex  style="margin: 0;" value="WRITE_AND_MANAGE_CONTENT">WRITE AND MANAGE CONTENT</md-radio-button>
+        </md-radio-group>
+    </md-dialog-content>
+    <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+        <div class="v2-color form-close" ng-click="answer('not useful')">
+            CANCEL
+        </div>
+        <md-button class="md-raised" ng-class="{'md-primary':assignUser !== ''}" ng-disabled="assignUser === ''" ng-click="assignLockrToUser()" style="margin-right:20px;padding: 0 20px;">
+            GRANT
+        </md-button>
+    </div>
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

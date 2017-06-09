@@ -1,0 +1,48 @@
+<md-dialog aria-label="Edit Asset"  class="edit-asset-dialog min-width-600">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color: #EDEDED;">
+            <h2 class="v2-color">Edit asset</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="answer('not applicable')">
+                <i aria-label="close" class="mdi mdi-close icon-size-2" style="color: #999;"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="update_asset_form" role="form" novalidate>
+        <md-dialog-content layout="column" class="md-padding" style="padding-top: 40px;">
+
+            <md-input-container ng-class="{'md-input-invalid':(update_asset_form.title.$invalid && update_asset_form.title.$dirty) || (update_asset_form.title.$error.required && submitted)}">
+                <label>Asset Name</label>
+                <input name="title" ng-model="currentAssetData.name" required>
+
+                <div ng-messages="update_asset_form.title.$error" ng-show="update_asset_form.title.$dirty || submitted">
+                    <div ng-message="required" ng-show="update_asset_form.title.$error.required">This is required!</div>
+                </div>
+            </md-input-container>
+            <div flex style="margin-bottom: 26px;">
+                <label style="color: #777;font-size: 12px;padding-left: 3px;">Asset Description</label>
+                <div flex style="padding-left: 1px;">
+                    <textarea aria-label="description" style="border:1px solid rgba(0,0,0,0.12);;width:100%;outline:none;height:120px;resize: none;overflow: scroll;" ng-model="currentAssetData.description"></textarea>
+                </div>
+            </div>
+            <md-input-container flex>
+                <label>Tags</label>
+                <input name="tags" ng-model="tags">
+            </md-input-container>
+        </md-dialog-content>
+        <div class="md-actions" layout="row" style="background-color: #EDEDED;">
+            <div class="v2-color form-close" ng-click="answer('not useful')">
+                CANCEL
+            </div>
+            <md-button class="md-raised md-primary" ng-click="updateAsset()" style="margin-right:20px;padding: 0 20px;">
+                UPDATE
+            </md-button>
+        </div>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+</md-dialog>

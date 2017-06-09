@@ -1,0 +1,163 @@
+<md-dialog class="add-new-lockr" aria-label="Add new Lockr" ng-style="{width:!mobileDevice && '375px' }" ng-cloak>
+    <form name="create_lockr_form" role="form" novalidate>
+        <md-toolbar>
+            <div bg="primary" class="md-toolbar-tools">
+                <h2 class="white">{{isEditing ? guideStep == 1 ? 'Sharing rule' : 'Edit Lockr': guideStep == 1 ? 'Sharing rule' : 'Add new Lockr'}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <i aria-label="close" class="mdi white mdi-close icon-size-2"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div style="padding: 0 16px;">
+                <div class="step-guide" layout="row" layout-align="center center">
+                    <div class="guide-item" ng-class="{'active':guideStep == 0}">
+                        <span class="circle">1</span>
+                        <span class="title">Details</span>
+                    </div>
+                    <span class="guide-divider"></span>
+                    <div class="guide-item" ng-class="{'active':guideStep == 1}">
+                        <span class="circle">2</span>
+                        <span class="title">Sharing Rule</span>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="step-1" ng-show="guideStep == 0">
+                        <div class="input-field" layout="column">
+                            <md-input-container flex>
+                                <label>LOCKR NAME</label>
+                                <input name="title" ng-model="currentEntity.name" required>
+                                <div ng-messages="create_lockr_form.title.$error">
+                                    <div ng-message="required">This is required!</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>LOCKR DESCRIPTION</label>
+                                <input name="description" ng-model="currentEntity.description">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>ADD TAGS TO LOCKR</label>
+                                <input name="tags" ng-model="currentEntity.tags">
+                            </md-input-container>
+
+                            <md-menu class="add-sublockr-menu">
+                                <md-button class="btn-item active" aria-label="Open menu" ng-click="$mdOpenMenu($event)">
+                                    <i ng-if="createType !== 'no'" class="mdi {{typeSettings[createType].icon}}"></i>
+                                    <span>{{typeSettings[createType].name}}</span>
+                                    <span flex></span>
+                                    <i class="mdi mdi-menu-down"></i>
+                                </md-button>
+                                <md-menu-content width="6">
+                                    <md-menu-item ng-if="key !== 'no'" ng-repeat="(key,type) in typeSettings">
+                                        <md-button ng-class="{active:key == createType}" ng-click="selectType(key)" class="m-dash-btn-item">
+                                            <i class="mdi {{type.icon}}"></i>
+                                            <span>{{type.name}}</span>
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                            <!--<md-input-container>-->
+                                <!--<md-select aria-label="select type" placeholder="TYPE OF LOCKR" ng-model="createType">-->
+                                    <!--<md-option value="normal">NORMAL</md-option>-->
+                                    <!--<md-option value="private">PRIVATE</md-option>-->
+                                <!--</md-select>-->
+                            <!--</md-input-container>-->
+                        </div>
+
+                        <div class="moderation-box" layout="column">
+                            <strong class="title">MODERATION</strong>
+                            <div class="mod-type" layout="row">
+                                <md-checkbox aria-label="share" ng-model="moderationType.share">SHARE</md-checkbox>
+                                <span class="mod-type-divider"></span>
+                                <md-checkbox aria-label="comment" ng-model="moderationType.comment">COMMENT</md-checkbox>
+                            </div>
+                            <strong ng-show="moderationType.share || moderationType.comment" class="title">MODERATOR</strong>
+                            <div ng-show="moderationType.share || moderationType.comment" class="mod-users">
+                                <md-list-item ng-click="contact.selected = !contact.selected" class="contact-item collaborator-list-row" ng-repeat="(index, contact) in (moderationType.share || moderationType.comment) ? allContacts : []">
+                                    <img ng-src="{{contact.image}}" class="md-avatar" alt="{{contact.name}}" />
+                                    <p>{{contact.name}}</p>
+                                    <md-checkbox class="md-secondary" ng-model="contact.selected"></md-checkbox>
+                                </md-list-item>
+                                <div layout="row" layout-align="start center" class="bottom">
+                                    <span flex>Add collaborator to moderate content</span>
+                                    <md-button class="dal-btn accent-small-btn dal-btn-accent" ng-click="addCollaborator()">ADD COLLABORATOR</md-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-2" ng-show="guideStep == 1">
+                        <div layout="row" layout-align="end center">
+                            <md-button class="dal-btn dal-btn-accent accent-small-btn" ng-click="addSharingRules()">CREATE SHARING RULE</md-button>
+                        </div>
+                        <md-radio-group ng-model="selectedRule">
+                            <div class="sharing-rule-row" ng-class="{'active':rule.selected}" ng-repeat="rule in sharingRules">
+                                <div class="row-head" ng-click="rule.selected = !rule.selected" layout-align="start center" layout="row">
+                                    <md-radio-button class="dal-primary md-v2" value="{{rule.id}}"> {{rule.name}} </md-radio-button>
+                                    <span flex></span>
+                                    <i class="mdi" ng-class="{'mdi-plus-circle':!rule.selected,'mdi-minus-circle':rule.selected}"></i>
+                                </div>
+                                <div class="row-content" ng-if="rule.selected">
+                                    <div layout="row" class="tab-head">
+                                        <a ng-click="rule.tabIndex = 0" ng-class="{'active':rule.tabIndex == 0}" href="javascript:void(0)" flex>Mime Type</a>
+                                        <a ng-click="rule.tabIndex = 1" ng-class="{'active':rule.tabIndex == 1}" href="javascript:void(0)" flex>Channels</a>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div layout="row" class="mime-type-view" layout-align="space-between" ng-show="rule.tabIndex == 0">
+                                            <i ng-repeat="item in mimeTypes" ng-class="{'active':mimeTypeIsActive(item,rule)}" class="mime-type-icon {{item.icon}}"></i>
+                                        </div>
+                                        <div class="mime-type-view" ng-show="rule.tabIndex == 1">
+                                            <div style="height: 48px;width: 100%;overflow: scroll;">
+                                                <div layout="row" style="width:{{ 58 * channelTypes.length + 'px'}};height: 48px;">
+                                                    <a ng-class="{'active':rule.channelActive == type.name}" ng-click="switchChannelType(rule,type)" layout="row" layout-align="center center" class="channel-item" ng-repeat="type in channelTypes" flex href="javascript:void(0)">
+                                                        <i class="mdi {{type.iconClass}}"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top: 6px;">
+                                                <span layout-wrap layout="row" layout-align="start center" ng-repeat="channel in rule.postOnSocialChannelDetail | filter:{socialChannelType:rule.channelActive}" class="social-item">
+                                                    <img ng-show="channel.imgLink" ng-src="{{channel.imgLink}}">
+                                                    <i ng-show="!channel.imgLink" class="mdi {{channel.iconClass}}"></i>
+                                                    <span>{{channel.name.split('-')[1]}}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="cc-text">
+                                        {{rule.ccContent.text}}
+                                    </p>
+                                    <div class="cc-image" layout="row" layout-align="center center">
+                                        <img ng-src="{{rule.ccContent.image}}">
+                                    </div>
+                                    <p class="cc-desc">
+                                        {{rule.ccContent.desc}}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-show="guideStep == 1" ng-disabled="create_lockr_form.$invalid" ng-click="guideStep == 0 ? guideStep = 1 : guideStep = 0" style="color: #3c3c3c;" class="dal-btn">
+                PREVIOUS
+            </md-button>
+            <span flex></span>
+            <md-button ng-disabled="create_lockr_form.$invalid" class="dal-btn dal-btn-primary md-raised" ng-click="guideStep == 0 ? guideStep = 1 : createLockr()">
+                {{guideStep == 0 ? 'NEXT':isEditing ? 'UPDATE' : 'SAVE' }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+
+    <div class="loading-mask" style="background-color: rgba(255,255,255,0.5);" ng-show="loadingInProgress">
+        <div layout="row" layout-sm="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+</md-dialog>

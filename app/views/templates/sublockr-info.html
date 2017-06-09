@@ -1,0 +1,196 @@
+<md-sidenav
+        style="z-index: 10;"
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$dalMedia('gt-xs')"
+        md-disable-backdrop
+        md-whiteframe="4">
+    <md-content layout-padding style="background-color: white;">
+        <div class="lockr-info" style="padding: 15px 0;background-color: white;">
+            <div class="card-shadow" style="height: 200px;width: 220px;margin-left:20px;position: relative;">
+                <div class="image" style="width:100%;height:150px;overflow: hidden;position: relative;"><img style="width:100%;" data-ng-src="{{currentLockrDetails.thumbnailUrl}}"></div>
+
+                <i class="mdi mdi-lock-outline sublockr-lock-icon" ng-show="currentLockrDetails.locked"></i>
+                <i class="mdi mdi-lock-open-outline sublockr-lock-icon" ng-show="!currentLockrDetails.locked"></i>
+
+                <div style="padding: 10px;">
+                    <div class="pull-left">
+                        <i class="mdi icon-size-1 mdi-clock  vertical-align-middle" style="padding-right: 5px;"></i><span class="vertical-align-middle font-size-1">{{currentLockrDetails.dateCreated | date : 'MMM,d yyyy'}}</span>
+                    </div>
+
+                    <div class="pull-right"  style="margin-left: 10px;">
+                        <i style="color: #f27065;font-size:13px;" class="vertical-align-middle mdi mdi-heart icon-size-1"></i>
+                        <span class="font-size-1 vertical-align-middle">{{currentLockrDetails.numberOfFollowers || 0}}</span>
+                    </div>
+                    <div class="pull-right">
+                        <ul class="list-unstyled clearfix">
+                            <li class="pull-left" style="margin-right: 5px;">
+                                <div>
+                                    <i class="mdi vertical-align-middle mdi-image-filter v2-color icon-size-1"></i>
+                                    <span class="vertical-align-middle font-size-1">{{currentLockrDetails.assetExtraInfo.totalImageNumber || 0}}</span>
+                                </div>
+                            </li>
+                            <li class="pull-left">
+                                <div>
+                                    <i class="mdi mdi-filmstrip vertical-align-middle v2-color icon-size-1"></i>
+                                    <span  class="vertical-align-middle font-size-1">{{currentLockrDetails.assetExtraInfo.totalVideoNumber || 0}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-left: 20px;padding:20px 0;width: 220px;"  class="clearfix">
+
+                <md-button class="pull-left" style="margin:0;text-transform:none;"  ng-click="openEditLockrDialog($event,currentLockrDetails)">
+                    <i class="mdi mdi-pencil icon-size-2 vertical-align-middle"></i>
+                    <span class="inline-block vertical-align-middle v2-color">Edit lockr</span>
+                </md-button>
+                <md-button ng-show="!isFollowedByMe" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;"  ng-click="followLockr($event,{id:currentLockrDetails.id,name:currentLockrDetails.name})">
+                    <i class="mdi mdi-heart icon-size-2 vertical-align-middle" style="color: #e1e1e1;"></i>
+                    <span class="vertical-align-middle v2-color">Follow lockr</span>
+                </md-button>
+                <md-button ng-show="isFollowedByMe" ng-click="unFollowLockr($event)" class="pull-right" style="margin:0;text-transform:none;padding:0 3px;">
+                    <i class="mdi mdi-heart icon-size-2 vertical-align-middle" style="color:#f27065;"></i>
+                    <span class="vertical-align-middle v2-color">Unfollow</span>
+                </md-button>
+            </div>
+
+            <p style="margin-left: 20px;width: 220px;padding: 10px;background-color:rgb(247,247,247);color:rgb(160,160,160);font-size: 14px;position: relative;letter-spacing: 0.3px;">{{currentLockrDetails.description == '' ? "No description":currentLockrDetails.description}}</p>
+
+            <div style="margin: 20px 0px 20px 20px;width: 220px;">
+                <span style="width: 95px;display: inline-block;" class="v2-color">Sharing Rules </span>
+            </div>
+
+            <div style="margin-left:15px;padding:10px 10px 20px 10px;width: 230px;box-shadow: 0 0 18px 0 rgba(0,0,0,.084),0 0 12px 0 rgba(0,0,0,.098),0 0 5px -1px rgba(0,0,0,.15);
+                     -webkit-box-shadow: 0 0 18px 0 rgba(0,0,0,.084),0 0 12px 0 rgba(0,0,0,.098),0 0 5px -1px rgba(0,0,0,.15);
+                     -o-box-shadow: 0 0 18px 0 rgba(0,0,0,.084),0 0 12px 0 rgba(0,0,0,.098),0 0 5px -1px rgba(0,0,0,.15);
+                     -moz-box-shadow: 0 0 18px 0 rgba(0,0,0,.084),0 0 12px 0 rgba(0,0,0,.098),0 0 5px -1px rgba(0,0,0,.15);
+                     -ms-box-shadow: 0 0 18px 0 rgba(0,0,0,.084),0 0 12px 0 rgba(0,0,0,.098),0 0 5px -1px rgba(0,0,0,.15);margin-bottom: 10px;" ng-repeat="item in sharingRules">
+
+                <div>{{item.name}}
+                    <div ng-if="currentLockrDetails.noContentManager" style="float:right;position: relative;">
+                        <a class="v2-color" ng-click="editLockrSharingRule(item)" style="text-decoration: underline;outline: none;">Edit</a>
+                        <i class="mdi mdi-close v2-color" ng-click="unassignSharingRule(item)" style="margin: 0px 10px;font-size: 15px;"></i>
+                    </div>
+                </div>
+
+                <div style="width: 220px;margin: 10px 0">
+                    <div>
+                        <i ng-repeat="shareon in item.shareMime" style="font-size: 18px;margin-left: 5px;vertical-align: middle;" class="mdi {{shareon}}"></i>
+                        <span style="vertical-align: middle;">shared on</span>
+                        <i ng-repeat="social in item.shareSocialType" style="font-size: 18px;margin-left: 5px;vertical-align: middle;" class="mdi {{social}}"></i>
+                    </div>
+                </div>
+
+                <div style="width: 220px;margin-top: 10px;">
+                    <span class="v2-color vertical-align-middle" style="width: 95px;display: inline-block;">Lisence type :</span>
+                    <div class="vertical-align-middle" style="display: inline-block;overflow: hidden;height: 30px;">
+                        <img ng-src="{{item.creativeImage}}" alt="{{item.name}}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-if="currentLockrDetails.noContentManager" style="margin: 20px 0 20px 20px;width: 220px;">
+                <a ng-click="openAddSharingRuleDialog($event)" style="text-decoration: underline;outline: none;position: relative;color: black;">Add sharing rules</a> <br> <br>
+                <a ng-click="assignLockrSharingRule($event)" style="text-decoration: underline;outline: none;position: relative; color: black;">Assign sharing rules</a>
+            </div>
+
+
+
+
+            <p style="margin:0;margin-left: 20px;width: 220px;padding:10px 0 10px 0;color:#555;font-size: 12px;position: relative;">Owned by: {{ownerName}}</p>
+
+            <div class="clearfix" style="padding: 10px 0;background-color: #F9F9F9;">
+                <div style="margin-left: 20px;width:220px;">
+                    <ul class="list-unstyled pull-left clearfix" style="padding-right: 5px;margin-bottom: 0;">
+                        <li class="pull-left" ng-repeat="item in currentLockrDetails.socialChannelView"><i class="mdi icon-size-1 {{item}}"></i></li>
+                    </ul>
+                    <div class="pull-right" ng-click="seeLockrComments()">
+                        <i style="padding-right: 5px;" class="mdi mdi-message-processing icon-size-1 vertical-align-middle"></i>
+                        <span class="font-size-1 vertical-align-middle">{{(currentLockrDetails.numberOfComments || 0) === 0 ? 'add comment' : currentLockrDetails.numberOfComments }}</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dl-collaborators" style="margin:20px 0 0 20px;width: 220px;" ng-show="currentLockrDetails.lockrType !== 'SafeLockr'">
+                <div style="position: relative;" class="dl-collaborators-header">
+                    <span class="v2-color">Collaborators</span>
+                    <i class="mdi mdi-chevron-up"></i>
+                </div>
+                <md-list>
+                    <div ng-repeat="user in accessUsers">
+                        <md-list-item class="md-2-line">
+                            <img ng-src="{{user.userPic}}" style="margin-top: 21px;width: 30px;height: 30px;" class="md-avatar" alt="{{user.username}}" />
+                            <div class="md-list-item-text">
+                                <h3 style="font-size: 14px;">{{user.firstName}} {{user.lastName}}</h3>
+                                <!--<p>Content manager</p>-->
+                            </div>
+                            <i class="mdi mdi-message-text-outline" style="line-height: 72px;font-size: 22px;"></i>
+                        </md-list-item>
+                        <md-divider ng-show="$index !== accessUsers.length - 1"></md-divider>
+                    </div>
+                </md-list>
+
+                <div class="text-right">
+                    <md-button style="text-transform: none;">
+                        <i class="mdi mdi-plus-circle-outline vertical-align-middle" style="font-size: 22px;color: black;"></i>
+                        <span class="vertical-align-middle" ng-click="addCollaborator($event)" style="font-size: 10px;outline: none;">Add collaborator</span>
+                    </md-button>
+
+                </div>
+            </div>
+
+
+            <div class="moderation-feed" ng-show="toApprovalRequests && toApprovalRequests.length" style="background-color: #F9F9F9;margin-top: 20px;">
+                <div style="margin-left: 20px;width: 235px;padding: 20px 0;">
+                    <div class="v2-color" style="padding-bottom: 15px;padding-right: 15px;">Moderation feed<span style="width: 20px;height: 20px;font-size:10px;background-color: #d0021b;border-radius: 50%;display: inline-block;line-height: 20px; color: white;float: right;text-align: center;">{{toApprovalRequests ? toApprovalRequests.length : '0'}}</span></div>
+                    <div style="max-height: 200px;overflow: scroll;width: 100%;padding: 1px;padding-right: 15px;">
+                        <div ng-repeat="item in toApprovalRequests">
+                            <div class="font-size-10" style="color:#9b9b9b;">
+                                <span>Reply to post </span>
+                                <span class="pull-right">{{item.momentString}}</span>
+                            </div>
+                            <div layout="row">
+                                <div flex class="font-size-12" style="color:#505559;">{{item.entity.name}}</div>
+                                <i class="mdi mdi-dots-horizontal" style="font-size:20px;"></i>
+                            </div>
+                            <div layout="column" style="margin-top: 10px;">
+                                <div class="moderation-edit-container">
+                                    <p class="font-size-10" style="color: #9b9b9b;padding: 10px;">
+                                        {{item.type === 'SHARE' ? item.shareApproval.description : item.commentApproval.message}}
+                                    </p>
+                                </div>
+                                <div class="text-right" style="padding-top: 5px;">
+                                    <i class="mdi mdi-check icon-size-20" ng-click="approvedThisRequest(true,item.id)">
+                                        <md-tooltip>Approved</md-tooltip>
+                                    </i>&nbsp;&nbsp;
+                                    <i class="mdi mdi-close-circle-outline icon-size-20" ng-click="approvedThisRequest(false,item.id)">
+                                        <md-tooltip>Denied</md-tooltip>
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="padding: 20px;">
+                <span style="color: #006fd5;">{{followersList[0].dateCreated | date:'yyyy-MM-dd'}}</span>
+                <div class="love-people clearfix" ng-repeat="item in followersList" style="padding-left:8px;margin-bottom: 10px;">
+                    <i class="mdi mdi-heart icon-size-1 pull-left" style="color:#f27065;line-height: 56px;"></i>
+                    <md-list-item class="md-with-secondary pull-left"  style="padding-left:5px;padding-right: 5px;">
+                        <div class="md-list-item-inner">
+                            <img ng-src="{{item.userPic}}" class="md-avatar" alt=""/>
+                            <p class="v2-color">{{item.follower.firstName}} {{item.follower.lastName}}</p>
+                        </div>
+                    </md-list-item>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</md-sidenav>
